@@ -379,6 +379,52 @@
     }
     [data-reveal].revealed { opacity: 1; transform: none; }
   }
+
+  /* photo band + contact visual */
+  /* Photo band */
+  .photo-band {
+    margin: 0;
+    padding: 0;
+    background: var(--black);
+  }
+  .photo-band figure {
+    margin: 0;
+    line-height: 0;
+  }
+  .photo-band img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    height: clamp(320px, 42vw, 540px);
+  }
+  
+  /* Contact grid */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    gap: 56px;
+    align-items: center;
+  }
+  @media (max-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .contact-visual {
+    margin: 0;
+    line-height: 0;
+  }
+  .contact-visual img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 16 / 10;
+  }
+  @media (max-width: 900px) {
+    .contact-visual {
+      order: 2;
+    }
+  }
 </style>
 </head>
 <body>
@@ -621,6 +667,13 @@
   </section>
 
   <!-- ============ TEAMS ============ -->
+<!-- SNIPPET A -->
+<section class="photo-band" aria-label="Engineering at work">
+  <figure>
+    <img src="../img/engineering.jpg" alt="Engineers monitoring infrastructure dashboards across three screens in a dark office" width="1600" height="893" loading="lazy" decoding="async">
+  </figure>
+</section>
+
   <section id="teams" class="band-dark" aria-labelledby="teams-h">
     <div class="wrap">
       <div class="section-head" data-reveal>
@@ -873,28 +926,36 @@
   </section>
 
   <!-- ============ CONTACT ============ -->
-  <section id="contact" class="contact band-dark" aria-labelledby="contact-h">
-    <div class="wrap" data-reveal>
-      <span class="eyebrow">Contact</span>
-      <h2 id="contact-h">Talk to IronRim</h2>
-      <p class="contact-lede">Tell us what your systems need to do. We will come back with an honest read on the work, the risks, and the path.</p>
-      <div class="contact-cols">
-        <div>
-          <h3>Email</h3>
-          <p><a class="big" href="mailto:info@ironrim.com">info@ironrim.com</a></p>
+  <!-- SNIPPET B -->
+<section id="contact" class="contact band-dark" aria-labelledby="contact-h">
+  <div class="wrap" data-reveal>
+    <div class="contact-grid">
+      <div>
+        <span class="eyebrow">Contact</span>
+        <h2 id="contact-h">Talk to IronRim</h2>
+        <p class="contact-lede">Tell us what your systems need to do. We will come back with an honest read on the work, the risks, and the path.</p>
+        <div class="contact-cols">
+          <div>
+            <h3>Email</h3>
+            <p><a class="big" href="mailto:info@ironrim.com">info@ironrim.com</a></p>
+          </div>
+          <div>
+            <h3>Phone</h3>
+            <p><a class="big" href="tel:+19182550687">+1 918 255 0687</a></p>
+          </div>
+          <div>
+            <h3>Headquarters</h3>
+            <address>IronRim<br>470 W Broad St<br>Columbus, OH 43215, USA</address>
+          </div>
         </div>
-        <div>
-          <h3>Phone</h3>
-          <p><a class="big" href="tel:+19182550687">+1 918 255 0687</a></p>
-        </div>
-        <div>
-          <h3>Headquarters</h3>
-          <address>IronRim<br>470 W Broad St<br>Columbus, OH 43215, USA</address>
-        </div>
+        <a class="btn btn-outline" href="mailto:info@ironrim.com?subject=Consultation%20request">Book a consultation <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#A8814A" stroke-width="1.5"/></svg></a>
       </div>
-      <a class="btn btn-outline" href="mailto:info@ironrim.com?subject=Consultation%20request">Book a consultation <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#A8814A" stroke-width="1.5"/></svg></a>
+      <figure class="contact-visual">
+        <img src="../img/contact-abstract.jpg" alt="Abstract render of a connected network of blue nodes" loading="lazy" decoding="async" width="1600" height="900">
+      </figure>
     </div>
-  </section>
+  </div>
+</section>
 
 </main>
 
