@@ -425,6 +425,8 @@
       order: 2;
     }
   }
+  .teams-photo { margin: 8px 0 40px; }
+  .teams-photo img { width: 100%; display: block; object-fit: cover; aspect-ratio: 21 / 9; filter: saturate(0.8); }
 </style>
 </head>
 <body>
@@ -681,6 +683,9 @@
         <h2 id="teams-h">Teams</h2>
         <p>Four engineering teams, organized by capability and staffed across timezones so work hands off cleanly around the clock.</p>
       </div>
+      <figure class="teams-photo" data-reveal>
+        <img src="../img/workspace.jpg" loading="lazy" decoding="async" width="1600" height="893" alt="Engineering workspace with rows of desks and monitors showing code">
+      </figure>
       <ul class="teams-grid">
         <li class="team-card" data-reveal>
           <h3>DevOps Engineering Team</h3>
