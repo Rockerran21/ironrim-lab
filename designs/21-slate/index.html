@@ -475,6 +475,20 @@
   .svc-fig text {
     letter-spacing: 0.08em;
   }
+  .quote-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  @media (max-width: 900px) { .quote-grid { grid-template-columns: 1fr; } }
+  .cases { padding-top: 0; }
+  .case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; list-style: none; padding: 0; }
+  @media (max-width: 900px) { .case-grid { grid-template-columns: 1fr; } }
+  .case-card { background: var(--surface-l); padding: 36px; }
+  .case-card img { height: 44px; width: auto; max-width: 160px; object-fit: contain; display: block; margin-bottom: 20px; }
+  .case-card h3 { font-size: 1.0625rem; margin-bottom: 10px; }
+  .case-card p { color: var(--gray); font-size: 0.9375rem; line-height: 1.6; }
+  .tech-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 48px; }
+  @media (max-width: 980px) { .tech-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 620px) { .tech-grid { grid-template-columns: 1fr; } }
+  .tech-group h3 { font-size: 0.9375rem; color: #fff; margin-bottom: 8px; }
+  .tech-group p { color: var(--gray-l); font-size: 0.9375rem; line-height: 1.7; }
 </style>
 </head>
 <body id="top">
@@ -880,6 +894,42 @@
 
   <!-- ============ TEAMS ============ -->
 <!-- SNIPPET A -->
+  <section class="tech band-dark" aria-labelledby="tech-h">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Technologies</span>
+        <h2 id="tech-h">The stack we work in</h2>
+        <p>Every tool below is one we have architected with, automated, or operated in production.</p>
+      </div>
+      <div class="tech-grid" data-reveal>
+        <div class="tech-group">
+          <h3>Cloud platforms</h3>
+          <p>AWS, Azure, GCP, Azure Government, VMware, OpenShift</p>
+        </div>
+        <div class="tech-group">
+          <h3>DevOps and infrastructure as code</h3>
+          <p>Kubernetes, Terraform, Ansible, Chef, Puppet, Jenkins, Azure DevOps, GitHub Actions, ArgoCD, Helm, Git, CloudFormation</p>
+        </div>
+        <div class="tech-group">
+          <h3>AI and data</h3>
+          <p>Azure OpenAI, AWS Bedrock, SageMaker, LangChain, Snowflake, Databricks, Oracle, SQL Server, MySQL, Redis, NoSQL</p>
+        </div>
+        <div class="tech-group">
+          <h3>Observability and SRE</h3>
+          <p>Dynatrace, Datadog, Splunk, Prometheus, Grafana, OpenTelemetry, PagerDuty</p>
+        </div>
+        <div class="tech-group">
+          <h3>Security, network, and code quality</h3>
+          <p>Cisco, Fortinet, Juniper, Palo Alto, ZScaler, SonarQube, Veracode, Synopsys, MicroFocus</p>
+        </div>
+        <div class="tech-group">
+          <h3>Languages</h3>
+          <p>Python, Go, Java, .NET, JavaScript, Shell, PowerShell</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
 <section class="photo-band" aria-label="Engineering at work">
   <figure>
     <img src="../img/engineering.jpg" alt="Engineers monitoring infrastructure dashboards across three screens in a dark office" width="1600" height="893" loading="lazy" decoding="async">
@@ -942,12 +992,53 @@
   </section>
 
   <!-- ============ LOCATIONS ============ -->
-  <section class="testimonial band-light" aria-label="Client testimonial">
-    <div class="wrap" data-reveal>
-      <blockquote class="client-quote">
-        <p>Kubernetes is a great buzzword! But to "Operationalize Kubernetes" was our biggest challenge. IronRim not only did the PoCs at blazing speed, setup Kubernetes Foundation but excelled into deep diving each part of Kubernetes and operationalized our Kubernetes environment. Their developed DevOps pipelines accelerated our production release cycles to speeds we never imagined before.</p>
-        <footer>Client testimonial, from a Kubernetes operationalization engagement</footer>
-      </blockquote>
+  <section class="testimonial band-light" aria-label="Client testimonials">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Testimonials</span>
+        <h2>What clients say</h2>
+      </div>
+      <div class="quote-grid">
+        <blockquote class="client-quote" data-reveal>
+          <p>Kubernetes is a great buzzword! But to "Operationalize Kubernetes" was our biggest challenge. IronRim not only did the PoCs at blazing speed, setup Kubernetes Foundation but excelled into deep diving each part of Kubernetes and operationalized our Kubernetes environment. Their developed DevOps pipelines accelerated our production release cycles to speeds we never imagined before.</p>
+          <footer>IT Director, Molina Healthcare</footer>
+        </blockquote>
+        <blockquote class="client-quote" data-reveal>
+          <p>We are advanced in DevOps and Kubernetes in Cloud. It was not easy for many vendors out there to first understand our technically deeper problems and then remediate them. IronRim actually gave us pretty good confidence and resolved tons of complex Cloud, DevOps, Compliance and Kubernetes problems and at the same time brought down our Cloud costs significantly.</p>
+          <footer>Director, Site Reliability Engineering, McGrawHill Education</footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="cases band-light" aria-labelledby="cases-h">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Case studies</span>
+        <h2 id="cases-h">Case studies of trusted customers</h2>
+      </div>
+      <ul class="case-grid">
+        <li class="case-card" data-reveal>
+          <img src="../img/jpmorgan.png" alt="JP Morgan Chase logo" loading="lazy" decoding="async">
+          <h3>JP Morgan Chase</h3>
+          <p>At JP we did cloud readiness assessments, setup AWS and Azure foundation, migrated multi-billion-dollar CPG, Retail, Card and Asset Mgmt. applications into the AWS cloud. We setup continuous security compliance frameworks according to CIS, NIST, SOC, ISO, PCI DSS, and GDPR. We also set up an archival solution to the bank to meet offsite banking regulatory requirements and migrated 20PB+ of data into AWS cloud for archival, saving millions of dollars on archival storage for the bank.</p>
+        </li>
+        <li class="case-card" data-reveal>
+          <img src="../img/molina.png" alt="Molina Healthcare logo" loading="lazy" decoding="async">
+          <h3>Molina Healthcare</h3>
+          <p>Molina Healthcare the largest Medicare &amp; Medicaid Health Insurance provider for US Govt. We set up and manage Kubernetes on Azure for Molina Healthcare. We also set up and manage Azure DevOps and continue to modernize their cloud environment. With more than 1700 applications overall being migrated to Azure that uses Azure DevOps, and 500+ applications that qualified for Kubernetes. Their business was struggling with poor production service reliability and production release frequency. We solved both with Kubernetes and Azure DevOps Pipelines. The business was very happy with the achievements.</p>
+        </li>
+        <li class="case-card" data-reveal>
+          <img src="../img/mcgrawhill.png" alt="McGrawHill Education logo" loading="lazy" decoding="async">
+          <h3>McGrawHill Education</h3>
+          <p>McGrawHill Education is top in the education industry. They are a very advanced DevOps and Kubernetes shop. There challenges with maturing in Kubernetes and DevOps, in area of better DevOps pipeline management, DevOps integrations, Continuous Monitoring, DevSecOps security management, Kubernetes security, performance, and networking management, and its automation were the main challenges. We got them DevSecOps, AWS Cloud and Kubernetes skills they lacked, and delivering complex solutions in an ongoing manner. They have grown significantly with this boost in business, their open learning platform is very stable now with a lot more advanced features.</p>
+        </li>
+        <li class="case-card" data-reveal>
+          <img src="../img/bimbo.png" alt="Grupo Bimbo USA logo" loading="lazy" decoding="async">
+          <h3>Grupo Bimbo USA</h3>
+          <p>Grupo Bimbo is the largest bakery in the world. With its multi-billion dollar operations in the USA, EMEA, and Asiapac their cakes and bread make it to billions of breakfast tables every day. We have successfully setup AWS and Azure cloud foundation for them, performed cloud migrations for 50+ large applications to AWS cloud, setup DevOps (100+ CICD Pipelines) in AWS and Azure, perform application modernization for various types of apps, setup continuous improvement and perform cloud security reviews.</p>
+        </li>
+      </ul>
     </div>
   </section>
 
