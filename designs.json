@@ -108,6 +108,42 @@
       "slug": "18-corporate",
       "name": "Corporate (Primary)",
       "status": "primary-candidate"
+    },
+    {
+      "n": 19,
+      "slug": "19-navy",
+      "name": "Navy & Ice Blue",
+      "status": "palette-variant"
+    },
+    {
+      "n": 20,
+      "slug": "20-charcoal",
+      "name": "Charcoal & Off-White",
+      "status": "palette-variant"
+    },
+    {
+      "n": 21,
+      "slug": "21-slate",
+      "name": "Slate Blue & Cool Gray",
+      "status": "palette-variant"
+    },
+    {
+      "n": 22,
+      "slug": "22-black-beige",
+      "name": "Black & Beige",
+      "status": "palette-variant"
+    },
+    {
+      "n": 23,
+      "slug": "23-sage",
+      "name": "Sage Green & Cream",
+      "status": "palette-variant"
+    },
+    {
+      "n": 24,
+      "slug": "24-burgundy",
+      "name": "Deep Burgundy & Warm Gray",
+      "status": "palette-variant"
     }
   ]
 }
