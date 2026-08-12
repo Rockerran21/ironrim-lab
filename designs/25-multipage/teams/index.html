@@ -518,6 +518,20 @@
   .contact-form textarea { min-height: 130px; resize: vertical; }
   .contact-form .btn { margin-top: 24px; cursor: pointer; }
   .form-note { color: var(--gray-l); font-size: 0.8125rem; margin-top: 12px; }
+  .team-rows { list-style: none; padding: 0; display: grid; }
+  .team-row { display: grid; grid-template-columns: 1.05fr 1.1fr 0.85fr; gap: 40px; padding: 40px 0; border-top: 1px solid var(--d3); }
+  @media (max-width: 900px) { .team-row { grid-template-columns: 1fr; gap: 18px; } }
+  .team-row h3 { color: #fff; font-size: 1.25rem; margin-bottom: 10px; }
+  .team-row h4 { color: var(--gray-l); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.04em; margin: 14px 0 6px; font-weight: 500; }
+  .team-row h4:first-child { margin-top: 0; }
+  .team-row p { color: var(--gray-l); font-size: 0.9375rem; }
+  .team-row ul { list-style: none; padding: 0; display: grid; gap: 8px; }
+  .team-row ul li { color: var(--gray-l); font-size: 0.9375rem; padding-left: 30px; position: relative; }
+  .team-row ul li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 20px; height: 3px; background: var(--accent); }
+  .staffing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 72px; padding-top: 48px; border-top: 1px solid var(--line-l); }
+  @media (max-width: 900px) { .staffing { grid-template-columns: 1fr; } }
+  .staffing h3 { font-size: 1.0625rem; margin-bottom: 8px; }
+  .staffing p { color: var(--gray); font-size: 0.9375rem; }
 </style>
 </head>
 <body id="top">
@@ -557,54 +571,140 @@
     <div class="wrap">
       <div class="section-head" data-reveal>
         <span class="eyebrow">Teams</span>
-        <h2 id="teams-h">Teams</h2>
+        <h1 id="teams-h" style="font-size:clamp(2.2rem,5vw,3.75rem); color:#fff;">Teams</h1>
         <p>Four engineering teams, organized by capability and staffed across timezones so work hands off cleanly around the clock.</p>
       </div>
       <figure class="teams-photo" data-reveal>
         <img src="../../img/workspace.jpg" loading="lazy" decoding="async" width="1600" height="893" alt="Engineering workspace with rows of desks and monitors showing code">
       </figure>
-      <ul class="teams-grid">
-        <li class="team-card" data-reveal>
-          <h3>DevOps Engineering Team</h3>
-          <p class="mission">Builds and runs the delivery platforms behind every engagement: pipelines, container platforms, and the release process itself.</p>
-          <dl>
-            <dt>Core stack</dt>
-            <dd>CI/CD, Kubernetes and OpenShift platforms, GitOps, release engineering</dd>
-            <dt>Timezone coverage</dt>
-            <dd>UTC+5:30 to UTC+8 &middot; Delhi NCR, Bengaluru, Singapore</dd>
-          </dl>
+      <ul class="team-rows">
+        <li class="team-row" data-reveal>
+          <div>
+            <h3>DevOps Engineering Team</h3>
+            <p class="mission">Builds and runs the delivery platforms behind every engagement: pipelines, container platforms, and the release process itself.</p>
+          </div>
+          <div>
+            <h4>What this team owns</h4>
+            <ul>
+              <li>CI/CD pipelines across Jenkins, GitHub Actions, and Azure DevOps</li>
+              <li>Kubernetes and OpenShift platform build and operations</li>
+              <li>GitOps release management with ArgoCD and Helm</li>
+              <li>Image scanning, policy gates, and secret hygiene in the pipeline</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Core stack</h4>
+            <p>CI/CD, Kubernetes and OpenShift platforms, GitOps, release engineering</p>
+            <h4>Timezone coverage</h4>
+            <p>UTC+5:30 to UTC+8 · Delhi NCR, Bengaluru, Singapore</p>
+          </div>
         </li>
-        <li class="team-card" data-reveal>
-          <h3>Senior Engineering Team</h3>
-          <p class="mission">Owns architecture leadership, design reviews, and escalation, and carries client-facing delivery ownership on every engagement.</p>
-          <dl>
-            <dt>Core stack</dt>
-            <dd>Architecture leadership, reviews, escalation, client-facing delivery ownership</dd>
-            <dt>Timezone coverage</dt>
-            <dd>UTC-8 to UTC-5 &middot; San Francisco, Houston, Columbus, Miami</dd>
-          </dl>
+        <li class="team-row" data-reveal>
+          <div>
+            <h3>Senior Engineering Team</h3>
+            <p class="mission">Owns architecture leadership, design reviews, and escalation, and carries client-facing delivery ownership on every engagement.</p>
+          </div>
+          <div>
+            <h4>What this team owns</h4>
+            <ul>
+              <li>Architecture decisions, written down and defended</li>
+              <li>Design and code reviews before anything reaches production</li>
+              <li>Escalation ownership when things get difficult</li>
+              <li>Client-facing delivery responsibility, end to end</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Core stack</h4>
+            <p>Architecture leadership, reviews, escalation, client-facing delivery ownership</p>
+            <h4>Timezone coverage</h4>
+            <p>UTC-8 to UTC-5 · San Francisco, Houston, Columbus, Miami</p>
+          </div>
         </li>
-        <li class="team-card" data-reveal>
-          <h3>AI Integration Engineering Team</h3>
-          <p class="mission">Delivers LLM platforms and retrieval pipelines, and builds the guardrails and model operations that keep AI systems governed in production.</p>
-          <dl>
-            <dt>Core stack</dt>
-            <dd>LLM platforms, RAG, MLOps, AI guardrails, model ops</dd>
-            <dt>Timezone coverage</dt>
-            <dd>UTC-5 to UTC+0 &middot; Columbus, Miami, London</dd>
-          </dl>
+        <li class="team-row" data-reveal>
+          <div>
+            <h3>AI Integration Engineering Team</h3>
+            <p class="mission">Delivers LLM platforms and retrieval pipelines, and builds the guardrails and model operations that keep AI systems governed in production.</p>
+          </div>
+          <div>
+            <h4>What this team owns</h4>
+            <ul>
+              <li>LLM platform and RAG pipeline delivery</li>
+              <li>Guardrails: content safety, prompt moderation, data classification</li>
+              <li>Model operations: evaluation, versioning, retraining</li>
+              <li>AI cost, latency, and quality monitoring in production</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Core stack</h4>
+            <p>LLM platforms, RAG, MLOps, AI guardrails, model ops</p>
+            <h4>Timezone coverage</h4>
+            <p>UTC-5 to UTC+0 · Columbus, Miami, London</p>
+          </div>
         </li>
-        <li class="team-card" data-reveal>
-          <h3>Software Engineering Team</h3>
-          <p class="mission">Builds the applications, APIs, and integrations, and modernizes the systems that carry your business.</p>
-          <dl>
-            <dt>Core stack</dt>
-            <dd>Application development, APIs, integrations, modernization</dd>
-            <dt>Timezone coverage</dt>
-            <dd>UTC+0 to UTC+5:30 &middot; London, Delhi NCR, Bengaluru</dd>
-          </dl>
+        <li class="team-row" data-reveal>
+          <div>
+            <h3>Software Engineering Team</h3>
+            <p class="mission">Builds the applications, APIs, and integrations, and modernizes the systems that carry your business.</p>
+          </div>
+          <div>
+            <h4>What this team owns</h4>
+            <ul>
+              <li>Application development and API design</li>
+              <li>System integrations and data exchange</li>
+              <li>Modernization of legacy workloads into cloud-native patterns</li>
+              <li>Performance and reliability engineering in the application tier</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Core stack</h4>
+            <p>Application development, APIs, integrations, modernization</p>
+            <h4>Timezone coverage</h4>
+            <p>UTC+0 to UTC+5:30 · London, Delhi NCR, Bengaluru</p>
+          </div>
         </li>
       </ul>
+    </div>
+  </section>
+
+  <section class="band-light" aria-labelledby="handoff-h">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Around the clock</span>
+        <h2 id="handoff-h">How a day of delivery moves</h2>
+        <p>The four teams span UTC-8 to UTC+8, so an engagement is always inside someone's working day. Work moves with the sun, with a written hand-off at every boundary.</p>
+      </div>
+      <ol class="process-row">
+        <li data-reveal>
+          <h3>Asia opens</h3>
+          <p>Bengaluru, Delhi NCR, and Singapore pick up the overnight hand-off from the US and run the platform and pipeline work of the Asian day.</p>
+        </li>
+        <li data-reveal>
+          <h3>London bridges</h3>
+          <p>London overlaps both sides: it closes out the Asian day with the India teams and opens the European day with the US East Coast.</p>
+        </li>
+        <li data-reveal>
+          <h3>The Americas take over</h3>
+          <p>Columbus, Miami, and Houston carry client-facing delivery through the US day, with the Senior Engineering Team on point.</p>
+        </li>
+        <li data-reveal>
+          <h3>San Francisco closes the loop</h3>
+          <p>The West Coast runs the final shift and writes the hand-off Asia opens with, completing the 24-hour cycle.</p>
+        </li>
+      </ol>
+      <div class="staffing" data-reveal>
+        <div>
+          <h3>A senior owner on every engagement</h3>
+          <p>Every engagement has one senior engineer who owns delivery and answers for it, from the first architecture decision to handover.</p>
+        </div>
+        <div>
+          <h3>Reviewed before production</h3>
+          <p>Nothing ships without a cross-team review: architecture, security posture, and operability are checked by people who did not write it.</p>
+        </div>
+        <div>
+          <h3>Instrumented by default</h3>
+          <p>Everything the teams deliver arrives with observability built in, so the platform can be operated and audited long after handover.</p>
+        </div>
+      </div>
     </div>
   </section>
 
