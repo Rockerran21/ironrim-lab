@@ -1,0 +1,1014 @@
+<!--
+THESIS: IronRim proves observability by being observable. The site is a live
+SLO board in a dark control room at 2 AM; the firm is the crew on console.
+OWN-WORLD: near-black green-tinted ground, phosphor green for healthy, amber
+for warn, one red spent only on a scripted incident. Instrumentation display
+face, humanist body, mono earned for readouts. Scanlined glass panels,
+LED nav, themed selection, caret, scrollbar and focus rings.
+STORY: land on live telemetry, read the mission, inspect eight monitored
+subsystems, survive one simulated incident, meet the crew roster, follow the
+runbook, open a channel.
+FIRST VIEWPORT: a working board: ticking sparklines, an error-budget gauge,
+uptime tiles, a deploy feed, honestly tagged DEMO FEED.
+FORM: one file, native JS plus canvas and SVG, motion gated behind
+prefers-reduced-motion, in-page anchors only.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IronRim - Mission Control</title>
+<meta name="description" content="IronRim architects and operates the systems enterprises bet on: AI platforms, cloud infrastructure, and the observability, security, and compliance that keep them trustworthy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ground:#070a08;
+    --ground2:#090d0a;
+    --panel:#0c120e;
+    --panel-2:#0e1510;
+    --line:#1b2a20;
+    --line-soft:#14201a;
+    --text:#dce8df;
+    --dim:#93ac9c;
+    --faint:#5f7a6b;
+    --ok:#46f5a0;
+    --ok-deep:#1f7a51;
+    --amber:#f5b445;
+    --red:#ff5252;
+    --font-display:"Chakra Petch",system-ui,sans-serif;
+    --font-body:"Atkinson Hyperlegible",system-ui,sans-serif;
+    --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scrollbar-color:#1e3628 var(--ground)}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+  body{
+    background:var(--ground);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-size:1.0625rem;
+    line-height:1.65;
+    caret-color:var(--ok);
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--ok);color:#04140b}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:var(--ground)}
+  ::-webkit-scrollbar-thumb{background:#1e3628;border-radius:5px;border:2px solid var(--ground)}
+  ::-webkit-scrollbar-thumb:hover{background:var(--ok-deep)}
+  :focus-visible{outline:2px solid var(--ok);outline-offset:3px;border-radius:2px}
+
+  a{color:var(--ok);text-decoration-color:rgba(70,245,160,.4);text-underline-offset:.22em}
+  a:hover{text-decoration-color:var(--ok)}
+
+  .skip{
+    position:absolute;left:-999px;top:0;z-index:99;
+    background:var(--ok);color:#04140b;font-family:var(--font-mono);
+    padding:.6rem 1rem;font-size:.85rem;
+  }
+  .skip:focus{left:.5rem;top:.5rem}
+
+  /* ---------- panels: the board's atom ---------- */
+  .panel{
+    position:relative;
+    background:linear-gradient(160deg,var(--panel-2),var(--panel) 55%);
+    border:1px solid var(--line);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .panel::after{
+    content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+    background:
+      linear-gradient(115deg,rgba(220,240,228,.028) 0%,rgba(220,240,228,.008) 28%,transparent 42%),
+      repeating-linear-gradient(0deg,transparent 0 2px,rgba(180,220,198,.012) 2px 3px);
+  }
+  .panel-head{
+    display:flex;align-items:center;gap:.55rem;
+    padding:.65rem .9rem;border-bottom:1px solid var(--line-soft);
+    font-family:var(--font-mono);font-size:.7rem;letter-spacing:.08em;
+    color:var(--dim);text-transform:uppercase;
+  }
+  .panel-body{padding:.9rem}
+
+  .led{width:7px;height:7px;border-radius:50%;background:var(--faint);flex:none}
+  .led.ok{background:var(--ok);box-shadow:0 0 6px rgba(70,245,160,.7)}
+  .led.warn{background:var(--amber);box-shadow:0 0 6px rgba(245,180,69,.7)}
+  .led.crit{background:var(--red);box-shadow:0 0 7px rgba(255,82,82,.8)}
+
+  .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+  .num{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-weight:500}
+
+  /* ---------- nav ---------- */
+  header.top{
+    position:fixed;inset:0 0 auto 0;z-index:50;
+    background:rgba(7,10,8,.88);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .top-in{
+    max-width:1240px;margin:0 auto;padding:0 1.25rem;
+    display:flex;align-items:center;gap:1.25rem;height:58px;
+  }
+  .wordmark{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--text);flex:none}
+  .wordmark svg{display:block}
+  .wordmark b{font-family:var(--font-display);font-weight:700;font-size:1.05rem;letter-spacing:.04em}
+  .wordmark span{font-family:var(--font-mono);font-size:.62rem;color:var(--faint);letter-spacing:.14em;display:block;margin-top:-2px}
+  nav.leds{margin-left:auto;overflow-x:auto;scrollbar-width:none}
+  nav.leds::-webkit-scrollbar{display:none}
+  nav.leds ul{display:flex;gap:.25rem;list-style:none}
+  nav.leds a{
+    display:flex;align-items:center;gap:.45rem;white-space:nowrap;
+    font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;
+    color:var(--dim);text-decoration:none;padding:.5rem .65rem;border-radius:4px;
+  }
+  nav.leds a:hover{color:var(--text);background:rgba(70,245,160,.06)}
+  nav.leds a .led{transition:background .3s,box-shadow .3s}
+  nav.leds a.live{color:var(--ok)}
+  nav.leds a.live .led{background:var(--ok);box-shadow:0 0 6px rgba(70,245,160,.8)}
+
+  main{display:block}
+  section{scroll-margin-top:72px}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 1.25rem}
+
+  h1,h2,h3{font-family:var(--font-display);line-height:1.15;text-wrap:balance}
+  h2{font-size:clamp(1.6rem,3.4vw,2.4rem);font-weight:600;letter-spacing:.01em}
+  section > .wrap > h2, .sect-head h2{margin-bottom:.9rem}
+  .lede{color:var(--dim);max-width:62ch}
+
+  /* ---------- hero ---------- */
+  #board{padding:112px 0 4.5rem}
+  .hero-grid{display:grid;grid-template-columns:minmax(300px,5fr) 7fr;gap:2.5rem;align-items:center}
+  .hero-copy h1{font-size:clamp(2.2rem,4.6vw,3.6rem);font-weight:700;letter-spacing:.01em;margin:.9rem 0 1.1rem}
+  .hero-copy h1 em{font-style:normal;color:var(--ok)}
+  .hero-copy p{color:var(--dim);max-width:46ch;margin-bottom:1.6rem}
+  .sys-line{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;color:var(--faint);display:flex;align-items:center;gap:.5rem}
+  .cta-row{display:flex;flex-wrap:wrap;gap:.8rem}
+  .btn{
+    display:inline-flex;align-items:center;gap:.55rem;
+    font-family:var(--font-mono);font-size:.8rem;letter-spacing:.08em;
+    padding:.75rem 1.15rem;border-radius:6px;text-decoration:none;
+    border:1px solid var(--ok-deep);transition:background .2s,border-color .2s,transform .2s;
+  }
+  .btn.primary{background:rgba(70,245,160,.12);color:var(--ok);border-color:rgba(70,245,160,.45)}
+  .btn.primary:hover{background:rgba(70,245,160,.2);border-color:var(--ok)}
+  .btn.ghost{color:var(--dim);border-color:var(--line)}
+  .btn.ghost:hover{color:var(--text);border-color:var(--faint)}
+  .btn svg{flex:none}
+
+  .board{
+    position:relative;
+    display:grid;gap:.7rem;
+    grid-template-columns:repeat(6,1fr);
+  }
+  .board-head{
+    grid-column:1/-1;display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;
+    font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;color:var(--dim);
+  }
+  .demo-tag{
+    display:inline-flex;align-items:center;gap:.4rem;
+    border:1px solid rgba(245,180,69,.45);color:var(--amber);
+    border-radius:3px;padding:.18rem .5rem;font-size:.62rem;letter-spacing:.14em;
+  }
+  .demo-tag small{color:var(--dim);letter-spacing:.04em;text-transform:none;font-size:.62rem}
+  .board-clock{margin-left:auto;color:var(--faint)}
+
+  .p-spark{grid-column:span 4}
+  .p-gauge{grid-column:span 2;display:flex;flex-direction:column}
+  .p-uptime{grid-column:span 2}
+  .p-spark2{grid-column:span 4}
+  .p-feed{grid-column:1/-1}
+
+  .readout{display:flex;align-items:baseline;gap:.6rem;padding:.2rem .9rem .1rem}
+  .readout .big{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:1.7rem;font-weight:700;color:var(--ok)}
+  .readout .unit{font-family:var(--font-mono);font-size:.75rem;color:var(--dim)}
+  .readout .delta{font-family:var(--font-mono);font-size:.68rem;color:var(--faint);margin-left:auto}
+  canvas.spark{display:block;width:100%;height:96px}
+
+  .gauge-wrap{display:flex;align-items:center;gap:.9rem;padding:.9rem}
+  .gauge-wrap svg{flex:none}
+  .gauge-num{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:1.35rem;font-weight:700;color:var(--ok)}
+  .gauge-sub{font-family:var(--font-mono);font-size:.65rem;color:var(--dim);letter-spacing:.06em;line-height:1.5}
+
+  .uptime-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-soft)}
+  .uptile{background:var(--panel);padding:.6rem .7rem}
+  .uptile b{display:block;font-family:var(--font-mono);font-weight:400;font-size:.6rem;letter-spacing:.1em;color:var(--faint);text-transform:uppercase}
+  .uptile .num{font-size:1rem;color:var(--ok)}
+  .uptile .num i{font-style:normal;font-size:.65rem;color:var(--dim)}
+
+  .feed{list-style:none;font-family:var(--font-mono);font-size:.74rem;line-height:1.9;color:var(--dim)}
+  .feed li{display:flex;gap:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .feed time{color:var(--faint);flex:none}
+  .feed .tag-ok{color:var(--ok)}
+  .feed .tag-warn{color:var(--amber)}
+  .feed .tag-crit{color:var(--red)}
+  @media (prefers-reduced-motion: no-preference){
+    .feed li.fresh{animation:feedin .5s cubic-bezier(.16,1,.3,1)}
+    @keyframes feedin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  }
+
+  /* ---------- mission ---------- */
+  #mission{padding:4.5rem 0}
+  .mission-grid{display:grid;grid-template-columns:7fr 5fr;gap:3rem;align-items:start}
+  .mission-grid h2{max-width:22ch}
+  .mission-grid .lede{margin-top:.4rem}
+  .heritage{
+    border-left:1px solid var(--ok-deep);
+    padding:.4rem 0 .4rem 1.4rem;
+    font-family:var(--font-display);font-size:1.25rem;font-weight:500;line-height:1.5;
+    color:var(--text);text-wrap:balance;
+  }
+  .heritage footer{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;color:var(--faint);margin-top:.8rem;text-transform:uppercase}
+
+  /* ---------- systems ---------- */
+  #systems{padding:4.5rem 0 5rem}
+  .sect-head{max-width:62ch;margin-bottom:2.2rem}
+  .sys-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:.8rem}
+  .sys{padding:0}
+  .sys .panel-head b{color:var(--text);font-weight:500;letter-spacing:.06em}
+  .sys .panel-head .code{margin-left:auto;color:var(--faint);letter-spacing:.1em}
+  .sys-body{padding:1rem 1.1rem 1.2rem;display:flex;flex-direction:column;gap:.7rem;height:calc(100% - 38px)}
+  .sys-body h3{font-size:1.15rem;font-weight:600;display:flex;align-items:center;gap:.65rem}
+  .sys-body h3 svg{flex:none;color:var(--ok)}
+  .sys-body p{color:var(--dim);font-size:.95rem}
+  .sys-body .stack{
+    margin-top:auto;font-family:var(--font-mono);font-size:.68rem;line-height:1.9;
+    color:var(--faint);letter-spacing:.03em;
+  }
+  .s-wide{grid-column:span 7}
+  .s-med{grid-column:span 5}
+  .s-third{grid-column:span 4}
+  .s-full{grid-column:1/-1}
+  .s-full .sys-body{flex-direction:row;align-items:center;gap:1.4rem;flex-wrap:wrap}
+  .s-full .sys-body p{max-width:52ch}
+  .s-full .sys-body .stack{margin:0 0 0 auto}
+  .compliance-chips{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.2rem}
+  .compliance-chips span{
+    font-family:var(--font-mono);font-size:.66rem;letter-spacing:.08em;color:var(--ok);
+    border:1px solid rgba(70,245,160,.3);border-radius:3px;padding:.22rem .55rem;
+  }
+
+  /* ---------- incident ---------- */
+  #incident{padding:4.5rem 0}
+  .inc-grid{display:grid;grid-template-columns:5fr 7fr;gap:2.5rem;align-items:center}
+  .inc-copy p{color:var(--dim);max-width:48ch;margin:.9rem 0 1.4rem}
+  .inc-note{font-family:var(--font-mono);font-size:.68rem;color:var(--faint);letter-spacing:.06em;margin-top:1rem;display:block}
+  .inc-panel .panel-head .inc-state{margin-left:auto;letter-spacing:.12em}
+  .inc-state.s-ok{color:var(--ok)}
+  .inc-state.s-warn{color:var(--amber)}
+  .inc-state.s-crit{color:var(--red)}
+  .inc-tile{
+    margin:.9rem;border:1px solid var(--line);border-radius:6px;padding:1rem 1.1rem;
+    display:grid;grid-template-columns:1fr auto auto;gap:.4rem 1.6rem;align-items:baseline;
+    transition:border-color .5s,background .5s,box-shadow .5s;
+  }
+  .inc-tile .svc{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.1em;color:var(--text);display:flex;align-items:center;gap:.55rem;grid-column:1/-1}
+  .inc-tile b{display:block;font-family:var(--font-mono);font-weight:400;font-size:.58rem;letter-spacing:.12em;color:var(--faint);text-transform:uppercase}
+  .inc-tile .num{font-size:1.25rem;color:var(--ok);transition:color .5s}
+  .inc-tile.warn{border-color:rgba(245,180,69,.55);background:rgba(245,180,69,.05)}
+  .inc-tile.warn .num{color:var(--amber)}
+  .inc-tile.crit{border-color:rgba(255,82,82,.6);background:rgba(255,82,82,.06);box-shadow:0 4px 24px rgba(255,82,82,.12)}
+  .inc-tile.crit .num{color:var(--red)}
+  @media (prefers-reduced-motion: no-preference){
+    .inc-tile.crit{animation:critpulse 1.1s ease-in-out infinite}
+    @keyframes critpulse{50%{box-shadow:0 4px 34px rgba(255,82,82,.22)}}
+  }
+  .inc-feed{min-height:11.5rem;padding:.2rem .9rem .9rem}
+  .replay{cursor:pointer;background:none}
+  .replay[disabled]{opacity:.45;cursor:default}
+
+  /* ---------- crew ---------- */
+  #crew{padding:4.5rem 0}
+  .crew-grid{display:grid;grid-template-columns:7fr 5fr;gap:.8rem;margin-top:2.2rem}
+  .crew-main .panel-body{padding:1.3rem 1.4rem}
+  .crew-main h3{font-size:1.35rem;margin-bottom:.2rem}
+  .crew-role{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;color:var(--ok);text-transform:uppercase}
+  .crew-main > .panel-body > p{color:var(--dim);margin-top:.9rem;max-width:56ch}
+  .service-record{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line-soft);
+    border-top:1px solid var(--line-soft);margin-top:1.2rem;
+  }
+  .service-record div{background:var(--panel);padding:.8rem 1rem}
+  .service-record b{display:block;font-family:var(--font-mono);font-weight:400;font-size:.6rem;letter-spacing:.12em;color:var(--faint);text-transform:uppercase;margin-bottom:.15rem}
+  .service-record span{font-family:var(--font-display);font-weight:600;font-size:1.05rem}
+  .quals{list-style:none;display:flex;flex-direction:column}
+  .quals li{
+    display:flex;align-items:center;gap:.7rem;padding:.72rem .2rem;
+    border-bottom:1px solid var(--line-soft);font-size:.92rem;
+  }
+  .quals li:last-child{border-bottom:none}
+  .quals svg{flex:none;color:var(--ok)}
+  .env-list{list-style:none;font-size:.92rem;color:var(--dim)}
+  .env-list li{display:flex;gap:.7rem;align-items:center;padding:.55rem .2rem}
+  .env-list .led{flex:none}
+
+  /* ---------- runbook ---------- */
+  #runbook{padding:4.5rem 0}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-top:2.2rem;counter-reset:step}
+  .step{padding:1.2rem 1.2rem 1.4rem;position:relative}
+  .step h3{font-size:1.2rem;display:flex;align-items:center;gap:.6rem;margin:.4rem 0 .6rem}
+  .step .phase{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.14em;color:var(--faint)}
+  .step p{color:var(--dim);font-size:.93rem}
+  .step svg{color:var(--ok)}
+
+  /* ---------- uplink ---------- */
+  #uplink{padding:4.5rem 0 5.5rem}
+  .uplink-panel{padding:0}
+  .uplink-body{display:grid;grid-template-columns:6fr 6fr;gap:2rem;padding:2.2rem;align-items:center}
+  .uplink-body h2{margin-bottom:.7rem}
+  .uplink-body .lede{max-width:44ch}
+  .channels{display:flex;flex-direction:column;gap:.8rem}
+  .channel{
+    display:flex;align-items:center;gap:1rem;text-decoration:none;
+    border:1px solid var(--line);border-radius:6px;padding:1rem 1.2rem;
+    transition:border-color .2s,background .2s;
+  }
+  a.channel:hover{border-color:rgba(70,245,160,.5);background:rgba(70,245,160,.05)}
+  .channel svg{flex:none;color:var(--ok)}
+  .channel b{display:block;font-family:var(--font-mono);font-weight:400;font-size:.6rem;letter-spacing:.14em;color:var(--faint);text-transform:uppercase}
+  .channel span{font-family:var(--font-mono);font-size:.95rem;color:var(--text)}
+  .channel.static{cursor:default}
+
+  footer.site{
+    border-top:1px solid var(--line-soft);padding:1.4rem 0 1.8rem;
+    font-family:var(--font-mono);font-size:.7rem;letter-spacing:.08em;color:var(--faint);
+  }
+  footer.site .wrap{display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
+  footer.site .end{margin-left:auto;display:flex;align-items:center;gap:.5rem}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:1020px){
+    .hero-grid{grid-template-columns:1fr;gap:2rem}
+    .mission-grid,.inc-grid,.crew-grid,.uplink-body{grid-template-columns:1fr;gap:1.6rem}
+    .s-wide,.s-med{grid-column:span 6}
+    .s-third{grid-column:span 6}
+    .sys-grid{grid-template-columns:repeat(6,1fr)}
+    .steps{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:640px){
+    .p-spark,.p-spark2,.p-gauge,.p-uptime{grid-column:1/-1}
+    .sys-grid{grid-template-columns:1fr}
+    .s-wide,.s-med,.s-third{grid-column:auto}
+    .steps{grid-template-columns:1fr}
+    .service-record{grid-template-columns:1fr 1fr}
+    .top-in{gap:.75rem;padding:0 .9rem}
+    .wordmark span{display:none}
+    .board-clock{display:none}
+    .uplink-body{padding:1.4rem}
+    .s-full .sys-body{flex-direction:column;align-items:flex-start}
+    .s-full .sys-body .stack{margin:0}
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#mission">Skip telemetry, go to content</a>
+
+<header class="top">
+  <div class="top-in">
+    <a class="wordmark" href="#board" aria-label="IronRim, back to board">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <circle cx="13" cy="13" r="11" stroke="#46f5a0" stroke-width="1.5"/>
+        <path d="M4 13h4l2-5 3 10 2.5-7 1.5 2h5" stroke="#46f5a0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span style="display:block">
+        <b>IRONRIM</b>
+        <span>MISSION CONTROL</span>
+      </span>
+    </a>
+    <nav class="leds" aria-label="Sections">
+      <ul>
+        <li><a href="#board" data-nav="board"><span class="led" aria-hidden="true"></span>BOARD</a></li>
+        <li><a href="#systems" data-nav="systems"><span class="led" aria-hidden="true"></span>SYSTEMS</a></li>
+        <li><a href="#incident" data-nav="incident"><span class="led" aria-hidden="true"></span>INCIDENT</a></li>
+        <li><a href="#crew" data-nav="crew"><span class="led" aria-hidden="true"></span>CREW</a></li>
+        <li><a href="#runbook" data-nav="runbook"><span class="led" aria-hidden="true"></span>RUNBOOK</a></li>
+        <li><a href="#uplink" data-nav="uplink"><span class="led" aria-hidden="true"></span>UPLINK</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ================= HERO BOARD ================= -->
+  <section id="board" aria-label="Live status board">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="sys-line"><span class="led ok" aria-hidden="true"></span>ALL SYSTEMS NOMINAL &middot; COLUMBUS, OH</p>
+        <h1>The systems you bet on, kept <em>observable</em>.</h1>
+        <p>IronRim architects and operates the platforms enterprises depend on: AI, cloud infrastructure, and the observability, security, and compliance that keep them trustworthy.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#uplink">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7h9M7 3.5 10.5 7 7 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            OPEN A CHANNEL</a>
+          <a class="btn ghost" href="#systems">VIEW SUBSYSTEMS</a>
+        </div>
+      </div>
+
+      <div class="board" role="group" aria-label="Simulated SLO board with illustrative data">
+        <div class="board-head">
+          <span class="demo-tag">DEMO FEED <small>&middot; illustrative data, synthetic telemetry</small></span>
+          <span class="board-clock num" id="boardClock" aria-hidden="true">00:00:00 UTC</span>
+        </div>
+
+        <div class="panel p-spark">
+          <div class="panel-head"><span class="led ok" aria-hidden="true"></span>EDGE GATEWAY &middot; P99 LATENCY</div>
+          <div class="readout">
+            <span class="big" id="latVal">184</span><span class="unit">ms</span>
+            <span class="delta">SLO &lt; 250 ms &middot; 60 s window</span>
+          </div>
+          <canvas class="spark" id="sparkLat" aria-hidden="true"></canvas>
+        </div>
+
+        <div class="panel p-gauge">
+          <div class="panel-head"><span class="led ok" aria-hidden="true"></span>ERROR BUDGET</div>
+          <div class="gauge-wrap">
+            <svg width="84" height="84" viewBox="0 0 84 84" aria-hidden="true">
+              <circle cx="42" cy="42" r="34" pathLength="100" fill="none" stroke="#14201a" stroke-width="7"/>
+              <circle id="gaugeArc" cx="42" cy="42" r="34" pathLength="100" fill="none"
+                stroke="#46f5a0" stroke-width="7" stroke-linecap="round"
+                stroke-dasharray="0 100" transform="rotate(-90 42 42)"/>
+            </svg>
+            <div>
+              <div class="gauge-num"><span id="budgetVal">0</span>%</div>
+              <div class="gauge-sub">BUDGET REMAINING<br>30-DAY WINDOW</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel p-uptime">
+          <div class="panel-head"><span class="led ok" aria-hidden="true"></span>UPTIME &middot; 90 D</div>
+          <div class="uptime-grid">
+            <div class="uptile"><b>api</b><span class="num" data-count="99.98" data-dec="2">99.98</span><span class="num"><i>%</i></span></div>
+            <div class="uptile"><b>model-serving</b><span class="num" data-count="99.95" data-dec="2">99.95</span><span class="num"><i>%</i></span></div>
+            <div class="uptile"><b>data-pipeline</b><span class="num" data-count="99.99" data-dec="2">99.99</span><span class="num"><i>%</i></span></div>
+            <div class="uptile"><b>auth</b><span class="num" data-count="100.00" data-dec="2">100.00</span><span class="num"><i>%</i></span></div>
+          </div>
+        </div>
+
+        <div class="panel p-spark2">
+          <div class="panel-head"><span class="led ok" aria-hidden="true"></span>INGEST THROUGHPUT</div>
+          <div class="readout">
+            <span class="big" id="rpsVal">12,400</span><span class="unit">req/s</span>
+            <span class="delta">AUTOSCALE ARMED</span>
+          </div>
+          <canvas class="spark" id="sparkRps" aria-hidden="true"></canvas>
+        </div>
+
+        <div class="panel p-feed">
+          <div class="panel-head"><span class="led ok" aria-hidden="true"></span>DEPLOYMENT EVENTS</div>
+          <div class="panel-body" style="padding-top:.4rem">
+            <ul class="feed" id="deployFeed" aria-live="off">
+              <li><time class="num">--:--:--</time><span><span class="tag-ok">OK</span> deploy 7e41c9a promoted to prod &middot; canary clean</span></li>
+              <li><time class="num">--:--:--</time><span><span class="tag-ok">OK</span> terraform apply: 0 to add, 0 to change, 0 to destroy</span></li>
+              <li><time class="num">--:--:--</time><span><span class="tag-ok">OK</span> SLO check passed: checkout p99 within budget</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MISSION ================= -->
+  <section id="mission" aria-label="Mission">
+    <div class="wrap mission-grid">
+      <div>
+        <h2>Built by people who have carried the pager.</h2>
+        <p class="lede">IronRim is an enterprise technology consulting firm in Columbus, Ohio. We build AI platforms, cloud infrastructure, and the operational layer around them, and we design everything as if we will be the ones on call for it. Often, we are.</p>
+      </div>
+      <blockquote class="heritage">
+        &ldquo;Rare expertise, delivered with customer obsession, accountability, and timeliness.&rdquo;
+        <footer>Operating principle &middot; IronRim</footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ================= SYSTEMS / SERVICES ================= -->
+  <section id="systems" aria-label="Services">
+    <div class="wrap">
+      <div class="sect-head">
+        <h2>Monitored subsystems</h2>
+        <p class="lede">Eight practice areas, run like production services: named, instrumented, and accountable. Every engagement leaves your systems more observable than we found them.</p>
+      </div>
+      <div class="sys-grid">
+
+        <article class="panel sys s-wide">
+          <div class="panel-head"><span class="led ok" aria-hidden="true"></span><b>STATUS OK</b><span class="code">AI/GENAI</span></div>
+          <div class="sys-body">
+            <h3><svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><rect x="5.5" y="5.5" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8.5 1.5v4M13.5 1.5v4M8.5 16.5v4M13.5 16.5v4M1.5 8.5h4M1.5 13.5h4M16.5 8.5h4M16.5 13.5h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>AI &amp; GenAI Engineering</h3>
+            <p>LLM platforms, RAG pipelines, MLOps, and the AI guardrails and governance that let enterprises ship models without losing sleep over them.</p>
+            <div class="stack">AWS BEDROCK &middot; SAGEMAKER &middot; AZURE OPENAI &middot; LANGCHAIN &middot; VECTOR DATABASES</div>
+          </div>
+        </article>
+
+        <article class="panel sys s-med">
+          <div class="panel-head"><span class="led ok" aria-hidden="true"></span><b>STATUS OK</b><span class="code">OBS/SRE</span></div>
+          <div class="sys-body">
+            <h3><svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M1.5 11c2.6-4.4 6-6.6 9.5-6.6S17.9 6.6 20.5 11c-2.6 4.4-6 6.6-9.5 6.6S4.1 15.4 1.5 11Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M6.5 11.5 9 9l2 3.5 2-2 2.5 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Observability &amp; SRE</h3>
+            <p>SLOs, alerting, incident readiness, and cost visibility. If it matters, it emits a signal someone can act on.</p>
+            <div class="stack">DYNATRACE &middot; DATADOG &middot; SPLUNK &middot; PROMETHEUS &middot; GRAFANA &middot; OPENTELEMETRY</div>
+          </div>
+        </article>
+
+        <article class="panel sys s-third">
+          <div class="panel-head"><span class="led ok" aria-hidden="true"></span><b>STATUS OK</b><span class="code">DEVOPS/PLT</span></div>
+          <div class="sys-body">
+            <h3><svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><circle cx="5.5" cy="5.5" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="16.5" cy="16.5" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 8.5v4a4 4 0 0 0 4 4h4M16.5 13.5v-4a4 4 0 0 0-4-4h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>DevOps &amp; Platform Engineering</h3>
+            <p>CI/CD pipelines and Kubernetes platforms your teams actually want to build on.</p>
+            <div class="stack">JENKINS &middot; GITHUB ACTIONS &middot; AZURE DEVOPS &middot; ARGOCD &middot; KUBERNETES &middot; OPENSHIFT &middot; HELM &middot; GITOPS</div>
+          </div>
+        </article>
+
+        <article class="panel sys s-third">
+          <div class="panel-head"><span class="led ok" aria-hidden="true"></span><b>STATUS OK</b><span class="code">CLOUD/ARCH</span></div>
+          <div class="sys-body">
+            <h3><svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M6 17.5a4.5 4.5 0 0 1-.7-8.95A6 6 0 0 1 17 9.6a4 4 0 0 1-.7 7.9H6Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>Cloud Architecture</h3>
+            <p>Landing zones, multi-region resilience, migration and modernization across the big three.</p>
+            <div class="stack">AWS &middot; AZURE &middot; GCP</div>
+          </div>
+        </article>
+
+        <article class="panel sys s-third">
+          <div class="panel-head"><span class="led ok" aria-hidden="true"></span><b>STATUS OK</b><span class="code">IAC</span></div>
+          <div class="sys-body">
+            <h3><svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="m7.5 6-4 5 4 5M14.5 6l4 5-4 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Infrastructure as Code</h3>
+            <p>Reusable modules, repeatable environments, drift-free automation. Environments as artifacts, not archaeology.</p>
+            <div class="stack">TERRAFORM &middot; ARM &middot; CLOUDFORMATION &middot; ANSIBLE</div>
+          </div>
+        </article>
+
+        <article class="panel sys s-med">
+          <div class="panel-head"><span class="led ok" aria-hidden="true"></span><b>STATUS OK</b><span class="code">SEC/IDENT</span></div>
+          <div class="sys-body">
+            <h3><svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 1.8 3.5 4.8v5.4c0 4.6 3.2 8.1 7.5 10 4.3-1.9 7.5-5.4 7.5-10V4.8L11 1.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m7.8 11 2.2 2.2 4.2-4.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Security &amp; Identity</h3>
+            <p>IAM, network isolation, KMS and Key Vault, DLP, RBAC, and secure AI workloads. Least privilege as a habit, not a finding.</p>
+            <div class="stack">IAM &middot; KMS &middot; KEY VAULT &middot; DLP &middot; RBAC &middot; SECURE AI WORKLOADS</div>
+          </div>
+        </article>
+
+        <article class="panel sys s-wide">
+          <div class="panel-head"><span class="led ok" aria-hidden="true"></span><b>STATUS OK</b><span class="code">COMPLIANCE</span></div>
+          <div class="sys-body">
+            <h3><svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><rect x="4" y="2.5" width="14" height="17" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 2.5h6v3H8zM8 11l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Compliance</h3>
+            <p>Regulated workloads shipped and kept auditable, including Azure Government experience on federal programs.</p>
+            <div class="compliance-chips" aria-label="Compliance frameworks">
+              <span>FEDRAMP HIGH</span><span>FEDRAMP MODERATE</span><span>NIST</span><span>CIS</span><span>HIPAA</span><span>GXP</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel sys s-full">
+          <div class="panel-head"><span class="led ok" aria-hidden="true"></span><b>STATUS OK</b><span class="code">DATA/ANALYTICS</span></div>
+          <div class="sys-body">
+            <h3><svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><ellipse cx="11" cy="5" rx="7.5" ry="3" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 5v12c0 1.66 3.36 3 7.5 3s7.5-1.34 7.5-3V5M3.5 11c0 1.66 3.36 3 7.5 3s7.5-1.34 7.5-3" stroke="currentColor" stroke-width="1.5"/></svg>Data &amp; Analytics</h3>
+            <p>Data platforms and pipelines that feed AI: modeled, governed, and fast enough to matter.</p>
+            <div class="stack">SNOWFLAKE &middot; DATABRICKS &middot; DATA PLATFORMS &middot; PIPELINES</div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= INCIDENT VIGNETTE ================= -->
+  <section id="incident" aria-label="Simulated incident">
+    <div class="wrap inc-grid">
+      <div class="inc-copy">
+        <h2>Watch one fail. Watch it recover.</h2>
+        <p>Systems break. The difference between a bad minute and a bad quarter is whether anyone can see it happening. This scripted vignette shows the posture we build into every platform: detect, page, remediate, verify.</p>
+        <button class="btn ghost replay" id="replayBtn" type="button">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M12 7A5 5 0 1 1 7 2c1.9 0 3.5 1 4.4 2.5M11.5 1v3.6H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          REPLAY VIGNETTE</button>
+        <span class="inc-note">SIMULATION &middot; scripted and synthetic, no real service was harmed</span>
+      </div>
+
+      <div class="panel inc-panel">
+        <div class="panel-head">
+          <span class="led ok" id="incLed" aria-hidden="true"></span>SUBSYSTEM MONITOR
+          <span class="inc-state s-ok mono" id="incState">NOMINAL</span>
+        </div>
+        <div class="inc-tile" id="incTile">
+          <span class="svc"><span class="led ok" id="incTileLed" aria-hidden="true"></span>checkout-api &middot; us-east-2</span>
+          <div><b>p99 latency</b><span class="num" id="incLat">212</span><span class="mono" style="font-size:.65rem;color:var(--faint)"> ms</span></div>
+          <div><b>error rate</b><span class="num" id="incErr">0.31</span><span class="mono" style="font-size:.65rem;color:var(--faint)"> %</span></div>
+          <div><b>pods ready</b><span class="num" id="incPods">12/12</span></div>
+        </div>
+        <ul class="feed inc-feed" id="incFeed" aria-live="polite">
+          <li><time class="num">T+0.0s</time><span><span class="tag-ok">OK</span> steady state &middot; all probes green</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CREW ================= -->
+  <section id="crew" aria-label="About IronRim">
+    <div class="wrap">
+      <div class="sect-head">
+        <h2>Crew roster</h2>
+        <p class="lede">IronRim is led by principal architect Prashant Chawla. Firm first, one name on the console, and the qualifications on record.</p>
+      </div>
+      <div class="crew-grid">
+        <article class="panel crew-main">
+          <div class="panel-head"><span class="led ok" aria-hidden="true"></span>OPERATOR ON CONSOLE</div>
+          <div class="panel-body">
+            <p class="crew-role">Principal Architect</p>
+            <h3>Prashant Chawla</h3>
+            <p>17+ years in enterprise infrastructure, including 9 years at JP Morgan Chase in Global Technology Infrastructure. Former Amazon engineer. A decade on AWS, eight years on Azure, and a habit of staying reachable after go-live.</p>
+            <div class="service-record">
+              <div><b>Enterprise infra</b><span class="num">17+ yrs</span></div>
+              <div><b>JPMC &middot; GTI</b><span class="num">9 yrs</span></div>
+              <div><b>AWS</b><span class="num">10 yrs</span></div>
+              <div><b>Azure</b><span class="num">8 yrs</span></div>
+            </div>
+          </div>
+        </article>
+
+        <div style="display:flex;flex-direction:column;gap:.8rem">
+          <article class="panel">
+            <div class="panel-head"><span class="led ok" aria-hidden="true"></span>QUALIFICATIONS &middot; CERTIFIED</div>
+            <div class="panel-body">
+              <ul class="quals">
+                <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="m5.2 8.2 2 2 3.6-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Microsoft Certified: Azure Solutions Architect Expert</li>
+                <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="m5.2 8.2 2 2 3.6-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>AWS Certified Solutions Architect, Professional</li>
+                <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="m5.2 8.2 2 2 3.6-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>AWS Certified Solutions Architect, Associate</li>
+                <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="m5.2 8.2 2 2 3.6-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Certified Kubernetes Administrator (CKA)</li>
+                <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="m5.2 8.2 2 2 3.6-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Dynatrace Associate Certified</li>
+              </ul>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><span class="led ok" aria-hidden="true"></span>ENVIRONMENTS SERVED</div>
+            <div class="panel-body">
+              <ul class="env-list">
+                <li><span class="led ok" aria-hidden="true"></span>Fortune 500 financial services</li>
+                <li><span class="led ok" aria-hidden="true"></span>Big Four consulting</li>
+                <li><span class="led ok" aria-hidden="true"></span>US federal agencies on Azure Government, FedRAMP High workloads</li>
+                <li><span class="led ok" aria-hidden="true"></span>Healthcare and pharma manufacturing</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RUNBOOK / PROCESS ================= -->
+  <section id="runbook" aria-label="Process">
+    <div class="wrap">
+      <div class="sect-head">
+        <h2>The runbook</h2>
+        <p class="lede">Four phases, run in order, no skipped checks. The same discipline we bring to production, applied to the engagement itself.</p>
+      </div>
+      <div class="steps">
+        <article class="panel step">
+          <span class="phase mono">PHASE &middot; ASSESS</span>
+          <h3><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5"/><path d="m13.5 13.5 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Assess</h3>
+          <p>We read your systems as they are, not as the diagram claims they are.</p>
+        </article>
+        <article class="panel step">
+          <span class="phase mono">PHASE &middot; ARCHITECT</span>
+          <h3><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="2.5" y="2.5" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="11.5" y="11.5" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M8.5 5.5h4a2 2 0 0 1 2 2v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Architect</h3>
+          <p>We design the target state and write the trade-offs down where you can audit them.</p>
+        </article>
+        <article class="panel step">
+          <span class="phase mono">PHASE &middot; AUTOMATE</span>
+          <h3><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2.5v3M10 14.5v3M2.5 10h3M14.5 10h3M4.7 4.7l2.1 2.1M13.2 13.2l2.1 2.1M15.3 4.7l-2.1 2.1M6.8 13.2l-2.1 2.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg>Automate</h3>
+          <p>We encode the build so environment two costs a fraction of environment one.</p>
+        </article>
+        <article class="panel step">
+          <span class="phase mono">PHASE &middot; OPERATE</span>
+          <h3><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2 12h3l2-5 3 8 2.5-6 1.5 3h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Operate</h3>
+          <p>We instrument, alert, hand over cleanly, and stay accountable after go-live.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= UPLINK / CONTACT ================= -->
+  <section id="uplink" aria-label="Contact">
+    <div class="wrap">
+      <div class="panel uplink-panel">
+        <div class="uplink-body">
+          <div>
+            <h2>Open a channel.</h2>
+            <p class="lede">Tell us what you are betting on. We will tell you, plainly, whether we are the right crew for it and what it will take to keep it trustworthy.</p>
+          </div>
+          <div class="channels">
+            <a class="channel" href="mailto:info@ironrim.com">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="m3 6 7 5 7-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span style="display:block"><b>EMAIL UPLINK</b><span>info@ironrim.com</span></span>
+            </a>
+            <a class="channel" href="tel:+19182550687">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 3h3l1.5 4L6.7 8.6a11 11 0 0 0 4.7 4.7L13 11.5l4 1.5v3a1.5 1.5 0 0 1-1.6 1.5C8.4 17 3 11.6 2.5 4.6A1.5 1.5 0 0 1 4 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              <span style="display:block"><b>VOICE CHANNEL</b><span>+1 918 255 0687</span></span>
+            </a>
+            <div class="channel static">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 18s6-5.1 6-9.6A6 6 0 0 0 4 8.4C4 12.9 10 18 10 18Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="10" cy="8.4" r="2.2" stroke="currentColor" stroke-width="1.5"/></svg>
+              <span style="display:block"><b>GROUND STATION</b><span>470 W Broad St, Columbus, OH 43215</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 IronRim. Columbus, Ohio.</span>
+    <span class="end"><span class="led ok" aria-hidden="true"></span>END OF TRANSMISSION</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function fmt(n, dec, sep){
+    var s = n.toFixed(dec);
+    if(sep){
+      var parts = s.split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      s = parts.join(".");
+    }
+    return s;
+  }
+  function easeOut(p){ return 1 - Math.pow(2, -10 * p); }
+
+  /* count a text node up to a value, exponential ease-out */
+  function count(el, to, dec, sep, dur){
+    if(!el) return;
+    if(RM){ el.textContent = fmt(to, dec, sep); return; }
+    var t0 = performance.now();
+    dur = dur || 1400;
+    (function frame(t){
+      var p = Math.min(1, (t - t0) / dur);
+      el.textContent = fmt(p < 1 ? to * easeOut(p) : to, dec, sep);
+      if(p < 1) requestAnimationFrame(frame);
+    })(t0);
+  }
+
+  /* ---------- board clock ---------- */
+  var clock = document.getElementById("boardClock");
+  function tickClock(){
+    var d = new Date();
+    var p = function(x){ return String(x).padStart(2, "0"); };
+    clock.textContent = p(d.getUTCHours()) + ":" + p(d.getUTCMinutes()) + ":" + p(d.getUTCSeconds()) + " UTC";
+  }
+  tickClock();
+  if(!RM) setInterval(tickClock, 1000);
+
+  /* ---------- sparklines ---------- */
+  function Spark(canvas, base, amp, lo, hi){
+    this.c = canvas; this.ctx = canvas.getContext("2d");
+    this.base = base; this.amp = amp; this.lo = lo; this.hi = hi;
+    this.v = base; this.data = [];
+    for(var i = 0; i < 64; i++) this.data.push(this.next());
+    this.reveal = RM ? 1 : 0;
+    this.fit();
+  }
+  Spark.prototype.next = function(){
+    this.v += (Math.random() - 0.5) * this.amp + (this.base - this.v) * 0.08;
+    this.v = Math.max(this.lo, Math.min(this.hi, this.v));
+    return this.v;
+  };
+  Spark.prototype.fit = function(){
+    var dpr = window.devicePixelRatio || 1;
+    var w = this.c.clientWidth, h = this.c.clientHeight;
+    if(!w || !h) return;
+    this.c.width = w * dpr; this.c.height = h * dpr;
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    this.w = w; this.h = h;
+  };
+  Spark.prototype.draw = function(){
+    var ctx = this.ctx, w = this.w, h = this.h, d = this.data;
+    if(!w) return;
+    ctx.clearRect(0, 0, w, h);
+    /* faint grid */
+    ctx.strokeStyle = "rgba(140,180,158,0.07)";
+    ctx.lineWidth = 1;
+    for(var g = 1; g < 4; g++){
+      ctx.beginPath(); ctx.moveTo(0, h * g / 4); ctx.lineTo(w, h * g / 4); ctx.stroke();
+    }
+    var n = Math.max(2, Math.floor(d.length * this.reveal));
+    var min = this.lo - (this.hi - this.lo) * 0.15, max = this.hi + (this.hi - this.lo) * 0.15;
+    var px = function(i){ return i / (d.length - 1) * w; };
+    var py = function(v){ return h - (v - min) / (max - min) * h; };
+    /* fill */
+    ctx.beginPath();
+    ctx.moveTo(px(0), py(d[0]));
+    for(var i = 1; i < n; i++) ctx.lineTo(px(i), py(d[i]));
+    ctx.lineTo(px(n - 1), h); ctx.lineTo(0, h); ctx.closePath();
+    var grad = ctx.createLinearGradient(0, 0, 0, h);
+    grad.addColorStop(0, "rgba(70,245,160,0.16)");
+    grad.addColorStop(1, "rgba(70,245,160,0)");
+    ctx.fillStyle = grad; ctx.fill();
+    /* line */
+    ctx.beginPath();
+    ctx.moveTo(px(0), py(d[0]));
+    for(i = 1; i < n; i++) ctx.lineTo(px(i), py(d[i]));
+    ctx.strokeStyle = "#46f5a0"; ctx.lineWidth = 1.5;
+    ctx.shadowColor = "rgba(70,245,160,0.55)"; ctx.shadowBlur = 6;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+    /* live head dot */
+    if(this.reveal >= 1){
+      ctx.beginPath();
+      ctx.arc(px(n - 1), py(d[n - 1]), 2.4, 0, Math.PI * 2);
+      ctx.fillStyle = "#46f5a0"; ctx.fill();
+    }
+  };
+  Spark.prototype.tick = function(){
+    this.data.push(this.next());
+    this.data.shift();
+    this.draw();
+    return this.data[this.data.length - 1];
+  };
+
+  var sLat = new Spark(document.getElementById("sparkLat"), 184, 26, 140, 255);
+  var sRps = new Spark(document.getElementById("sparkRps"), 12400, 900, 9800, 15200);
+  var latEl = document.getElementById("latVal");
+  var rpsEl = document.getElementById("rpsVal");
+
+  function revealSpark(s, done){
+    if(RM){ s.reveal = 1; s.draw(); if(done) done(); return; }
+    var t0 = performance.now();
+    (function frame(t){
+      var p = Math.min(1, (t - t0) / 1300);
+      s.reveal = easeOut(p);
+      s.draw();
+      if(p < 1) requestAnimationFrame(frame); else { s.reveal = 1; if(done) done(); }
+    })(t0);
+  }
+
+  revealSpark(sLat, function(){
+    if(RM) return;
+    setInterval(function(){ latEl.textContent = fmt(sLat.tick(), 0); }, 950);
+  });
+  revealSpark(sRps, function(){
+    if(RM) return;
+    setInterval(function(){ rpsEl.textContent = fmt(sRps.tick(), 0, true); }, 1150);
+  });
+  count(latEl, 184, 0);
+  count(rpsEl, 12400, 0, true);
+
+  window.addEventListener("resize", function(){
+    sLat.fit(); sLat.draw();
+    sRps.fit(); sRps.draw();
+  });
+
+  /* ---------- gauge + uptime counters ---------- */
+  var arc = document.getElementById("gaugeArc");
+  var budget = 58;
+  if(RM){
+    arc.setAttribute("stroke-dasharray", budget + " " + (100 - budget));
+  } else {
+    var t0g = performance.now();
+    (function g(t){
+      var p = Math.min(1, (t - t0g) / 1500);
+      var v = p < 1 ? budget * easeOut(p) : budget;
+      arc.setAttribute("stroke-dasharray", v + " " + (100 - v));
+      if(p < 1) requestAnimationFrame(g);
+    })(t0g);
+  }
+  count(document.getElementById("budgetVal"), budget, 0);
+  document.querySelectorAll("[data-count]").forEach(function(el){
+    count(el, parseFloat(el.dataset.count), parseInt(el.dataset.dec || "0", 10));
+  });
+
+  /* ---------- deployment feed ---------- */
+  var feed = document.getElementById("deployFeed");
+  var feedLines = [
+    ["OK", "autoscale event: +2 nodes, pool-inference"],
+    ["OK", "otel-collector 0.98 rolled out fleet-wide"],
+    ["OK", "backup verified: snapshot restore test passed"],
+    ["OK", "cert rotation complete: edge-gateway"],
+    ["OK", "drift scan clean: 0 unmanaged resources"],
+    ["OK", "deploy 9b02fd3 promoted to prod · canary clean"],
+    ["OK", "guardrail eval passed: rag-answering v14"],
+    ["OK", "cost report posted: 30-day trend within plan"]
+  ];
+  function stamp(){
+    var d = new Date();
+    var p = function(x){ return String(x).padStart(2, "0"); };
+    return p(d.getUTCHours()) + ":" + p(d.getUTCMinutes()) + ":" + p(d.getUTCSeconds());
+  }
+  /* give the three static rows real timestamps */
+  Array.prototype.forEach.call(feed.querySelectorAll("time"), function(t){ t.textContent = stamp(); });
+  var fi = 0;
+  function pushLine(){
+    var line = feedLines[fi % feedLines.length]; fi++;
+    var li = document.createElement("li");
+    li.className = "fresh";
+    li.innerHTML = "<time class=\"num\">" + stamp() + "</time><span><span class=\"tag-ok\">" + line[0] + "</span> " + line[1] + "</span>";
+    feed.appendChild(li);
+    while(feed.children.length > 4) feed.removeChild(feed.firstElementChild);
+  }
+  if(!RM) setInterval(pushLine, 3200);
+
+  /* ---------- nav LEDs ---------- */
+  var navLinks = {};
+  document.querySelectorAll("[data-nav]").forEach(function(a){ navLinks[a.dataset.nav] = a; });
+  var current = null;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        if(current) current.classList.remove("live");
+        current = navLinks[e.target.id];
+        if(current) current.classList.add("live");
+      }
+    });
+  }, { rootMargin: "-35% 0px -55% 0px" });
+  ["board", "mission", "systems", "incident", "crew", "runbook", "uplink"].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) io.observe(el);
+  });
+  /* mission maps to board's neighborhood; only ids with nav entries light up */
+
+  /* ---------- incident vignette ---------- */
+  var inc = {
+    tile: document.getElementById("incTile"),
+    tileLed: document.getElementById("incTileLed"),
+    led: document.getElementById("incLed"),
+    state: document.getElementById("incState"),
+    lat: document.getElementById("incLat"),
+    err: document.getElementById("incErr"),
+    pods: document.getElementById("incPods"),
+    feed: document.getElementById("incFeed"),
+    btn: document.getElementById("replayBtn")
+  };
+  var incRunning = false, incPlayed = false, incTimers = [];
+
+  function incLine(tag, cls, t, msg){
+    var li = document.createElement("li");
+    if(!RM) li.className = "fresh";
+    li.innerHTML = "<time class=\"num\">T+" + t + "s</time><span><span class=\"" + cls + "\">" + tag + "</span> " + msg + "</span>";
+    inc.feed.appendChild(li);
+    while(inc.feed.children.length > 6) inc.feed.removeChild(inc.feed.firstElementChild);
+  }
+  function setState(cls, label, ledCls){
+    inc.state.className = "inc-state mono " + cls;
+    inc.state.textContent = label;
+    inc.led.className = "led " + ledCls;
+    inc.tileLed.className = "led " + ledCls;
+  }
+  function setTile(mode, lat, err, pods){
+    inc.tile.className = "inc-tile" + (mode ? " " + mode : "");
+    inc.lat.textContent = lat;
+    inc.err.textContent = err;
+    inc.pods.textContent = pods;
+  }
+  function resetIncident(){
+    incTimers.forEach(clearTimeout); incTimers = [];
+    inc.feed.innerHTML = "";
+    setState("s-ok", "NOMINAL", "ok");
+    setTile("", "212", "0.31", "12/12");
+    incLine("OK", "tag-ok", "0.0", "steady state · all probes green");
+  }
+  var incidentScript = [
+    [600,  function(){ setState("s-warn", "ALERT", "warn"); setTile("warn", "486", "1.9", "12/12");
+                       incLine("WARN", "tag-warn", "0.6", "p99 breach: checkout-api above 250 ms"); }],
+    [2000, function(){ setState("s-crit", "PAGING", "crit"); setTile("crit", "893", "7.2", "9/12");
+                       incLine("CRIT", "tag-crit", "2.0", "error budget burn 14x · on-call paged"); }],
+    [3600, function(){ incLine("CRIT", "tag-crit", "3.6", "cause isolated: deploy 4c9f2e1, us-east-2"); }],
+    [5000, function(){ setState("s-warn", "REMEDIATING", "warn"); setTile("warn", "412", "2.4", "11/12");
+                       incLine("WARN", "tag-warn", "5.0", "auto-remediation: rolling back 4c9f2e1"); }],
+    [6600, function(){ incLine("OK", "tag-ok", "6.6", "pods rescheduled · error rate falling"); }],
+    [8000, function(){ setState("s-ok", "RESOLVED", "ok"); setTile("", "218", "0.29", "12/12");
+                       incLine("OK", "tag-ok", "8.0", "resolved · SLO restored, postmortem opened"); }]
+  ];
+  function runIncident(){
+    if(incRunning) return;
+    incRunning = true; incPlayed = true;
+    inc.btn.disabled = true;
+    resetIncident();
+    if(RM){
+      /* reduced motion: print the whole sequence at once, land on resolved */
+      incidentScript.forEach(function(s){ s[1](); });
+      incRunning = false; inc.btn.disabled = false;
+      return;
+    }
+    incidentScript.forEach(function(s){
+      incTimers.push(setTimeout(s[1], s[0]));
+    });
+    incTimers.push(setTimeout(function(){
+      incRunning = false; inc.btn.disabled = false;
+    }, 8400));
+  }
+  inc.btn.addEventListener("click", runIncident);
+  /* fire once per visit when the panel is half in view */
+  var incIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting && !incPlayed){
+        runIncident();
+        incIO.disconnect();
+      }
+    });
+  }, { threshold: 0.5 });
+  incIO.observe(document.querySelector(".inc-panel"));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,676 @@
+<!--
+THESIS: Enterprise infrastructure sold as steelwork. IronRim is the fabricator whose structures carry the load.
+OWN-WORLD: Fabrication drawings and industrial safety signage. Paper white, ink black, safety orange. Heavy 3-4px rules, gusset plates, rivets, stencil lettering. Hazard striping appears exactly once, at the CTA band.
+STORY: A truss assembles member by member and receives the IRONRIM nameplate. Capabilities roll past as painted beam markings. Eight service beams take the load. An inspection plate proves the record. A test load crosses the process truss and the structure holds. The hazard band asks for the job.
+FIRST VIEWPORT: Title-block nav, self-assembling truss that catches the stenciled name, one thesis line, two hard CTAs.
+FORM: One column of steel members joined at drawn gusset plates. The exposed structure is the layout.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IronRim - Structural Steel</title>
+<meta name="description" content="IronRim architects and operates AI platforms, cloud infrastructure, and the observability, security, and compliance that keep them trustworthy. Columbus, Ohio.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23e85000'/%3E%3Crect x='3' y='3' width='10' height='10' fill='none' stroke='%23101010' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f4ee;
+  --ink:#101010;
+  --org:#e85000;
+  --yellow:#ffd400;
+  --steel:#45423c;
+  --stencil:'Saira Stencil One', 'Arial Narrow', sans-serif;
+  --body:'Barlow', 'Helvetica Neue', Arial, sans-serif;
+  --cond:'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --snapback:cubic-bezier(.16,1,.3,1);
+  --settle:cubic-bezier(.16,1.4,.32,1);
+}
+*{box-sizing:border-box}
+html{scrollbar-color:var(--ink) var(--paper)}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:1.05rem;
+  line-height:1.6;
+  overflow-x:clip;
+}
+::selection{background:var(--org);color:#0b0b0b}
+::-webkit-scrollbar{width:14px}
+::-webkit-scrollbar-track{background:var(--paper);border-left:2px solid var(--ink)}
+::-webkit-scrollbar-thumb{background:var(--ink);border:3px solid var(--paper)}
+::-webkit-scrollbar-thumb:hover{background:var(--org)}
+:focus-visible{outline:3px solid var(--org);outline-offset:3px}
+a{color:var(--ink);text-decoration-thickness:2px;text-underline-offset:4px}
+a:hover{color:var(--org)}
+h1,h2,h3{margin:0;line-height:1.1;text-wrap:balance}
+p{margin:0 0 1rem}
+
+.skip{
+  position:absolute;left:-999px;top:0;z-index:99;
+  background:var(--ink);color:var(--paper);
+  font-family:var(--cond);text-transform:uppercase;letter-spacing:.08em;
+  padding:.7rem 1.2rem;text-decoration:none;
+}
+.skip:focus-visible{left:0;color:var(--paper)}
+
+.wrap{max-width:1100px;margin:0 auto;padding:0 1.25rem}
+
+/* ============ nav: drawing title block ============ */
+.topbar{border-bottom:4px solid var(--ink);background:var(--paper);position:relative;z-index:5}
+.topbar .wrap{display:flex;align-items:stretch;justify-content:space-between;flex-wrap:wrap;gap:.25rem 1.5rem}
+.brand{
+  font-family:var(--stencil);font-size:1.5rem;letter-spacing:.12em;
+  text-decoration:none;color:var(--ink);
+  display:flex;align-items:center;gap:.6rem;padding:.75rem 0;
+}
+.brand svg{display:block}
+.brand:hover{color:var(--ink)}
+.brand:hover .bmark{fill:var(--org)}
+.topnav ul{display:flex;list-style:none;margin:0;padding:0;gap:1.6rem;height:100%;align-items:center}
+.topnav a{
+  font-family:var(--cond);font-weight:600;text-transform:uppercase;
+  letter-spacing:.12em;font-size:1rem;text-decoration:none;
+  padding:1rem 0;display:inline-block;
+}
+.topnav a:hover{color:var(--org);text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:8px}
+
+/* ============ hero ============ */
+.hero{padding:3rem 0 4.5rem;border-bottom:4px solid var(--ink)}
+.hero svg{display:block;width:100%;height:auto;margin:0 0 2.2rem}
+.member{stroke:var(--ink);stroke-linecap:butt}
+.rivet{fill:var(--paper);stroke:var(--ink);stroke-width:3;transform-box:fill-box;transform-origin:center}
+#plate rect{fill:var(--ink)}
+#plate .prv{fill:var(--paper);stroke:none}
+#plate text{fill:var(--paper);font-family:var(--stencil);letter-spacing:.16em}
+#truss.anim .member{transition:transform .5s var(--settle),opacity .22s linear}
+#truss.anim .rivet{transition:opacity .18s linear}
+#truss.anim #plate{transition:transform .5s cubic-bezier(.2,1.5,.32,1),opacity .18s linear}
+.dip{animation:dip .3s cubic-bezier(.3,0,.2,1) 1}
+@keyframes dip{0%{transform:translateY(0)}40%{transform:translateY(3px)}100%{transform:translateY(0)}}
+
+.hero h1{
+  font-family:var(--stencil);
+  font-size:clamp(2.3rem,5.6vw,4.4rem);
+  letter-spacing:.02em;
+  max-width:18ch;
+}
+.lede{max-width:62ch;font-size:1.18rem;margin:1.4rem 0 2rem;color:var(--steel)}
+.cta-row{display:flex;gap:1rem;flex-wrap:wrap}
+.btn{
+  display:inline-block;
+  font-family:var(--cond);font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;font-size:1.05rem;
+  border:3px solid var(--ink);
+  padding:.75rem 1.5rem;
+  text-decoration:none;
+  background:var(--paper);color:var(--ink);
+}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn:hover{background:var(--org);color:#0b0b0b;border-color:var(--ink)}
+
+/* ============ marquee: painted beam markings ============ */
+.marquee{
+  border-bottom:4px solid var(--ink);
+  overflow:hidden;
+  padding:.85rem 0;
+  background:var(--paper);
+}
+.mq-track{display:flex;width:max-content}
+.mq-list{
+  display:flex;align-items:center;gap:2.2rem;
+  list-style:none;margin:0;padding:0 2.2rem 0 0;
+  font-family:var(--stencil);font-size:1.25rem;letter-spacing:.14em;
+  white-space:nowrap;
+}
+.mq-list li{display:flex;align-items:center;gap:2.2rem}
+.mq-list svg{flex:none}
+
+/* ============ sections ============ */
+section{padding:4.5rem 0}
+.plate-h{
+  font-family:var(--stencil);
+  font-size:clamp(1.7rem,3.6vw,2.5rem);
+  letter-spacing:.08em;
+  display:inline-block;
+  border:3px solid var(--ink);
+  padding:.35em .8em;
+  margin:0 0 1.2rem;
+  --rv:var(--ink);
+  background-image:
+    radial-gradient(circle at 11px 11px,var(--rv) 3px,transparent 3.5px),
+    radial-gradient(circle at calc(100% - 11px) 11px,var(--rv) 3px,transparent 3.5px),
+    radial-gradient(circle at 11px calc(100% - 11px),var(--rv) 3px,transparent 3.5px),
+    radial-gradient(circle at calc(100% - 11px) calc(100% - 11px),var(--rv) 3px,transparent 3.5px);
+}
+.sec-intro{max-width:68ch;color:var(--steel);margin-bottom:2.5rem}
+
+/* ============ service beams ============ */
+.beams{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem;list-style:none;margin:0;padding:0}
+.beam{
+  position:relative;
+  border-top:4px solid var(--ink);
+  border-bottom:4px solid var(--ink);
+  border-left:2px solid var(--ink);
+  border-right:2px solid var(--ink);
+  padding:1.7rem 1.7rem 1.4rem;
+  background:var(--paper);
+  --rv:var(--ink);
+  background-image:
+    radial-gradient(circle at 13px 13px,var(--rv) 3.5px,transparent 4px),
+    radial-gradient(circle at calc(100% - 13px) 13px,var(--rv) 3.5px,transparent 4px),
+    radial-gradient(circle at 13px calc(100% - 13px),var(--rv) 3.5px,transparent 4px),
+    radial-gradient(circle at calc(100% - 13px) calc(100% - 13px),var(--rv) 3.5px,transparent 4px);
+}
+.beam.full{grid-column:1/-1}
+.beam:hover{--rv:var(--org)}
+.beam h3{
+  font-family:var(--stencil);
+  letter-spacing:.05em;
+  font-size:clamp(1.35rem,2.4vw,1.9rem);
+  margin:0 0 .7rem;
+}
+.beam.full h3{font-size:clamp(1.9rem,4.2vw,3rem);transform:rotate(-.5deg)}
+.beam p{margin:0 0 .8rem;max-width:70ch}
+.beam .spec{
+  font-family:var(--cond);font-weight:600;
+  text-transform:uppercase;letter-spacing:.09em;
+  font-size:.95rem;color:var(--steel);margin:0;
+}
+.iconplate{
+  width:46px;height:46px;
+  border:2px solid var(--ink);
+  display:grid;place-items:center;
+  margin-bottom:1rem;
+}
+.iconplate svg{display:block;stroke:var(--ink);fill:none;stroke-width:2}
+.beam:hover .iconplate svg{stroke:var(--org)}
+
+/* ============ proof: inspection plate ============ */
+#proof{border-top:4px solid var(--ink)}
+.inspection{
+  position:relative;
+  border:4px solid var(--ink);
+  padding:2.4rem 2.2rem 2rem;
+  --rv:var(--ink);
+  background-image:
+    radial-gradient(circle at 15px 15px,var(--rv) 4px,transparent 4.5px),
+    radial-gradient(circle at calc(100% - 15px) 15px,var(--rv) 4px,transparent 4.5px),
+    radial-gradient(circle at 15px calc(100% - 15px),var(--rv) 4px,transparent 4.5px),
+    radial-gradient(circle at calc(100% - 15px) calc(100% - 15px),var(--rv) 4px,transparent 4.5px);
+}
+.inspection>p{max-width:68ch}
+.spec-table{margin:1.6rem 0 0;display:grid;grid-template-columns:max-content 1fr;border-top:3px solid var(--ink)}
+.spec-table dt{
+  font-family:var(--cond);font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;font-size:.95rem;
+  padding:.85rem 2rem .85rem 0;
+  border-bottom:2px solid var(--ink);
+}
+.spec-table dd{margin:0;padding:.85rem 0;border-bottom:2px solid var(--ink);max-width:65ch}
+.certs{list-style:none;display:flex;flex-wrap:wrap;gap:.6rem;margin:0;padding:0}
+.certs li{
+  border:2px solid var(--ink);
+  font-family:var(--cond);font-weight:600;
+  text-transform:uppercase;letter-spacing:.06em;font-size:.9rem;
+  padding:.3rem .7rem;
+}
+.heritage{
+  margin:2rem 0 0;padding:0 0 0 1.2rem;
+  border-left:4px solid var(--org);
+  font-size:1.15rem;font-weight:500;max-width:56ch;
+}
+.heritage p{margin:0}
+.stamp{
+  position:absolute;right:1.6rem;bottom:1.4rem;
+  transform:rotate(-11deg);
+  pointer-events:none;
+}
+@media (max-width:860px){.stamp{position:static;transform:rotate(-8deg);margin-top:1.5rem}}
+
+/* ============ process + load test ============ */
+#process{border-top:4px solid var(--ink)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.6rem;list-style:none;margin:0 0 3rem;padding:0;counter-reset:step}
+.steps li{border-top:4px solid var(--ink);padding-top:1rem}
+.steps li::before{
+  counter-increment:step;
+  content:counter(step);
+  display:block;
+  font-family:var(--stencil);
+  font-size:2.6rem;line-height:1;
+  color:var(--org);
+}
+.steps h3{font-family:var(--stencil);letter-spacing:.06em;font-size:1.4rem;margin:.4rem 0 .5rem}
+.steps p{margin:0;color:var(--steel);font-size:1rem}
+.loadtest svg{display:block;width:100%;height:auto}
+.loadtest .member{stroke:var(--ink)}
+#load rect{fill:var(--org);stroke:var(--ink);stroke-width:3}
+#load line,#load polygon{stroke:var(--ink)}
+#load polygon{fill:var(--ink)}
+#load text{font-family:var(--cond);font-weight:700;font-size:13px;letter-spacing:.1em;fill:var(--ink)}
+.load-caption{
+  font-family:var(--cond);font-weight:600;text-transform:uppercase;
+  letter-spacing:.14em;text-align:center;color:var(--steel);
+  margin:.8rem 0 0;font-size:.95rem;
+}
+
+/* ============ hazard CTA band: the only striping on the page ============ */
+.hazard{
+  background:repeating-linear-gradient(-45deg,var(--yellow) 0 26px,var(--ink) 26px 52px);
+  padding:3.5rem 1.25rem;
+}
+.hazard-plate{
+  max-width:780px;margin:0 auto;
+  background:var(--paper);
+  border:4px solid var(--ink);
+  padding:2.6rem 2rem 2.4rem;
+  text-align:center;
+  --rv:var(--ink);
+  background-image:
+    radial-gradient(circle at 15px 15px,var(--rv) 4px,transparent 4.5px),
+    radial-gradient(circle at calc(100% - 15px) 15px,var(--rv) 4px,transparent 4.5px),
+    radial-gradient(circle at 15px calc(100% - 15px),var(--rv) 4px,transparent 4.5px),
+    radial-gradient(circle at calc(100% - 15px) calc(100% - 15px),var(--rv) 4px,transparent 4.5px);
+}
+.hazard-plate h2{
+  font-family:var(--stencil);
+  font-size:clamp(1.8rem,4.4vw,2.9rem);
+  letter-spacing:.05em;
+  margin-bottom:1rem;
+}
+.hazard-plate p{max-width:52ch;margin:0 auto 1.8rem;color:var(--steel)}
+.hazard-plate .cta-row{justify-content:center}
+.hazard-plate address{
+  font-style:normal;margin-top:1.8rem;
+  font-family:var(--cond);font-weight:600;
+  text-transform:uppercase;letter-spacing:.1em;font-size:.95rem;
+}
+
+/* ============ footer ============ */
+footer{background:var(--ink);color:var(--paper);padding:2.6rem 0}
+footer .wrap{display:flex;flex-wrap:wrap;gap:1.5rem 3rem;align-items:baseline;justify-content:space-between}
+.fbrand{font-family:var(--stencil);font-size:1.4rem;letter-spacing:.12em;color:var(--org)}
+footer a{color:var(--paper)}
+footer a:hover{color:var(--yellow)}
+footer address{font-style:normal}
+footer small{font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;font-size:.85rem;color:#c9c5bc}
+
+/* ============ responsive ============ */
+@media (max-width:720px){
+  .beams{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .spec-table{grid-template-columns:1fr}
+  .spec-table dt{border-bottom:none;padding-bottom:.1rem}
+  .spec-table dd{padding-top:.15rem}
+  .topnav ul{gap:1.1rem}
+}
+@media (max-width:460px){
+  .steps{grid-template-columns:1fr}
+  .btn{width:100%;text-align:center}
+}
+
+/* ============ motion: one system, gated ============ */
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  .mq-track{animation:mq 44s linear infinite}
+  @keyframes mq{to{transform:translateX(-50%)}}
+  .beam{transition:transform .32s var(--snapback)}
+  .beam:hover{transform:translate(6px,-6px);transition-duration:0s}
+  .btn{transition:transform .28s var(--snapback)}
+  .btn:hover{transform:translate(3px,-3px);transition-duration:0s}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#main" aria-label="IronRim, back to top">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+        <rect class="bmark" x="1.5" y="1.5" width="23" height="23" fill="none" stroke="currentColor" stroke-width="3"/>
+        <line x1="6" y1="20" x2="20" y2="6" stroke="currentColor" stroke-width="3"/>
+      </svg>
+      IRONRIM
+    </a>
+    <nav class="topnav" aria-label="Site">
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#proof">Proof</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="wrap">
+      <svg id="truss" viewBox="0 0 960 300" aria-hidden="true" focusable="false"></svg>
+      <h1>We build the structures enterprises bet on.</h1>
+      <p class="lede">IronRim architects and operates AI platforms, cloud infrastructure, and the observability, security, and compliance that keep them trustworthy.</p>
+      <div class="cta-row">
+        <a class="btn solid" href="mailto:info@ironrim.com">Start a project</a>
+        <a class="btn" href="tel:+19182550687">Call +1 918 255 0687</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-label="Capabilities">
+    <div class="mq-track">
+      <ul class="mq-list" id="mqlist">
+        <li>AWS BEDROCK</li><li>SAGEMAKER</li><li>AZURE OPENAI</li><li>LANGCHAIN</li>
+        <li>KUBERNETES</li><li>OPENSHIFT</li><li>TERRAFORM</li><li>ANSIBLE</li>
+        <li>DYNATRACE</li><li>DATADOG</li><li>PROMETHEUS</li><li>GRAFANA</li>
+        <li>OPENTELEMETRY</li><li>ARGOCD</li><li>GITOPS</li><li>SNOWFLAKE</li>
+        <li>DATABRICKS</li><li>FEDRAMP</li><li>NIST</li><li>HIPAA</li>
+      </ul>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <h2 class="plate-h">Services</h2>
+      <p class="sec-intro">Eight load-bearing practices. Each one is fabricated to spec, bolted to the rest, and rated for production.</p>
+      <ul class="beams">
+
+        <li class="beam full">
+          <div class="iconplate"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect x="12.5" y="12.5" width="7" height="7"/><circle cx="6" cy="6" r="3"/><circle cx="26" cy="6" r="3"/><circle cx="6" cy="26" r="3"/><circle cx="26" cy="26" r="3"/><line x1="8.5" y1="8.5" x2="12.5" y2="12.5"/><line x1="23.5" y1="8.5" x2="19.5" y2="12.5"/><line x1="8.5" y1="23.5" x2="12.5" y2="19.5"/><line x1="23.5" y1="23.5" x2="19.5" y2="19.5"/></svg></div>
+          <h3>AI &amp; GenAI Engineering</h3>
+          <p>LLM platforms, RAG pipelines, and MLOps, with the AI guardrails and governance that keep the whole assembly accountable.</p>
+          <p class="spec">AWS Bedrock · SageMaker · Azure OpenAI · LangChain · Vector databases</p>
+        </li>
+
+        <li class="beam">
+          <div class="iconplate"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 23a11 11 0 0 1 22 0"/><line x1="16" y1="23" x2="23" y2="12"/><circle cx="16" cy="23" r="2.5"/></svg></div>
+          <h3>Observability &amp; SRE</h3>
+          <p>SLOs, alerting, incident readiness, and cost visibility across the stack.</p>
+          <p class="spec">Dynatrace · Datadog · Splunk · Prometheus · Grafana · OpenTelemetry</p>
+        </li>
+
+        <li class="beam">
+          <div class="iconplate"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M8 11h16"/><path d="M20 6l4 5-4 5"/><path d="M24 21H8"/><path d="M12 16l-4 5 4 5"/></svg></div>
+          <h3>DevOps &amp; Platform Engineering</h3>
+          <p>CI/CD pipelines and Kubernetes and OpenShift platforms, run as products with Helm and GitOps.</p>
+          <p class="spec">Jenkins · GitHub Actions · Azure DevOps · ArgoCD</p>
+        </li>
+
+        <li class="beam full">
+          <div class="iconplate"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 23h22v-7h-5v-5h-8v4H9v3H5z"/><line x1="5" y1="27" x2="27" y2="27"/></svg></div>
+          <h3>Cloud Architecture</h3>
+          <p>Landing zones, multi-region resilience, and migration and modernization across AWS, Azure, and GCP.</p>
+          <p class="spec">AWS · Azure · GCP · Landing zones · Multi-region resilience</p>
+        </li>
+
+        <li class="beam">
+          <div class="iconplate"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 7l-7 9 7 9"/><path d="M20 7l7 9-7 9"/></svg></div>
+          <h3>Infrastructure as Code</h3>
+          <p>Reusable modules and repeatable environments, automated until drift has nowhere to hide.</p>
+          <p class="spec">Terraform · ARM · CloudFormation · Ansible</p>
+        </li>
+
+        <li class="beam">
+          <div class="iconplate"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><polygon points="16,3 27,9.5 27,22.5 16,29 5,22.5 5,9.5"/><circle cx="16" cy="14" r="3"/><line x1="16" y1="17" x2="16" y2="22"/></svg></div>
+          <h3>Security &amp; Identity</h3>
+          <p>IAM, network isolation, KMS and Key Vault, DLP, and RBAC, extended to secure AI workloads.</p>
+          <p class="spec">IAM · Network isolation · KMS · Key Vault · DLP · RBAC</p>
+        </li>
+
+        <li class="beam">
+          <div class="iconplate"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="12"/><polyline points="10,16.5 14.5,21 22,11.5"/></svg></div>
+          <h3>Compliance</h3>
+          <p>FedRAMP High and Moderate, NIST, CIS, HIPAA, and GxP, with Azure Government experience.</p>
+          <p class="spec">FedRAMP High · FedRAMP Moderate · NIST · CIS · HIPAA · GxP</p>
+        </li>
+
+        <li class="beam">
+          <div class="iconplate"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="16" cy="8" rx="10" ry="4"/><path d="M6 8v16c0 2.2 4.5 4 10 4s10-1.8 10-4V8"/><path d="M6 16c0 2.2 4.5 4 10 4s10-1.8 10-4"/></svg></div>
+          <h3>Data &amp; Analytics</h3>
+          <p>Data platforms and pipelines built to feed AI, not just to store history.</p>
+          <p class="spec">Snowflake · Databricks · Data platforms · Pipelines</p>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+  <section id="proof">
+    <div class="wrap">
+      <h2 class="plate-h">Proof</h2>
+      <div class="inspection">
+        <p>IronRim is led by principal architect Prashant Chawla: 17+ years in enterprise infrastructure, 9 of them at JP Morgan Chase in Global Technology Infrastructure, and a former Amazon engineer. 10 years on AWS. 8 on Azure.</p>
+        <dl class="spec-table">
+          <dt>Certifications</dt>
+          <dd>
+            <ul class="certs">
+              <li>Microsoft Certified: Azure Solutions Architect Expert</li>
+              <li>AWS Certified Solutions Architect, Professional</li>
+              <li>AWS Certified Solutions Architect, Associate</li>
+              <li>Certified Kubernetes Administrator (CKA)</li>
+              <li>Dynatrace Associate Certified</li>
+            </ul>
+          </dd>
+          <dt>Field record</dt>
+          <dd>Fortune 500 financial services. Big Four consulting. US federal agencies on Azure Government, running FedRAMP High workloads. Healthcare and pharma manufacturing.</dd>
+          <dt>Platform time</dt>
+          <dd>10 years on AWS. 8 years on Azure. Kubernetes in production across both.</dd>
+        </dl>
+        <blockquote class="heritage"><p>"Rare expertise, delivered with customer obsession, accountability, and timeliness."</p></blockquote>
+        <svg class="stamp" width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
+          <circle cx="60" cy="60" r="55" fill="none" stroke="var(--org)" stroke-width="4"/>
+          <circle cx="60" cy="60" r="40" fill="none" stroke="var(--org)" stroke-width="2"/>
+          <defs>
+            <path id="arcT" d="M60 60 m-47 0 a47 47 0 0 1 94 0"/>
+            <path id="arcB" d="M60 60 m-47 0 a47 47 0 0 0 94 0"/>
+          </defs>
+          <text fill="var(--org)" font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="14" letter-spacing="3">
+            <textPath href="#arcT" startOffset="50%" text-anchor="middle">INSPECTED</textPath>
+          </text>
+          <text fill="var(--org)" font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="14" letter-spacing="3">
+            <textPath href="#arcB" startOffset="50%" text-anchor="middle" side="right">IRONRIM 2026</textPath>
+          </text>
+          <text x="60" y="66" text-anchor="middle" fill="var(--org)" font-family="Saira Stencil One, sans-serif" font-size="18" letter-spacing="2">PASSED</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="wrap">
+      <h2 class="plate-h">Process</h2>
+      <p class="sec-intro">Four passes, in order. The same sequence every time, because structures fail when steps get skipped.</p>
+      <ol class="steps">
+        <li><h3>Assess</h3><p>We survey what you run today: systems, spend, risks, and the load they actually carry.</p></li>
+        <li><h3>Architect</h3><p>We draw the target structure before anything is built, and defend every choice in it.</p></li>
+        <li><h3>Automate</h3><p>Pipelines, infrastructure as code, and guardrails make the build repeatable and drift-free.</p></li>
+        <li><h3>Operate</h3><p>We stand behind the structure in production: SLOs, alerting, and incident readiness.</p></li>
+      </ol>
+      <div class="loadtest" id="loadtest">
+        <svg id="loadtruss" viewBox="0 0 960 250" aria-hidden="true" focusable="false"></svg>
+        <p class="load-caption">Load test: the structure holds.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="hazard" id="contact">
+    <div class="hazard-plate">
+      <h2>Put your platform on structure that holds.</h2>
+      <p>Tell us what you are building, or what is failing. We answer with an assessment, not a sales deck.</p>
+      <div class="cta-row">
+        <a class="btn solid" href="mailto:info@ironrim.com">info@ironrim.com</a>
+        <a class="btn" href="tel:+19182550687">+1 918 255 0687</a>
+      </div>
+      <address>470 W Broad St, Columbus, OH 43215</address>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="fbrand">IRONRIM</span>
+    <address>
+      <a href="mailto:info@ironrim.com">info@ironrim.com</a> ·
+      <a href="tel:+19182550687">+1 918 255 0687</a><br>
+      470 W Broad St, Columbus, OH 43215
+    </address>
+    <small>&copy; 2026 IronRim. Columbus, Ohio.</small>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var NS='http://www.w3.org/2000/svg';
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function el(name,attrs,parent){
+    var n=document.createElementNS(NS,name);
+    for(var k in attrs)n.setAttribute(k,attrs[k]);
+    if(parent)parent.appendChild(n);
+    return n;
+  }
+
+  /* Parallel-chord truss builder, shared by hero and load test */
+  function makeTruss(svg,cfg){
+    var g=el('g',{},svg);
+    var step=(cfg.x1-cfg.x0)/cfg.panels;
+    var members=[],rivets=[];
+    function line(ax,ay,bx,by,w){
+      var m=el('line',{x1:ax,y1:ay,x2:bx,y2:by,'stroke-width':w,'class':'member'},g);
+      members.push({el:m,mx:(ax+bx)/2});
+    }
+    var i,xa,xb;
+    for(i=0;i<cfg.panels;i++){
+      xa=cfg.x0+i*step;xb=xa+step;
+      line(xa,cfg.bot,xb,cfg.bot,8);
+      line(xa,cfg.top,xb,cfg.top,8);
+    }
+    for(i=0;i<=cfg.panels;i++){
+      xa=cfg.x0+i*step;
+      line(xa,cfg.top,xa,cfg.bot,4);
+    }
+    for(i=0;i<cfg.panels;i++){
+      xa=cfg.x0+i*step;xb=xa+step;
+      if(i<cfg.panels/2)line(xa,cfg.bot,xb,cfg.top,4);
+      else line(xa,cfg.top,xb,cfg.bot,4);
+    }
+    for(i=0;i<=cfg.panels;i++){
+      xa=cfg.x0+i*step;
+      rivets.push(el('circle',{cx:xa,cy:cfg.top,r:5,'class':'rivet'},g));
+      rivets.push(el('circle',{cx:xa,cy:cfg.bot,r:5,'class':'rivet'},g));
+    }
+    return {g:g,members:members,rivets:rivets};
+  }
+
+  /* ---- hero: assembly, then the nameplate lands ---- */
+  var heroSvg=document.getElementById('truss');
+  var hero=makeTruss(heroSvg,{panels:7,x0:30,x1:930,top:62,bot:224});
+  var plate=el('g',{id:'plate'},hero.g);
+  el('rect',{x:284,y:102,width:392,height:82},plate);
+  [[300,118],[660,118],[300,168],[660,168]].forEach(function(p){
+    el('circle',{cx:p[0],cy:p[1],r:4,'class':'prv'},plate);
+  });
+  var nm=el('text',{x:480,y:162,'text-anchor':'middle','font-size':52},plate);
+  nm.textContent='IRONRIM';
+
+  if(!reduce){
+    heroSvg.classList.add('anim');
+    hero.members.forEach(function(m,i){
+      var l=m.el;
+      var dx=(+l.getAttribute('x2'))-(+l.getAttribute('x1'));
+      var dy=(+l.getAttribute('y2'))-(+l.getAttribute('y1'));
+      var len=Math.hypot(dx,dy)||1,s=(i%2?1:-1)*80;
+      l.style.opacity='0';
+      l.style.transform='translate('+(dx/len*s)+'px,'+(dy/len*s)+'px)';
+    });
+    hero.rivets.forEach(function(c){c.style.opacity='0';});
+    plate.style.opacity='0';
+    plate.style.transform='translateY(-110px)';
+    requestAnimationFrame(function(){requestAnimationFrame(function(){
+      hero.members.forEach(function(m,i){
+        setTimeout(function(){
+          m.el.style.opacity='1';
+          m.el.style.transform='none';
+        },140+i*42);
+      });
+      var tR=140+hero.members.length*42+220;
+      hero.rivets.forEach(function(c,i){
+        setTimeout(function(){c.style.opacity='1';},tR+i*14);
+      });
+      setTimeout(function(){
+        plate.style.opacity='1';
+        plate.style.transform='none';
+        setTimeout(function(){hero.g.classList.add('dip');},400);
+      },tR+280);
+    });});
+  }
+
+  /* ---- marquee: duplicate the list for a seamless loop ---- */
+  var mq=document.getElementById('mqlist');
+  var clone=mq.cloneNode(true);
+  clone.setAttribute('aria-hidden','true');
+  clone.removeAttribute('id');
+  /* bolt marks between items */
+  [mq,clone].forEach(function(list){
+    Array.prototype.forEach.call(list.children,function(li){
+      var b=el('svg',{width:12,height:12,viewBox:'0 0 12 12','aria-hidden':'true'});
+      el('polygon',{points:'6,0.8 10.5,3.4 10.5,8.6 6,11.2 1.5,8.6 1.5,3.4',fill:'none',stroke:'currentColor','stroke-width':1.6},b);
+      el('circle',{cx:6,cy:6,r:1.4,fill:'currentColor'},b);
+      li.appendChild(b);
+    });
+  });
+  mq.parentNode.appendChild(clone);
+
+  /* ---- process: scroll-driven load test ---- */
+  var ltSvg=document.getElementById('loadtruss');
+  var lt=makeTruss(ltSvg,{panels:8,x0:30,x1:930,top:78,bot:212});
+  var load=el('g',{id:'load'},ltSvg);
+  el('line',{x1:0,y1:40,x2:0,y2:66,'stroke-width':3},load);
+  el('polygon',{points:'-7,64 7,64 0,74'},load);
+  el('rect',{x:-46,y:12,width:92,height:30},load);
+  var lbl=el('text',{x:0,y:32,'text-anchor':'middle'},load);
+  lbl.textContent='TEST LOAD';
+  var LX0=50,LX1=910;
+
+  function setLoad(x){
+    load.setAttribute('transform','translate('+x+',0)');
+    lt.members.forEach(function(m){
+      var d=(m.mx-x)/70;
+      var flex=1.8*Math.exp(-d*d);
+      m.el.setAttribute('transform',flex>0.05?'translate(0,'+flex.toFixed(2)+')':'');
+    });
+  }
+
+  if(reduce){
+    setLoad((LX0+LX1)/2);
+    lt.members.forEach(function(m){m.el.removeAttribute('transform');});
+  }else{
+    var sec=document.getElementById('loadtest');
+    var ticking=false;
+    function update(){
+      ticking=false;
+      var r=sec.getBoundingClientRect();
+      var vh=window.innerHeight;
+      var p=(vh-r.top)/(vh+r.height);
+      p=Math.min(1,Math.max(0,p));
+      setLoad(LX0+p*(LX1-LX0));
+    }
+    function onScroll(){
+      if(!ticking){ticking=true;requestAnimationFrame(update);}
+    }
+    addEventListener('scroll',onScroll,{passive:true});
+    addEventListener('resize',onScroll,{passive:true});
+    update();
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "approved": null,
+  "designs": [
+    {"n": 1, "slug": "01-forge", "name": "The Forge", "status": "candidate"},
+    {"n": 2, "slug": "02-blueprint", "name": "Blueprint", "status": "candidate"},
+    {"n": 3, "slug": "03-mission-control", "name": "Mission Control", "status": "candidate"},
+    {"n": 4, "slug": "04-swiss", "name": "Swiss Editorial", "status": "candidate"},
+    {"n": 5, "slug": "05-dossier", "name": "The Dossier", "status": "candidate"},
+    {"n": 6, "slug": "06-bento", "name": "Keynote Bento", "status": "candidate"},
+    {"n": 7, "slug": "07-terminal", "name": "Plan & Apply", "status": "candidate"},
+    {"n": 8, "slug": "08-stratus", "name": "Stratus", "status": "candidate"},
+    {"n": 9, "slug": "09-steel", "name": "Structural Steel", "status": "candidate"},
+    {"n": 10, "slug": "10-perimeter", "name": "The Perimeter", "status": "candidate"}
+  ]
+}

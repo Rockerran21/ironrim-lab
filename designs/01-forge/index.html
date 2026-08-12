@@ -1,0 +1,690 @@
+<!doctype html>
+<!--
+THESIS: IronRim taken literally. A master smith's forge at night, where enterprise systems are worked metal: heated, hammered, quenched, proven.
+OWN-WORLD: Charcoal ground, ember orange and heat white as the only light, brushed steel structure. Big Shoulders Display over Barlow. Maker's marks, riveted plates, heat seams, chamfered billets.
+STORY: Heat cools into strength. The page opens molten and tempers as you descend: the headline cools letter by letter, seams cool as you pass, the process quenches in sequence, ending at a cold certification plate and a commission.
+FIRST VIEWPORT: Night forge at full scale. Embers drift and answer the pointer, the headline cools from ember to steel, one hot seam waits below.
+FORM: One long page, five acts: hero, works, quench, plate, commission. One motion system: temperature.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="IronRim architects and operates the systems enterprises bet on: AI platforms, cloud infrastructure, and the observability, security, and compliance that keep them trustworthy. Columbus, Ohio.">
+<meta name="theme-color" content="#151210">
+<title>IronRim - The Forge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --coal:#151210;
+  --coal-2:#1c1814;
+  --steel:#23262b;
+  --steel-2:#191b1f;
+  --steel-edge:#3a3f47;
+  --steel-hi:#525a64;
+  --ember:#ff7a29;
+  --ember-hot:#ffb063;
+  --ember-deep:#c9500e;
+  --heat-white:#fff3e4;
+  --cooled:#ece7df;
+  --text:#e6dfd4;
+  --text-dim:#b4a996;
+  --steel-text:#c3cad3;
+  --steel-text-dim:#98a2ad;
+  --display:"Big Shoulders Display","Arial Narrow",Arial,sans-serif;
+  --body:"Barlow","Helvetica Neue",Arial,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+  color-scheme:dark;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-padding-top:5.5rem}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+html,body{overflow-x:clip}
+body{
+  background:var(--coal);
+  color:var(--text);
+  font-family:var(--body);
+  font-size:1.0625rem;
+  line-height:1.65;
+  background-image:
+    repeating-linear-gradient(115deg,rgba(255,255,255,.012) 0 1px,transparent 1px 4px),
+    radial-gradient(140% 60% at 50% 0%,rgba(255,110,30,.05),transparent 55%);
+}
+::selection{background:var(--ember);color:#1c0e03}
+::-webkit-scrollbar{width:11px}
+::-webkit-scrollbar-track{background:var(--coal)}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--steel-edge),#2c3036);border:2px solid var(--coal);border-radius:6px}
+::-webkit-scrollbar-thumb:hover{background:var(--ember-deep)}
+@supports not selector(::-webkit-scrollbar){html{scrollbar-color:var(--steel-edge) var(--coal)}}
+:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px}
+.skip{position:absolute;left:1rem;top:-4rem;z-index:60;background:var(--ember);color:#1c0e03;font-weight:600;padding:.55rem 1rem;text-decoration:none;transition:top .2s}
+.skip:focus{top:1rem}
+.wrap{width:min(1160px,100% - clamp(2.2rem,7vw,4rem));margin-inline:auto}
+
+/* ---------- nav ---------- */
+.top{
+  position:sticky;top:0;z-index:50;
+  background:rgba(21,18,16,.86);
+  backdrop-filter:blur(9px);
+  -webkit-backdrop-filter:blur(9px);
+  border-bottom:1px solid rgba(255,122,41,.14);
+}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:64px}
+.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--heat-white)}
+.brand svg{color:var(--ember)}
+.brand b{font-family:var(--display);font-weight:800;font-size:1.45rem;letter-spacing:.04em;text-transform:uppercase}
+.brand b span{color:var(--ember)}
+.top nav{display:flex;gap:clamp(.7rem,2.4vw,1.9rem)}
+.top nav a{
+  color:var(--text-dim);text-decoration:none;text-transform:uppercase;
+  font-size:.74rem;font-weight:600;letter-spacing:.14em;padding:.4rem 0;
+  border-bottom:2px solid transparent;transition:color .25s,border-color .25s;
+}
+.top nav a:hover{color:var(--heat-white);border-bottom-color:var(--ember)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;overflow:clip;
+  background:
+    radial-gradient(120% 75% at 50% 112%,rgba(255,96,18,.22),transparent 62%),
+    radial-gradient(60% 40% at 82% 100%,rgba(255,140,50,.10),transparent 70%);
+}
+#embers{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero .wrap{position:relative;z-index:1;padding:7rem 0 5rem}
+h1{
+  font-family:var(--display);font-weight:800;text-transform:uppercase;
+  font-size:clamp(3.1rem,9vw,6rem);line-height:.95;letter-spacing:.005em;
+  color:var(--cooled);max-width:16ch;text-wrap:balance;
+}
+h1 .w{display:inline-block;white-space:nowrap}
+h1 .ch{display:inline-block}
+.lit .ch{animation:temper 2.1s var(--ease) both;animation-delay:calc(var(--i)*42ms)}
+@keyframes temper{
+  0%{color:var(--ember-hot);text-shadow:0 0 14px rgba(255,130,40,.9),0 2px 46px rgba(255,90,10,.5)}
+  45%{color:#ff9c4e;text-shadow:0 0 8px rgba(255,120,35,.45),0 2px 22px rgba(255,90,10,.2)}
+  100%{color:var(--cooled);text-shadow:0 0 0 rgba(255,120,35,0),0 2px 0 rgba(255,90,10,0)}
+}
+.hero p{margin-top:1.6rem;max-width:56ch;font-size:clamp(1.05rem,1.7vw,1.2rem);color:var(--text-dim)}
+.cta-row{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:2.4rem}
+.btn{
+  position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:.6rem;
+  padding:.95rem 1.7rem;text-decoration:none;text-transform:uppercase;
+  font-weight:600;font-size:.85rem;letter-spacing:.11em;
+  transition:transform .3s var(--ease);
+}
+.btn::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px);
+  transition:filter .3s,background-color .3s;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0)}
+.btn-ember{color:#201005}
+.btn-ember::before{background:linear-gradient(175deg,var(--ember-hot),var(--ember) 55%,var(--ember-deep))}
+.btn-ember:hover::before{filter:brightness(1.12) drop-shadow(0 6px 18px rgba(255,110,25,.4))}
+.btn-steel{color:var(--steel-text)}
+.btn-steel::before{background:linear-gradient(175deg,#2d3138,#22252a);box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+.btn-steel:hover{color:var(--heat-white)}
+.btn-steel:hover::before{filter:brightness(1.15) drop-shadow(0 6px 16px rgba(0,0,0,.5))}
+.btn svg{flex:none}
+
+/* ---------- heat seams ---------- */
+.seam{
+  height:2px;width:min(1160px,100% - clamp(2.2rem,7vw,4rem));margin-inline:auto;border:0;
+  background:linear-gradient(90deg,transparent,var(--ember) 18%,var(--heat-white) 50%,var(--ember) 82%,transparent);
+  box-shadow:0 2px 18px 2px rgba(255,110,30,.5),0 8px 34px rgba(255,90,15,.28);
+  transition:background 1.4s var(--ease),box-shadow 1.4s var(--ease);
+}
+.seam.cooled{
+  background:linear-gradient(90deg,transparent,var(--steel-edge) 22%,#565d66 50%,var(--steel-edge) 78%,transparent);
+  box-shadow:0 2px 10px rgba(0,0,0,.5);
+}
+
+/* ---------- sections ---------- */
+section{padding:clamp(4.2rem,9vw,7.5rem) 0}
+h2{
+  font-family:var(--display);font-weight:800;text-transform:uppercase;
+  font-size:clamp(2.1rem,5vw,3.4rem);line-height:1;letter-spacing:.01em;
+  color:var(--heat-white);margin-top:.5rem;
+}
+.lead{margin-top:1.1rem;max-width:62ch;color:var(--text-dim)}
+
+/* ---------- works ---------- */
+.works-grid{display:grid;gap:14px;grid-template-columns:repeat(6,1fr);margin-top:2.8rem}
+.plate{
+  position:relative;overflow:clip;
+  background:
+    radial-gradient(90% 60% at 20% 0%,rgba(255,255,255,.03),transparent 60%),
+    repeating-linear-gradient(115deg,rgba(255,255,255,.018) 0 1px,transparent 1px 3px),
+    linear-gradient(165deg,var(--steel),var(--steel-2));
+  border:1px solid var(--steel-edge);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 16px 32px -20px rgba(0,0,0,.85);
+  padding:1.6rem 1.5rem 1.7rem;
+  transition:border-color .45s;
+}
+.plate::after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:0;
+  background:radial-gradient(240px circle at var(--mx,50%) var(--my,40%),rgba(255,118,32,.26),rgba(255,90,15,.08) 45%,transparent 70%);
+  transition:opacity .5s var(--ease);
+}
+.plate:hover{border-color:rgba(255,122,41,.55)}
+.plate:hover::after{opacity:1}
+.mark{
+  width:46px;height:46px;border:1px solid var(--steel-hi);border-radius:50%;
+  display:grid;place-items:center;color:#d8905a;
+  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.07),rgba(0,0,0,.25));
+  box-shadow:inset 0 2px 4px rgba(0,0,0,.5);
+  transition:color .45s,border-color .45s;
+}
+.plate:hover .mark{color:var(--ember-hot);border-color:var(--ember)}
+.plate h3{
+  font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:1.35rem;letter-spacing:.03em;line-height:1.05;
+  color:var(--steel-text);margin-top:1.1rem;transition:color .45s;
+}
+.plate:hover h3{color:var(--heat-white)}
+.plate p{margin-top:.65rem;font-size:.95rem;color:var(--steel-text-dim)}
+.p-ai{grid-column:span 4;padding:2.3rem 2.2rem 2.4rem}
+.p-ai .mark{width:58px;height:58px}
+.p-ai h3{font-size:clamp(1.7rem,3vw,2.3rem)}
+.p-ai p{font-size:1.02rem;max-width:52ch}
+.p-obs{grid-column:span 2}
+.p-dev,.p-cloud,.p-iac{grid-column:span 2}
+.p-sec,.p-comp{grid-column:span 3}
+.p-data{grid-column:span 6;display:flex;align-items:center;gap:1.6rem;padding:1.4rem 2rem}
+.p-data h3{margin-top:0}
+.p-data p{margin-top:.3rem}
+.p-data .mark{flex:none}
+
+/* ---------- quench ---------- */
+.quench{list-style:none;display:grid;gap:clamp(1.4rem,3vw,2.2rem);grid-template-columns:repeat(4,1fr);margin-top:3rem}
+.step::before{
+  content:"";display:block;height:3px;margin-bottom:1.2rem;
+  background:linear-gradient(90deg,var(--heat-white),var(--ember) 45%,var(--ember-deep));
+  box-shadow:0 2px 16px rgba(255,110,30,.55),0 6px 30px rgba(255,90,15,.3);
+  transition:background 1s var(--ease),box-shadow 1s var(--ease);
+}
+.step-head{display:flex;align-items:baseline;gap:.7rem}
+.step-n,.step h3{
+  font-family:var(--display);font-weight:800;text-transform:uppercase;
+  transition:color 1s var(--ease),text-shadow 1s var(--ease);
+}
+.step-n{font-size:2.6rem;line-height:1;color:var(--ember-hot);text-shadow:0 0 16px rgba(255,120,35,.7)}
+.step h3{font-size:1.5rem;letter-spacing:.03em;color:var(--ember-hot);text-shadow:0 0 12px rgba(255,120,35,.45)}
+.step p{margin-top:.7rem;font-size:.95rem;color:var(--text-dim);max-width:34ch}
+.step.cooled::before{
+  background:linear-gradient(90deg,#565d66,var(--steel-edge));
+  box-shadow:0 2px 8px rgba(0,0,0,.5);
+}
+.step.cooled .step-n{color:var(--steel-hi);text-shadow:none}
+.step.cooled h3{color:var(--cooled);text-shadow:none}
+
+/* ---------- proof plate ---------- */
+.cert-plate{
+  position:relative;margin-top:3rem;
+  background:
+    radial-gradient(100% 70% at 25% 0%,rgba(255,255,255,.035),transparent 55%),
+    repeating-linear-gradient(115deg,rgba(255,255,255,.02) 0 1px,transparent 1px 3px),
+    linear-gradient(160deg,#25282e,#17191d);
+  border:1px solid var(--steel-edge);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 24px 48px -24px rgba(0,0,0,.9);
+  padding:clamp(1.8rem,4.5vw,3.2rem);
+}
+.rivet{
+  position:absolute;width:14px;height:14px;border-radius:50%;
+  background:radial-gradient(circle at 34% 28%,#79828d,#2b2f35 72%);
+  box-shadow:0 2px 5px rgba(0,0,0,.65),inset 0 -1px 2px rgba(0,0,0,.5);
+}
+.rivet:nth-child(1){top:12px;left:12px}
+.rivet:nth-child(2){top:12px;right:12px}
+.rivet:nth-child(3){bottom:12px;left:12px}
+.rivet:nth-child(4){bottom:12px;right:12px}
+.cert-plate .lead{color:var(--steel-text);max-width:64ch}
+.cert-cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.6rem,4vw,3rem);margin-top:2.4rem}
+.cert-plate h3{
+  font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:1.3rem;letter-spacing:.05em;color:var(--heat-white);margin-top:.8rem;
+}
+.stamp-list{list-style:none;margin-top:1.1rem;display:grid;gap:.75rem}
+.stamp-list li{display:flex;gap:.7rem;align-items:flex-start;color:var(--steel-text);font-size:.97rem}
+.stamp-list svg{flex:none;margin-top:.18rem;color:#d8905a}
+.motto{
+  margin-top:2.6rem;padding-top:1.6rem;border-top:1px solid rgba(255,255,255,.08);
+  font-family:var(--display);font-weight:600;text-transform:uppercase;
+  font-size:clamp(1.05rem,2vw,1.35rem);letter-spacing:.09em;line-height:1.4;
+  color:#9aa4af;text-shadow:0 1px 0 rgba(0,0,0,.7),0 -1px 0 rgba(255,255,255,.04);
+}
+
+/* ---------- contact ---------- */
+.commission p{margin-top:1.1rem;max-width:54ch;color:var(--text-dim)}
+.contact-row{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:2.4rem}
+.addr{
+  display:flex;align-items:center;gap:.65rem;margin-top:2.2rem;
+  color:var(--text-dim);font-style:normal;
+}
+.addr svg{color:#d8905a;flex:none}
+
+/* ---------- footer ---------- */
+footer{padding:2.2rem 0 2.8rem}
+footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+footer small{color:#8f8574;font-size:.85rem}
+footer .brand b{font-size:1.15rem}
+
+/* ---------- responsive ---------- */
+@media (max-width:939px){
+  .quench{grid-template-columns:1fr 1fr}
+}
+@media (max-width:899px){
+  .works-grid{grid-template-columns:1fr 1fr}
+  .p-ai,.p-data{grid-column:1 / -1}
+  .p-obs,.p-dev,.p-cloud,.p-iac,.p-sec,.p-comp{grid-column:span 1}
+}
+@media (max-width:759px){
+  .cert-cols{grid-template-columns:1fr}
+}
+@media (max-width:599px){
+  .works-grid{grid-template-columns:1fr}
+  .p-obs,.p-dev,.p-cloud,.p-iac,.p-sec,.p-comp{grid-column:auto}
+  .quench{grid-template-columns:1fr}
+  .step p{max-width:none}
+  .p-data{flex-direction:column;align-items:flex-start;gap:.9rem;padding:1.6rem 1.5rem}
+  .top nav a{letter-spacing:.09em;font-size:.68rem}
+  .top .wrap{gap:.5rem}
+  .top .brand b{font-size:1.2rem}
+  .top nav{gap:.7rem}
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  #embers{display:none}
+  .btn:hover{transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#works">Skip to content</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#hero" aria-label="IronRim, back to top">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 7.5h11c3.2 0 6 1.2 7 3-1.8 1-4.3 1.3-6.5 1.3H13l1.6 5.2H9.4L11 11.8c-4.4 0-8-1.6-8-4.3z"/>
+        <path d="M6.5 17h11v2.5h-11z"/>
+      </svg>
+      <b>Iron<span>Rim</span></b>
+    </a>
+    <nav aria-label="Sections">
+      <a href="#works">Works</a>
+      <a href="#process">Process</a>
+      <a href="#proof">Proof</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="hero" aria-label="Introduction">
+    <canvas id="embers" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <h1 class="cool-head">We forge the systems enterprises bet on</h1>
+      <p>IronRim architects and operates AI platforms, cloud infrastructure, and the observability, security, and compliance that keep them trustworthy. Worked to spec, proven under load, from Columbus, Ohio.</p>
+      <div class="cta-row">
+        <a class="btn btn-ember" href="#contact">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 4l6 6-2.5 2.5-6-6z"/><path d="M12 9.5L3.5 18a1.8 1.8 0 0 0 2.5 2.5L14.5 12"/></svg>
+          Commission the forge
+        </a>
+        <a class="btn btn-steel" href="#works">See the works</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="seam" aria-hidden="true"></div>
+
+  <section id="works" aria-labelledby="works-h">
+    <div class="wrap">
+      <h2 id="works-h">The works of the forge</h2>
+      <p class="lead">Eight services, one discipline. Every system leaves this shop stamped with its maker's mark: designed to hold, tested under heat, ready to take a load.</p>
+      <div class="works-grid" id="works-grid">
+        <article class="plate p-ai">
+          <div class="mark" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v4M12 17.5v4M2.5 12h4M17.5 12h4M5.4 5.4l2.4 2.4M16.2 16.2l2.4 2.4M18.6 5.4l-2.4 2.4M7.8 16.2l-2.4 2.4"/></svg>
+          </div>
+          <h3>AI &amp; GenAI Engineering</h3>
+          <p>The bet most enterprises are making now. We build the platform under it: LLM platforms, RAG pipelines, MLOps, and the AI guardrails and governance that keep it accountable. AWS Bedrock, SageMaker, Azure OpenAI, LangChain, vector databases.</p>
+        </article>
+        <article class="plate p-obs">
+          <div class="mark" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16a8 8 0 0 1 16 0"/><path d="M12 16l4.2-4.8"/><circle cx="12" cy="16" r="1.2"/><path d="M2 19.5h20"/></svg>
+          </div>
+          <h3>Observability &amp; SRE</h3>
+          <p>Dynatrace, Datadog, Splunk, Prometheus, Grafana, OpenTelemetry. SLOs, alerting, incident readiness, cost visibility.</p>
+        </article>
+        <article class="plate p-dev">
+          <div class="mark" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h8a5 5 0 0 1 5 5v.5"/><path d="M16.5 8.5L19 11l2.5-2.5"/><path d="M18 18h-8a5 5 0 0 1-5-5v-.5"/><path d="M7.5 15.5L5 13l-2.5 2.5"/></svg>
+          </div>
+          <h3>DevOps &amp; Platform Engineering</h3>
+          <p>CI/CD with Jenkins, GitHub Actions, Azure DevOps, ArgoCD. Kubernetes and OpenShift platforms, Helm, GitOps.</p>
+        </article>
+        <article class="plate p-cloud">
+          <div class="mark" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17.5a4.2 4.2 0 0 1-.3-8.4 5.3 5.3 0 0 1 10.2-1.4 4.1 4.1 0 0 1 .3 9.8H7z"/></svg>
+          </div>
+          <h3>Cloud Architecture</h3>
+          <p>AWS, Azure, GCP. Landing zones, multi-region resilience, migration and modernization.</p>
+        </article>
+        <article class="plate p-iac">
+          <div class="mark" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4-8 4-8-4z"/><path d="M4 12l8 4 8-4"/><path d="M4 16.5l8 4 8-4"/></svg>
+          </div>
+          <h3>Infrastructure as Code</h3>
+          <p>Terraform, ARM, CloudFormation, Ansible. Reusable modules, repeatable environments, drift-free automation.</p>
+        </article>
+        <article class="plate p-sec">
+          <div class="mark" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5.2c0 4.4-2.9 7.6-7 8.8-4.1-1.2-7-4.4-7-8.8V6z"/><circle cx="12" cy="10" r="2"/><path d="M12 12v3.2"/></svg>
+          </div>
+          <h3>Security &amp; Identity</h3>
+          <p>IAM, network isolation, KMS and Key Vault, DLP, RBAC, secure AI workloads.</p>
+        </article>
+        <article class="plate p-comp">
+          <div class="mark" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7.5"/><path d="M8.6 12.2l2.4 2.4 4.4-5.2"/><path d="M12 1.5v1.6M12 20.9v1.6M1.5 12h1.6M20.9 12h1.6"/></svg>
+          </div>
+          <h3>Compliance</h3>
+          <p>FedRAMP High and Moderate, NIST, CIS, HIPAA, GxP. Azure Government experience.</p>
+        </article>
+        <article class="plate p-data">
+          <div class="mark" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="7" ry="2.8"/><path d="M5 5.5v13c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8v-13"/><path d="M5 12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8"/></svg>
+          </div>
+          <div>
+            <h3>Data &amp; Analytics</h3>
+            <p>Snowflake, Databricks, data platforms and pipelines that feed AI. The stock every other work in this shop is forged from.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="seam" aria-hidden="true"></div>
+
+  <section id="process" aria-labelledby="process-h">
+    <div class="wrap">
+      <h2 id="process-h">The quench</h2>
+      <p class="lead">Our process is four strikes, in order. Each one starts hot and is cooled into something that holds its shape.</p>
+      <ol class="quench" role="list">
+        <li class="step">
+          <div class="step-head"><span class="step-n" aria-hidden="true">1</span><h3>Assess</h3></div>
+          <p>We read the metal before we strike: what you run, what it costs, where it will fail.</p>
+        </li>
+        <li class="step">
+          <div class="step-head"><span class="step-n" aria-hidden="true">2</span><h3>Architect</h3></div>
+          <p>We draw what will hold and write down why, so the design outlives the meeting.</p>
+        </li>
+        <li class="step">
+          <div class="step-head"><span class="step-n" aria-hidden="true">3</span><h3>Automate</h3></div>
+          <p>Pipelines, modules, and guardrails, so every environment comes out of the same die.</p>
+        </li>
+        <li class="step">
+          <div class="step-head"><span class="step-n" aria-hidden="true">4</span><h3>Operate</h3></div>
+          <p>We stand by the work: SLOs, incident readiness, and costs you can actually see.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="seam" aria-hidden="true"></div>
+
+  <section id="proof" aria-labelledby="proof-h">
+    <div class="wrap">
+      <h2 id="proof-h">The maker's plate</h2>
+      <div class="cert-plate">
+        <span class="rivet" aria-hidden="true"></span><span class="rivet" aria-hidden="true"></span><span class="rivet" aria-hidden="true"></span><span class="rivet" aria-hidden="true"></span>
+        <p class="lead">IronRim is led by principal architect Prashant Chawla: 17+ years in enterprise infrastructure, nine of them at JP Morgan Chase in Global Technology Infrastructure, and years as an Amazon engineer before that. Ten years on AWS. Eight on Azure.</p>
+        <div class="cert-cols">
+          <div>
+            <h3>Proofmarks</h3>
+            <ul class="stamp-list">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M8.6 12.2l2.4 2.4 4.4-5.2"/></svg>Microsoft Certified: Azure Solutions Architect Expert</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M8.6 12.2l2.4 2.4 4.4-5.2"/></svg>AWS Certified Solutions Architect, Professional</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M8.6 12.2l2.4 2.4 4.4-5.2"/></svg>AWS Certified Solutions Architect, Associate</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M8.6 12.2l2.4 2.4 4.4-5.2"/></svg>Certified Kubernetes Administrator (CKA)</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M8.6 12.2l2.4 2.4 4.4-5.2"/></svg>Dynatrace Associate Certified</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Metal we have worked</h3>
+            <ul class="stamp-list">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 4l6 6-2.5 2.5-6-6z"/><path d="M12 9.5L3.5 18a1.8 1.8 0 0 0 2.5 2.5L14.5 12"/></svg>Fortune 500 financial services</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 4l6 6-2.5 2.5-6-6z"/><path d="M12 9.5L3.5 18a1.8 1.8 0 0 0 2.5 2.5L14.5 12"/></svg>Big Four consulting</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 4l6 6-2.5 2.5-6-6z"/><path d="M12 9.5L3.5 18a1.8 1.8 0 0 0 2.5 2.5L14.5 12"/></svg>US federal agencies on Azure Government, FedRAMP High workloads</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 4l6 6-2.5 2.5-6-6z"/><path d="M12 9.5L3.5 18a1.8 1.8 0 0 0 2.5 2.5L14.5 12"/></svg>Healthcare and pharma manufacturing</li>
+            </ul>
+          </div>
+        </div>
+        <p class="motto">Rare expertise, delivered with customer obsession, accountability, and timeliness.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="seam" aria-hidden="true"></div>
+
+  <section id="contact" class="commission" aria-labelledby="contact-h">
+    <div class="wrap">
+      <h2 id="contact-h">Commission the forge</h2>
+      <p>Bring us the system that has to hold. We answer with an assessment, not a pitch.</p>
+      <div class="contact-row">
+        <a class="btn btn-ember" href="mailto:info@ironrim.com">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3.5 7l8.5 6 8.5-6"/></svg>
+          info@ironrim.com
+        </a>
+        <a class="btn btn-steel" href="tel:+19182550687">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.4 1.6a13 13 0 0 0 4.8 4.8L15 13l5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+          +1 918 255 0687
+        </a>
+      </div>
+      <address class="addr">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21.5S5 15.2 5 10.3a7 7 0 0 1 14 0c0 4.9-7 11.2-7 11.2z"/><circle cx="12" cy="10" r="2.4"/></svg>
+        470 W Broad St, Columbus, OH 43215
+      </address>
+    </div>
+  </section>
+</main>
+
+<div class="seam cooled" aria-hidden="true"></div>
+
+<footer>
+  <div class="wrap">
+    <span class="brand" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5h11c3.2 0 6 1.2 7 3-1.8 1-4.3 1.3-6.5 1.3H13l1.6 5.2H9.4L11 11.8c-4.4 0-8-1.6-8-4.3z"/><path d="M6.5 17h11v2.5h-11z"/></svg>
+      <b>Iron<span>Rim</span></b>
+    </span>
+    <small>&copy; 2026 IronRim. Columbus, Ohio.</small>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* headline cools letter by letter */
+  var h1 = document.querySelector('.cool-head');
+  if (h1 && !reduce) {
+    var text = h1.textContent.trim().replace(/\s+/g, ' ');
+    h1.setAttribute('aria-label', text);
+    h1.textContent = '';
+    var frag = document.createDocumentFragment();
+    var words = text.split(' ');
+    var i = 0;
+    words.forEach(function(word, wi){
+      var w = document.createElement('span');
+      w.className = 'w';
+      w.setAttribute('aria-hidden', 'true');
+      for (var c = 0; c < word.length; c++) {
+        var s = document.createElement('span');
+        s.className = 'ch';
+        s.style.setProperty('--i', i++);
+        s.textContent = word[c];
+        w.appendChild(s);
+      }
+      frag.appendChild(w);
+      if (wi < words.length - 1) frag.appendChild(document.createTextNode(' '));
+    });
+    h1.appendChild(frag);
+    h1.classList.add('lit');
+  }
+
+  /* seams cool once scrolled past */
+  var seams = document.querySelectorAll('.seam');
+  if (reduce || !('IntersectionObserver' in window)) {
+    seams.forEach(function(s){ s.classList.add('cooled'); });
+  } else {
+    var seamIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('cooled'); seamIO.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -55% 0px' });
+    seams.forEach(function(s){ seamIO.observe(s); });
+  }
+
+  /* the quench: steps temper in sequence with scroll */
+  var proc = document.getElementById('process');
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
+  if (reduce) {
+    steps.forEach(function(s){ s.classList.add('cooled'); });
+  } else if (proc && steps.length) {
+    var qTick = false;
+    var quench = function(){
+      qTick = false;
+      var r = proc.getBoundingClientRect();
+      var p = (innerHeight * 0.85 - r.top) / r.height;
+      steps.forEach(function(s, idx){
+        s.classList.toggle('cooled', p > 0.18 + idx * 0.22);
+      });
+    };
+    addEventListener('scroll', function(){
+      if (!qTick) { qTick = true; requestAnimationFrame(quench); }
+    }, { passive: true });
+    quench();
+  }
+
+  /* plates heat from the cursor point */
+  var grid = document.getElementById('works-grid');
+  if (grid) {
+    grid.addEventListener('pointermove', function(e){
+      var plate = e.target.closest ? e.target.closest('.plate') : null;
+      if (!plate) return;
+      var r = plate.getBoundingClientRect();
+      plate.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+      plate.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+    });
+  }
+
+  /* ember drift behind the hero, pointer reactive */
+  var hero = document.getElementById('hero');
+  var cv = document.getElementById('embers');
+  if (!reduce && hero && cv && cv.getContext) {
+    var ctx = cv.getContext('2d');
+    var sp = document.createElement('canvas');
+    sp.width = sp.height = 64;
+    var sg = sp.getContext('2d');
+    var rg = sg.createRadialGradient(32, 32, 0, 32, 32, 30);
+    rg.addColorStop(0, 'rgba(255,244,228,0.95)');
+    rg.addColorStop(0.25, 'rgba(255,170,80,0.85)');
+    rg.addColorStop(0.55, 'rgba(255,110,30,0.35)');
+    rg.addColorStop(1, 'rgba(255,90,20,0)');
+    sg.fillStyle = rg;
+    sg.fillRect(0, 0, 64, 64);
+
+    var W = 0, H = 0, parts = [], px = -1e4, py = -1e4;
+    var running = false, raf = 0, last = 0, inView = true;
+
+    var spawn = function(){
+      return {
+        x: Math.random() * W, y: Math.random() * H,
+        s: 0.35 + Math.random() * 1.15,
+        vy: 12 + Math.random() * 26,
+        vx: (Math.random() - 0.5) * 10,
+        ph: Math.random() * Math.PI * 2,
+        fs: 0.6 + Math.random() * 1.6
+      };
+    };
+    var resize = function(){
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = hero.clientWidth; H = hero.clientHeight;
+      cv.width = W * dpr; cv.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var n = Math.min(110, Math.round(W * H / 16000));
+      parts = [];
+      for (var k = 0; k < n; k++) parts.push(spawn());
+    };
+    var frame = function(t){
+      if (!running) return;
+      var dt = Math.min((t - last) / 1000, 0.05) || 0.016;
+      last = t;
+      var tt = t / 1000;
+      ctx.clearRect(0, 0, W, H);
+      ctx.globalCompositeOperation = 'lighter';
+      for (var k = 0; k < parts.length; k++) {
+        var p = parts[k];
+        p.y -= p.vy * dt;
+        p.x += (p.vx + Math.sin(tt * 0.7 + p.ph) * 8) * dt;
+        var dx = p.x - px, dy = p.y - py, d2 = dx * dx + dy * dy;
+        if (d2 < 19600) {
+          var d = Math.sqrt(d2) || 1;
+          var f = (140 - d) / 140 * 90 * dt;
+          p.x += dx / d * f;
+          p.y += dy / d * f;
+        }
+        if (p.y < -24 || p.x < -24 || p.x > W + 24) {
+          p.x = Math.random() * W;
+          p.y = H + 20 + Math.random() * 40;
+        }
+        var a = Math.max(0, 0.28 + 0.5 * Math.sin(tt * p.fs * 2 + p.ph));
+        var sz = 26 * p.s;
+        ctx.globalAlpha = a;
+        ctx.drawImage(sp, p.x - sz / 2, p.y - sz / 2, sz, sz);
+      }
+      ctx.globalAlpha = 1;
+      raf = requestAnimationFrame(frame);
+    };
+    var start = function(){
+      if (running || !inView || document.hidden) return;
+      running = true;
+      last = performance.now();
+      raf = requestAnimationFrame(frame);
+    };
+    var stop = function(){
+      running = false;
+      cancelAnimationFrame(raf);
+    };
+
+    resize();
+    start();
+    addEventListener('resize', resize);
+    document.addEventListener('visibilitychange', function(){
+      document.hidden ? stop() : start();
+    });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function(entries){
+        inView = entries[0].isIntersecting;
+        inView ? start() : stop();
+      }).observe(hero);
+    }
+    hero.addEventListener('pointermove', function(e){
+      var r = cv.getBoundingClientRect();
+      px = e.clientX - r.left;
+      py = e.clientY - r.top;
+    });
+    hero.addEventListener('pointerleave', function(){
+      px = py = -1e4;
+    });
+  }
+})();
+</script>
+</body>
+</html>

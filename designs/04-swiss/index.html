@@ -1,0 +1,828 @@
+<!--
+THESIS: Enterprise trust argued in type alone. No pictures, no cliches: scale, grid, and one rust accent carry the whole claim.
+OWN-WORLD: International Typographic Style played straight. Warm white ground, hairline modular grid left exposed, a single grotesque (Archivo) at enormous tight sizes, iron-oxide rust as the only color. Selection, caret, scrollbar, focus rings all speak the same system.
+STORY: A claim, an indexed table of capabilities, a museum caption of proof, a four-step method, an invitation to write.
+FIRST VIEWPORT: The claim wipes upward line by line, then IRONRIM lands at a scale that bleeds off the right edge of the viewport.
+FORM: Single page. Numbered accordion index for services, marquee strip of certifications, rust block tracking scroll along the grid's left rail. Mailto and tel only, no form.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IronRim - Swiss Editorial</title>
+<meta name="description" content="IronRim architects and operates the systems enterprises bet on: AI platforms, cloud infrastructure, and the observability, security, and compliance that keep them trustworthy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#faf7f1;
+    --ink:#181512;
+    --ink-2:#5c554b;
+    --rust:#a63a16;
+    --rust-deep:#8c2f10;
+    --rule:rgba(24,21,18,.16);
+    --rule-strong:rgba(24,21,18,.4);
+    --gutter:clamp(20px, 4vw, 56px);
+    --rail:clamp(20px, 3vw, 44px);
+    --ease-out-exp:cubic-bezier(.16,1,.3,1);
+    --font:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;overflow-x:clip}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+  }
+  body{
+    font-family:var(--font);
+    background:var(--paper);
+    color:var(--ink);
+    font-size:clamp(16px,1.1vw,18px);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  /* Browser surfaces speak the system */
+  ::selection{background:var(--rust);color:var(--paper)}
+  body{caret-color:var(--rust);scrollbar-color:var(--rust) var(--paper)}
+  ::-webkit-scrollbar{width:10px}
+  ::-webkit-scrollbar-track{background:var(--paper);border-left:1px solid var(--rule)}
+  ::-webkit-scrollbar-thumb{background:var(--rust);border:2px solid var(--paper)}
+  :focus{outline:none}
+  :focus-visible{outline:2px solid var(--rust);outline-offset:3px}
+
+  a{color:inherit;text-decoration:none}
+  .u{
+    background-image:linear-gradient(var(--rust),var(--rust));
+    background-repeat:no-repeat;
+    background-position:0 100%;
+    background-size:0% 2px;
+    transition:background-size .45s var(--ease-out-exp);
+    padding-bottom:2px;
+  }
+  .u:hover,.u:focus-visible{background-size:100% 2px}
+
+  .cap{
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    font-weight:600;
+  }
+  .num{font-variant-numeric:tabular-nums}
+
+  /* ---------- exposed modular grid ---------- */
+  .gridlines{
+    position:fixed;inset:0;
+    pointer-events:none;
+    z-index:0;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    padding:0 var(--gutter) 0 calc(var(--rail) + var(--gutter));
+  }
+  .gridlines > i{border-left:1px solid rgba(24,21,18,.06)}
+  .gridlines > i:first-child{border-left:none}
+
+  /* left rail + scroll block */
+  .rail{
+    position:fixed;top:0;bottom:0;left:var(--rail);
+    width:1px;background:var(--rule);
+    z-index:40;
+  }
+  .rail-block{
+    position:absolute;left:-3px;top:0;
+    width:7px;height:64px;
+    background:var(--rust);
+    will-change:transform;
+  }
+
+  main,header.site,footer.site{position:relative;z-index:1}
+
+  /* ---------- header ---------- */
+  header.site{
+    position:sticky;top:0;z-index:50;
+    background:var(--paper);
+    border-bottom:1px solid var(--rule);
+    display:flex;align-items:baseline;justify-content:space-between;
+    gap:24px;
+    padding:18px var(--gutter) 18px calc(var(--rail) + var(--gutter));
+  }
+  .wordmark{
+    font-weight:800;
+    font-size:20px;
+    letter-spacing:-.02em;
+  }
+  .wordmark b{color:var(--rust);font-weight:800}
+  nav.primary{display:flex;gap:clamp(16px,3vw,40px)}
+  nav.primary a{font-weight:600;font-size:14px;letter-spacing:.01em}
+  .head-mail{font-size:14px;color:var(--ink-2)}
+  @media (max-width:820px){.head-mail{display:none}}
+  @media (max-width:560px){
+    header.site{flex-wrap:wrap;row-gap:8px;padding-top:14px;padding-bottom:14px}
+    nav.primary{width:100%;gap:18px}
+    nav.primary a{font-size:13px}
+  }
+
+  /* ---------- shared section frame ---------- */
+  section{
+    padding:clamp(72px,10vh,140px) var(--gutter) clamp(72px,10vh,140px) calc(var(--rail) + var(--gutter));
+    border-bottom:1px solid var(--rule);
+  }
+  .sec-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    border-bottom:1px solid var(--rule-strong);
+    padding-bottom:16px;
+    margin-bottom:clamp(40px,6vh,72px);
+  }
+  .sec-head h2{
+    font-size:clamp(2.4rem,5.5vw,5.5rem);
+    font-weight:700;
+    letter-spacing:-.025em;
+    line-height:.95;
+  }
+  .sec-head .cap{color:var(--ink-2);text-align:right;flex-shrink:0}
+  @media (max-width:640px){
+    .sec-head{flex-direction:column;align-items:flex-start;gap:10px}
+    .sec-head .cap{text-align:left}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    overflow:hidden;
+    padding-top:clamp(56px,9vh,120px);
+    padding-bottom:0;
+    border-bottom:none;
+  }
+  .hero h1{
+    font-size:clamp(2.1rem,5.2vw,5.2rem);
+    font-weight:700;
+    letter-spacing:-.028em;
+    line-height:1.04;
+    max-width:18ch;
+    text-wrap:balance;
+  }
+  .hero h1 .line{display:block;overflow:hidden}
+  .hero h1 .line > span{display:block}
+  .hero h1 em{font-style:normal;color:var(--rust)}
+  .hero-sub{
+    margin-top:clamp(28px,4vh,48px);
+    display:grid;
+    grid-template-columns:minmax(0,58ch) 1fr;
+    gap:24px;
+    align-items:end;
+  }
+  .hero-sub p{color:var(--ink-2);max-width:58ch}
+  .hero-sub .cap{justify-self:end;color:var(--ink-2)}
+  @media (max-width:820px){
+    .hero-sub{grid-template-columns:1fr}
+    .hero-sub .cap{justify-self:start}
+  }
+  .giant{
+    margin-top:clamp(40px,7vh,96px);
+    font-weight:800;
+    font-size:clamp(7rem,24.5vw,26rem);
+    line-height:.76;
+    letter-spacing:-.03em;
+    white-space:nowrap;
+    margin-left:-.04em;
+    margin-bottom:-.06em;
+    user-select:none;
+    color:var(--ink);
+  }
+  .giant b{color:var(--rust);font-weight:800}
+
+  /* hero reveal (motion only when .js + motion allowed) */
+  @media (prefers-reduced-motion:no-preference){
+    .js .hero h1 .line > span{
+      transform:translateY(112%);
+      animation:wipe-up .9s var(--ease-out-exp) forwards;
+    }
+    .js .hero h1 .line:nth-child(1) > span{animation-delay:.08s}
+    .js .hero h1 .line:nth-child(2) > span{animation-delay:.2s}
+    .js .hero h1 .line:nth-child(3) > span{animation-delay:.32s}
+    .js .hero-sub{
+      opacity:0;
+      animation:fade-in .8s var(--ease-out-exp) .55s forwards;
+    }
+    .js .giant{
+      clip-path:inset(0 0 100% 0);
+      animation:wipe-open 1s var(--ease-out-exp) .5s forwards;
+    }
+    @keyframes wipe-up{to{transform:translateY(0)}}
+    @keyframes fade-in{to{opacity:1}}
+    @keyframes wipe-open{to{clip-path:inset(0 0 -5% 0)}}
+  }
+
+  /* ---------- marquee ---------- */
+  .marquee{
+    overflow:hidden;
+    border-top:1px solid var(--rule-strong);
+    border-bottom:1px solid var(--rule-strong);
+    padding:14px 0;
+    background:var(--paper);
+  }
+  .marquee-track{
+    display:flex;
+    width:max-content;
+  }
+  .marquee-group{
+    display:flex;
+    align-items:center;
+    gap:40px;
+    padding-right:40px;
+    flex-shrink:0;
+  }
+  .marquee-group .cap{white-space:nowrap;color:var(--ink)}
+  .marquee-group .sq{
+    width:8px;height:8px;background:var(--rust);flex-shrink:0;
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .marquee-track{animation:marquee 46s linear infinite}
+    @keyframes marquee{to{transform:translateX(-50%)}}
+  }
+
+  /* ---------- services index ---------- */
+  .svc{border-top:1px solid var(--rule)}
+  .svc-row{
+    width:100%;
+    display:grid;
+    grid-template-columns:clamp(52px,7vw,110px) 1fr auto;
+    align-items:baseline;
+    gap:clamp(12px,2vw,32px);
+    padding:clamp(18px,2.6vh,30px) 0;
+    background:none;border:none;
+    border-bottom:1px solid var(--rule);
+    font:inherit;color:inherit;
+    text-align:left;
+    cursor:pointer;
+  }
+  .svc-row .idx{
+    font-weight:700;
+    font-size:clamp(1rem,1.6vw,1.35rem);
+    letter-spacing:-.01em;
+    color:var(--ink-2);
+    display:inline-block;
+    transform-origin:left bottom;
+    transition:color .4s var(--ease-out-exp),transform .5s var(--ease-out-exp);
+  }
+  .svc-row .name{
+    font-size:clamp(1.35rem,3.4vw,3rem);
+    font-weight:700;
+    letter-spacing:-.025em;
+    line-height:1.05;
+    transition:transform .5s var(--ease-out-exp);
+  }
+  .svc-row .plus{
+    justify-self:end;
+    width:20px;height:20px;
+    position:relative;
+    align-self:center;
+  }
+  .svc-row .plus::before,.svc-row .plus::after{
+    content:"";position:absolute;background:var(--ink);
+    transition:transform .5s var(--ease-out-exp),background .4s var(--ease-out-exp);
+  }
+  .svc-row .plus::before{left:0;top:9px;width:20px;height:2px}
+  .svc-row .plus::after{left:9px;top:0;width:2px;height:20px}
+  .svc-row:hover .name{transform:translateX(clamp(6px,1vw,14px))}
+  .svc-row:hover .idx,.svc-row[aria-expanded="true"] .idx{color:var(--rust)}
+  .svc-row[aria-expanded="true"] .idx{transform:rotate(-8deg) translateY(-2px)}
+  .svc-row[aria-expanded="true"] .plus::after{transform:rotate(90deg)}
+  .svc-row[aria-expanded="true"] .plus::before,
+  .svc-row[aria-expanded="true"] .plus::after{background:var(--rust)}
+
+  .svc-panel{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows .6s var(--ease-out-exp);
+  }
+  .svc-panel > div{overflow:hidden}
+  .svc-panel.open{grid-template-rows:1fr}
+  .svc-panel .inner{
+    display:grid;
+    grid-template-columns:clamp(52px,7vw,110px) minmax(0,52ch) 1fr;
+    gap:clamp(12px,2vw,32px);
+    padding:6px 0 clamp(28px,4vh,44px);
+    border-bottom:1px solid var(--rule);
+  }
+  .svc-panel .inner > .spacer{grid-column:1}
+  .svc-panel .inner p{color:var(--ink-2)}
+  .svc-panel .inner .stack{
+    color:var(--ink-2);
+    font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+    line-height:2;
+    justify-self:end;text-align:right;
+    max-width:32ch;
+  }
+  @media (max-width:820px){
+    .svc-panel .inner{grid-template-columns:clamp(52px,7vw,110px) 1fr}
+    .svc-panel .inner .stack{grid-column:2;justify-self:start;text-align:left;margin-top:12px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .svc-panel,.svc-row .idx,.svc-row .name,.svc-row .plus::before,.svc-row .plus::after,.u{transition:none}
+  }
+
+  /* ---------- practice (museum caption) ---------- */
+  .practice-grid{
+    display:grid;
+    grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+    gap:clamp(32px,5vw,96px);
+    align-items:start;
+  }
+  @media (max-width:820px){.practice-grid{grid-template-columns:1fr}}
+  .lede{
+    font-size:clamp(1.3rem,2.4vw,2rem);
+    font-weight:500;
+    letter-spacing:-.015em;
+    line-height:1.3;
+    max-width:24ch;
+    text-wrap:balance;
+  }
+  .lede b{color:var(--rust);font-weight:700}
+  .quote{
+    margin-top:clamp(28px,4vh,48px);
+    border-top:1px solid var(--rule);
+    padding-top:20px;
+    max-width:44ch;
+  }
+  .quote p{font-size:1.05rem;font-weight:500}
+  .quote .cap{color:var(--ink-2);display:block;margin-top:10px}
+  .caption-block{border-top:2px solid var(--ink)}
+  .caption-block dl{margin:0}
+  .caption-block .entry{
+    display:grid;
+    grid-template-columns:clamp(110px,10vw,150px) 1fr;
+    gap:16px;
+    padding:14px 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .caption-block dt{color:var(--ink-2)}
+  .caption-block dt.cap{padding-top:3px}
+  .caption-block dd{font-weight:500}
+  .caption-block dd ul{list-style:none}
+  .caption-block dd li{padding:2px 0}
+  .caption-block dd li::before{
+    content:"";display:inline-block;
+    width:7px;height:7px;background:var(--rust);
+    margin-right:10px;vertical-align:2px;
+  }
+
+  /* ---------- process ---------- */
+  .process-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border-left:1px solid var(--rule);
+  }
+  .step{
+    border-right:1px solid var(--rule);
+    padding:clamp(20px,2.5vw,36px) clamp(16px,2vw,28px) clamp(48px,8vh,110px);
+  }
+  .step:nth-child(2){margin-top:clamp(24px,5vh,72px)}
+  .step:nth-child(3){margin-top:clamp(48px,10vh,144px)}
+  .step:nth-child(4){margin-top:clamp(72px,15vh,216px)}
+  .step .n{
+    display:block;
+    font-size:clamp(2.6rem,5vw,5rem);
+    font-weight:800;
+    letter-spacing:-.03em;
+    line-height:1;
+    color:var(--rust);
+  }
+  .step h3{
+    margin-top:14px;
+    font-size:clamp(1.15rem,1.8vw,1.6rem);
+    font-weight:700;
+    letter-spacing:-.02em;
+  }
+  .step p{margin-top:10px;color:var(--ink-2);font-size:.95rem}
+  @media (max-width:820px){
+    .process-grid{grid-template-columns:1fr;border-left:none;border-top:1px solid var(--rule)}
+    .step{border-right:none;border-bottom:1px solid var(--rule);margin-top:0 !important;padding-bottom:clamp(24px,4vh,40px)}
+  }
+
+  /* ---------- contact ---------- */
+  .contact{border-bottom:none}
+  .contact-mail{
+    display:inline-block;
+    font-size:clamp(1.7rem,6.4vw,6rem);
+    font-weight:700;
+    letter-spacing:-.028em;
+    line-height:1;
+    word-break:break-word;
+  }
+  .contact-mail .u{padding-bottom:clamp(3px,.6vw,8px)}
+  .contact-mail:hover,.contact-mail:focus-visible{color:var(--rust)}
+  .contact-meta{
+    margin-top:clamp(36px,6vh,72px);
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:24px;
+    border-top:1px solid var(--rule-strong);
+    padding-top:20px;
+  }
+  .contact-meta .cap{color:var(--ink-2);display:block;margin-bottom:8px}
+  .contact-meta p,.contact-meta a{font-weight:500}
+  .contact-cta{
+    display:inline-block;
+    margin-top:clamp(32px,5vh,56px);
+    background:var(--rust);
+    color:var(--paper);
+    font-weight:700;
+    font-size:15px;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    padding:18px 34px;
+    transition:background .35s var(--ease-out-exp);
+  }
+  .contact-cta:hover,.contact-cta:focus-visible{background:var(--rust-deep)}
+  .contact-cta::selection{background:var(--ink);color:var(--paper)}
+  @media (max-width:820px){.contact-meta{grid-template-columns:1fr;gap:0}
+    .contact-meta > div{border-bottom:1px solid var(--rule);padding:14px 0}
+    .contact-meta > div:last-child{border-bottom:none}
+  }
+
+  /* ---------- footer ---------- */
+  footer.site{
+    border-top:1px solid var(--rule-strong);
+    display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+    padding:20px var(--gutter) 28px calc(var(--rail) + var(--gutter));
+    color:var(--ink-2);
+    font-size:13px;
+  }
+  footer.site .wordmark{font-size:15px;color:var(--ink)}
+
+  /* ---------- scroll reveal system ---------- */
+  @media (prefers-reduced-motion:no-preference){
+    .js [data-reveal]{
+      opacity:0;
+      transform:translateY(26px);
+      transition:opacity .8s var(--ease-out-exp),transform .8s var(--ease-out-exp);
+    }
+    .js [data-reveal].in{opacity:1;transform:none}
+    .js [data-reveal="2"].in{transition-delay:.1s}
+    .js [data-reveal="3"].in{transition-delay:.2s}
+    .js [data-reveal="4"].in{transition-delay:.3s}
+  }
+
+  .skip{
+    position:absolute;left:-9999px;top:0;
+    background:var(--rust);color:var(--paper);
+    padding:10px 18px;font-weight:700;z-index:100;
+  }
+  .skip:focus{left:var(--rail)}
+</style>
+</head>
+<body>
+<a class="skip" href="#services">Skip to services</a>
+
+<div class="gridlines" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<div class="rail" aria-hidden="true"><div class="rail-block" id="railBlock"></div></div>
+
+<header class="site">
+  <a class="wordmark" href="#top">Iron<b>Rim</b></a>
+  <nav class="primary" aria-label="Primary">
+    <a class="u" href="#services">Services</a>
+    <a class="u" href="#practice">Practice</a>
+    <a class="u" href="#process">Process</a>
+    <a class="u" href="#contact">Contact</a>
+  </nav>
+  <a class="head-mail u" href="mailto:info@ironrim.com">info@ironrim.com</a>
+</header>
+
+<main id="top">
+
+  <section class="hero" aria-labelledby="claim">
+    <h1 id="claim">
+      <span class="line"><span>We architect and operate</span></span>
+      <span class="line"><span>the systems enterprises</span></span>
+      <span class="line"><span><em>bet on.</em></span></span>
+    </h1>
+    <div class="hero-sub">
+      <p>AI platforms, cloud infrastructure, and the observability, security, and compliance that keep them trustworthy. Enterprise technology consulting from Columbus, Ohio.</p>
+      <span class="cap num">Est. Columbus, OH / 39.96 N, 82.99 W</span>
+    </div>
+    <div class="giant" aria-hidden="true">IRON<b>RIM</b></div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-group">
+        <span class="cap">Microsoft Certified: Azure Solutions Architect Expert</span><span class="sq"></span>
+        <span class="cap">AWS Certified Solutions Architect, Professional</span><span class="sq"></span>
+        <span class="cap">AWS Certified Solutions Architect, Associate</span><span class="sq"></span>
+        <span class="cap">Certified Kubernetes Administrator (CKA)</span><span class="sq"></span>
+        <span class="cap">Dynatrace Associate Certified</span><span class="sq"></span>
+      </div>
+      <div class="marquee-group">
+        <span class="cap">Microsoft Certified: Azure Solutions Architect Expert</span><span class="sq"></span>
+        <span class="cap">AWS Certified Solutions Architect, Professional</span><span class="sq"></span>
+        <span class="cap">AWS Certified Solutions Architect, Associate</span><span class="sq"></span>
+        <span class="cap">Certified Kubernetes Administrator (CKA)</span><span class="sq"></span>
+        <span class="cap">Dynatrace Associate Certified</span><span class="sq"></span>
+      </div>
+    </div>
+  </div>
+
+  <section id="services" aria-labelledby="services-h">
+    <div class="sec-head" data-reveal>
+      <h2 id="services-h">Services</h2>
+      <span class="cap num">Index / 8 disciplines</span>
+    </div>
+
+    <div class="svc" data-reveal="2">
+
+      <h3 style="position:absolute;left:-9999px">Service index</h3>
+
+      <button class="svc-row" aria-expanded="false" aria-controls="svc-p1" id="svc-b1">
+        <span class="idx num">01</span>
+        <span class="name">AI &amp; GenAI Engineering</span>
+        <span class="plus" aria-hidden="true"></span>
+      </button>
+      <div class="svc-panel" id="svc-p1" role="region" aria-labelledby="svc-b1"><div>
+        <div class="inner"><span class="spacer" aria-hidden="true"></span>
+          <p>LLM platforms, RAG pipelines, MLOps, and the AI guardrails and governance that make generative systems safe to put in front of an enterprise.</p>
+          <span class="stack">AWS Bedrock / SageMaker / Azure OpenAI / LangChain / Vector databases</span>
+        </div>
+      </div></div>
+
+      <button class="svc-row" aria-expanded="false" aria-controls="svc-p2" id="svc-b2">
+        <span class="idx num">02</span>
+        <span class="name">Observability &amp; SRE</span>
+        <span class="plus" aria-hidden="true"></span>
+      </button>
+      <div class="svc-panel" id="svc-p2" role="region" aria-labelledby="svc-b2"><div>
+        <div class="inner"><span class="spacer" aria-hidden="true"></span>
+          <p>SLOs, alerting, incident readiness, and cost visibility: the discipline of knowing what your systems are doing before your customers tell you.</p>
+          <span class="stack">Dynatrace / Datadog / Splunk / Prometheus / Grafana / OpenTelemetry</span>
+        </div>
+      </div></div>
+
+      <button class="svc-row" aria-expanded="false" aria-controls="svc-p3" id="svc-b3">
+        <span class="idx num">03</span>
+        <span class="name">DevOps &amp; Platform Engineering</span>
+        <span class="plus" aria-hidden="true"></span>
+      </button>
+      <div class="svc-panel" id="svc-p3" role="region" aria-labelledby="svc-b3"><div>
+        <div class="inner"><span class="spacer" aria-hidden="true"></span>
+          <p>CI/CD pipelines and Kubernetes and OpenShift platforms built as products: Helm-packaged, GitOps-driven, owned by the teams that ship on them.</p>
+          <span class="stack">Jenkins / GitHub Actions / Azure DevOps / ArgoCD / Kubernetes / OpenShift / Helm / GitOps</span>
+        </div>
+      </div></div>
+
+      <button class="svc-row" aria-expanded="false" aria-controls="svc-p4" id="svc-b4">
+        <span class="idx num">04</span>
+        <span class="name">Cloud Architecture</span>
+        <span class="plus" aria-hidden="true"></span>
+      </button>
+      <div class="svc-panel" id="svc-p4" role="region" aria-labelledby="svc-b4"><div>
+        <div class="inner"><span class="spacer" aria-hidden="true"></span>
+          <p>Landing zones, multi-region resilience, migration and modernization. Architecture that survives the audit and the outage alike.</p>
+          <span class="stack">AWS / Azure / GCP</span>
+        </div>
+      </div></div>
+
+      <button class="svc-row" aria-expanded="false" aria-controls="svc-p5" id="svc-b5">
+        <span class="idx num">05</span>
+        <span class="name">Infrastructure as Code</span>
+        <span class="plus" aria-hidden="true"></span>
+      </button>
+      <div class="svc-panel" id="svc-p5" role="region" aria-labelledby="svc-b5"><div>
+        <div class="inner"><span class="spacer" aria-hidden="true"></span>
+          <p>Reusable modules, repeatable environments, drift-free automation. The second environment costs a fraction of the first, and the tenth is identical.</p>
+          <span class="stack">Terraform / ARM / CloudFormation / Ansible</span>
+        </div>
+      </div></div>
+
+      <button class="svc-row" aria-expanded="false" aria-controls="svc-p6" id="svc-b6">
+        <span class="idx num">06</span>
+        <span class="name">Security &amp; Identity</span>
+        <span class="plus" aria-hidden="true"></span>
+      </button>
+      <div class="svc-panel" id="svc-p6" role="region" aria-labelledby="svc-b6"><div>
+        <div class="inner"><span class="spacer" aria-hidden="true"></span>
+          <p>IAM, network isolation, key management, DLP, and RBAC, extended to the newest attack surface: secure AI workloads.</p>
+          <span class="stack">IAM / Network isolation / KMS &amp; Key Vault / DLP / RBAC / Secure AI workloads</span>
+        </div>
+      </div></div>
+
+      <button class="svc-row" aria-expanded="false" aria-controls="svc-p7" id="svc-b7">
+        <span class="idx num">07</span>
+        <span class="name">Compliance</span>
+        <span class="plus" aria-hidden="true"></span>
+      </button>
+      <div class="svc-panel" id="svc-p7" role="region" aria-labelledby="svc-b7"><div>
+        <div class="inner"><span class="spacer" aria-hidden="true"></span>
+          <p>FedRAMP High and Moderate, NIST, CIS, HIPAA, and GxP, with hands-on Azure Government experience. Compliance built into the platform, not bolted onto it.</p>
+          <span class="stack">FedRAMP High &amp; Moderate / NIST / CIS / HIPAA / GxP / Azure Government</span>
+        </div>
+      </div></div>
+
+      <button class="svc-row" aria-expanded="false" aria-controls="svc-p8" id="svc-b8">
+        <span class="idx num">08</span>
+        <span class="name">Data &amp; Analytics</span>
+        <span class="plus" aria-hidden="true"></span>
+      </button>
+      <div class="svc-panel" id="svc-p8" role="region" aria-labelledby="svc-b8"><div>
+        <div class="inner"><span class="spacer" aria-hidden="true"></span>
+          <p>Data platforms and pipelines that feed AI: governed, observable, and fast enough to matter.</p>
+          <span class="stack">Snowflake / Databricks</span>
+        </div>
+      </div></div>
+
+    </div>
+  </section>
+
+  <section id="practice" aria-labelledby="practice-h">
+    <div class="sec-head" data-reveal>
+      <h2 id="practice-h">Practice</h2>
+      <span class="cap">Exhibit / Credentials</span>
+    </div>
+    <div class="practice-grid">
+      <div data-reveal="2">
+        <p class="lede">IronRim is led by principal architect <b>Prashant Chawla</b>: 17+ years in enterprise infrastructure, 9 of them inside JP Morgan Chase Global Technology Infrastructure, and a former Amazon engineer.</p>
+        <div class="quote">
+          <p>&ldquo;Rare expertise, delivered with customer obsession, accountability, and timeliness.&rdquo;</p>
+          <span class="cap">The IronRim standard</span>
+        </div>
+      </div>
+      <div class="caption-block" data-reveal="3">
+        <dl>
+          <div class="entry">
+            <dt class="cap">Tenure</dt>
+            <dd class="num">17+ years, enterprise infrastructure. 10 years on AWS. 8 years on Azure.</dd>
+          </div>
+          <div class="entry">
+            <dt class="cap">Provenance</dt>
+            <dd>JP Morgan Chase, Global Technology Infrastructure, 9 years. Amazon, engineering.</dd>
+          </div>
+          <div class="entry">
+            <dt class="cap">Certifications</dt>
+            <dd>
+              <ul>
+                <li>Microsoft Certified: Azure Solutions Architect Expert</li>
+                <li>AWS Certified Solutions Architect, Professional</li>
+                <li>AWS Certified Solutions Architect, Associate</li>
+                <li>Certified Kubernetes Administrator (CKA)</li>
+                <li>Dynatrace Associate Certified</li>
+              </ul>
+            </dd>
+          </div>
+          <div class="entry">
+            <dt class="cap">Field of work</dt>
+            <dd>
+              <ul>
+                <li>Fortune 500 financial services</li>
+                <li>Big Four consulting</li>
+                <li>US federal agencies on Azure Government, FedRAMP High workloads</li>
+                <li>Healthcare and pharma manufacturing</li>
+              </ul>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="process" aria-labelledby="process-h">
+    <div class="sec-head" data-reveal>
+      <h2 id="process-h">Process</h2>
+      <span class="cap num">Method / 4 steps</span>
+    </div>
+    <ol class="process-grid" style="list-style:none">
+      <li class="step" data-reveal>
+        <span class="n num" aria-hidden="true">1</span>
+        <h3>Assess</h3>
+        <p>We map what actually runs, what it costs, and where it will fail first.</p>
+      </li>
+      <li class="step" data-reveal="2">
+        <span class="n num" aria-hidden="true">2</span>
+        <h3>Architect</h3>
+        <p>We design for the failure modes before the features, and write it down.</p>
+      </li>
+      <li class="step" data-reveal="3">
+        <span class="n num" aria-hidden="true">3</span>
+        <h3>Automate</h3>
+        <p>Everything repeatable becomes code, so the tenth environment matches the first.</p>
+      </li>
+      <li class="step" data-reveal="4">
+        <span class="n num" aria-hidden="true">4</span>
+        <h3>Operate</h3>
+        <p>We run what we build, watch it honestly, and answer for it.</p>
+      </li>
+    </ol>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-group">
+        <span class="cap">AI &amp; GenAI Engineering</span><span class="sq"></span>
+        <span class="cap">Observability &amp; SRE</span><span class="sq"></span>
+        <span class="cap">DevOps &amp; Platform Engineering</span><span class="sq"></span>
+        <span class="cap">Cloud Architecture</span><span class="sq"></span>
+        <span class="cap">Infrastructure as Code</span><span class="sq"></span>
+        <span class="cap">Security &amp; Identity</span><span class="sq"></span>
+        <span class="cap">Compliance</span><span class="sq"></span>
+        <span class="cap">Data &amp; Analytics</span><span class="sq"></span>
+      </div>
+      <div class="marquee-group">
+        <span class="cap">AI &amp; GenAI Engineering</span><span class="sq"></span>
+        <span class="cap">Observability &amp; SRE</span><span class="sq"></span>
+        <span class="cap">DevOps &amp; Platform Engineering</span><span class="sq"></span>
+        <span class="cap">Cloud Architecture</span><span class="sq"></span>
+        <span class="cap">Infrastructure as Code</span><span class="sq"></span>
+        <span class="cap">Security &amp; Identity</span><span class="sq"></span>
+        <span class="cap">Compliance</span><span class="sq"></span>
+        <span class="cap">Data &amp; Analytics</span><span class="sq"></span>
+      </div>
+    </div>
+  </div>
+
+  <section id="contact" class="contact" aria-labelledby="contact-h">
+    <div class="sec-head" data-reveal>
+      <h2 id="contact-h">Contact</h2>
+      <span class="cap">Write first / We answer</span>
+    </div>
+    <div data-reveal="2">
+      <a class="contact-mail" href="mailto:info@ironrim.com"><span class="u">info@ironrim.com</span></a>
+      <div class="contact-meta">
+        <div>
+          <span class="cap">Telephone</span>
+          <p><a class="u num" href="tel:+19182550687">+1 918 255 0687</a></p>
+        </div>
+        <div>
+          <span class="cap">Office</span>
+          <p>470 W Broad St<br>Columbus, OH 43215</p>
+        </div>
+        <div>
+          <span class="cap">Email</span>
+          <p><a class="u" href="mailto:info@ironrim.com">info@ironrim.com</a></p>
+        </div>
+      </div>
+      <a class="contact-cta" href="mailto:info@ironrim.com?subject=Engagement%20inquiry">Start the conversation</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <span class="wordmark">Iron<b>Rim</b></span>
+  <span class="num">&copy; 2026 IronRim. Columbus, Ohio.</span>
+</footer>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* service accordion */
+  document.querySelectorAll('.svc-row').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      document.getElementById(btn.getAttribute('aria-controls')).classList.toggle('open', !open);
+    });
+  });
+
+  /* scroll reveal: one system, exponential ease, visible without JS */
+  var revealEls = [].slice.call(document.querySelectorAll('[data-reveal]'));
+  function sweep(){
+    revealEls = revealEls.filter(function(el){
+      var r = el.getBoundingClientRect();
+      if(r.top < innerHeight && r.bottom > 0){ el.classList.add('in'); return false; }
+      return true;
+    });
+    if(!revealEls.length && sweepTimer){ clearInterval(sweepTimer); }
+  }
+  var sweepTimer = null;
+  if(!reduce && 'IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {rootMargin:'0px 0px -12% 0px'});
+    revealEls.forEach(function(el){ io.observe(el); });
+    /* never gate visibility solely on IO: throttled/hidden tabs still reveal */
+    addEventListener('scroll', sweep, {passive:true});
+    sweepTimer = setInterval(sweep, 1200);
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* rust block tracks scroll along the exposed rail */
+  var block = document.getElementById('railBlock'), ticking = false;
+  function place(){
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - innerHeight;
+    var p = max > 0 ? Math.min(1, scrollY / max) : 0;
+    block.style.transform = 'translateY(' + (p * (innerHeight - 64)) + 'px)';
+    ticking = false;
+  }
+  addEventListener('scroll', function(){
+    if(!ticking){ ticking = true; requestAnimationFrame(place); }
+  }, {passive:true});
+  addEventListener('resize', place);
+  place();
+})();
+</script>
+</body>
+</html>

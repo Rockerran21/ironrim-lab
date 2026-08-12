@@ -1,0 +1,1070 @@
+<!--
+THESIS: Enterprises live inside a perimeter someone must hold. IronRim holds it.
+OWN-WORLD: A radar room on watch. Naval blue-black ground, phosphor green traces,
+azimuth rings, bearing ticks. Mono is earned only by bearings and coordinates.
+STORY: The scope acquires eight service contacts; the integrity report verifies
+the boundary; the command record names who stands the watch; the rotation shows
+how a watch runs; the open channel hails the station.
+FIRST VIEWPORT: A live sweeping scope with eight contacts and a locked-track
+console, under a scrolling bearing tape. The thesis is spoken before the sweep.
+FORM: One file. Canvas sweep with true afterglow decay, scroll-driven compass
+tape, self-drawing boundary with verified checkpoints, mailto/tel hailing
+frequencies. Every contact's log entry is plain scrollable text; readable with
+motion off.
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IronRim - The Perimeter</title>
+<meta name="description" content="IronRim architects and operates the systems enterprises bet on: AI platforms, cloud infrastructure, and the observability, security, and compliance that keep them trustworthy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Archivo:wght@400;500;600;700&family=Red+Hat+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ground: #050c14;
+    --ground-2: #071120;
+    --panel: #0a1826;
+    --line: #16324a;
+    --line-dim: #0e2233;
+    --ink: #d9e8ec;
+    --ink-2: #9db8c6;
+    --trace: #63e6a2;
+    --trace-soft: #2c7a54;
+    --lock: #f0b465;
+    --ease: cubic-bezier(.16, 1, .3, 1);
+    --header-h: 96px;
+    --font-face: "Michroma", "Archivo", sans-serif;
+    --font-body: "Archivo", system-ui, sans-serif;
+    --font-mono: "Red Hat Mono", ui-monospace, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; scrollbar-color: #1d4258 var(--ground); }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    overflow-x: clip;
+    caret-color: var(--trace);
+  }
+
+  ::selection { background: var(--trace); color: #04121b; }
+
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: var(--ground); }
+  ::-webkit-scrollbar-thumb { background: #1d4258; border: 2px solid var(--ground); border-radius: 5px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--trace-soft); }
+
+  :focus-visible { outline: 2px solid var(--trace); outline-offset: 3px; border-radius: 2px; }
+
+  a { color: var(--trace); text-decoration-color: var(--trace-soft); text-underline-offset: 3px; }
+  a:hover { text-decoration-color: var(--trace); }
+
+  .mono { font-family: var(--font-mono); }
+
+  .skip {
+    position: absolute; left: 12px; top: -60px; z-index: 60;
+    background: var(--trace); color: #04121b; font-family: var(--font-mono);
+    padding: 8px 14px; font-size: .85rem;
+  }
+  .skip:focus { top: 12px; }
+
+  /* ============ HEADER + BEARING TAPE ============ */
+  header {
+    position: fixed; inset: 0 0 auto 0; z-index: 50;
+    background: var(--ground);
+    border-bottom: 1px solid var(--line-dim);
+  }
+  .hd-row {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px; padding: 0 clamp(16px, 4vw, 40px);
+    border-bottom: 1px solid var(--line-dim);
+  }
+  .brand {
+    font-family: var(--font-face); font-size: 1rem; letter-spacing: .22em;
+    color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 10px;
+  }
+  .brand svg { color: var(--trace); }
+  .readout {
+    font-family: var(--font-mono); font-size: .8rem; letter-spacing: .08em;
+    color: var(--ink-2); display: flex; gap: 14px; align-items: baseline;
+  }
+  .readout b { color: var(--trace); font-weight: 600; }
+
+  .tape { position: relative; height: 39px; overflow: hidden; }
+  .tape-track {
+    position: absolute; top: 0; left: 50%; height: 100%; width: 1920px;
+    will-change: transform;
+  }
+  html:not(.js) .tape-track {
+    position: static; width: auto; display: flex; gap: 22px;
+    align-items: center; height: 100%; padding: 0 clamp(16px, 4vw, 40px);
+  }
+  .tick { position: absolute; top: 0; width: 1px; background: var(--line); height: 6px; }
+  .tick.mid { height: 10px; }
+  .tick.major { height: 13px; background: #2a516d; }
+  .tick-num {
+    position: absolute; top: 13px; transform: translateX(-50%);
+    font-family: var(--font-mono); font-size: .62rem; color: #57798d; letter-spacing: .05em;
+  }
+  html.js .tape a {
+    position: absolute; top: 20px; transform: translateX(-50%);
+    font-family: var(--font-mono); font-size: .72rem; letter-spacing: .14em;
+    color: var(--ink-2); text-decoration: none; padding: 0 6px;
+    transition: color .3s var(--ease);
+  }
+  html:not(.js) .tape a {
+    font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em;
+    color: var(--ink-2); text-decoration: none;
+  }
+  .tape a:hover, .tape a.here { color: var(--trace); }
+  .tape-cursor {
+    position: absolute; left: 50%; top: 0; height: 100%; width: 1px;
+    background: var(--trace); pointer-events: none;
+  }
+  html:not(.js) .tape-cursor { display: none; }
+  .tape-cursor::before {
+    content: ""; position: absolute; top: 0; left: -4px;
+    border: 4.5px solid transparent; border-top-color: var(--trace);
+  }
+
+  main { padding-top: var(--header-h); }
+
+  section { padding: clamp(64px, 9vw, 120px) clamp(16px, 4vw, 40px); scroll-margin-top: calc(var(--header-h) + 8px); }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+
+  h1, h2 { font-family: var(--font-face); font-weight: 400; line-height: 1.22; letter-spacing: .015em; }
+  h1 { font-size: clamp(1.55rem, 3.6vw, 2.7rem); max-width: 21ch; text-wrap: balance; }
+  h2 { font-size: clamp(1.25rem, 2.6vw, 1.9rem); text-wrap: balance; }
+  h3 { font-family: var(--font-body); font-weight: 600; font-size: 1.15rem; letter-spacing: .01em; }
+
+  .h-line { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; margin-bottom: clamp(28px, 4vw, 48px); }
+  .h-line .brg-tag {
+    font-family: var(--font-mono); font-size: .78rem; color: var(--trace);
+    letter-spacing: .12em; white-space: nowrap;
+    border: 1px solid var(--line); padding: 3px 9px;
+  }
+  .lede { color: var(--ink-2); max-width: 62ch; }
+
+  /* ============ HERO / SCOPE ============ */
+  .hero { padding-top: clamp(40px, 6vw, 72px); }
+  .hero-thesis { margin-bottom: clamp(36px, 5vw, 56px); }
+  .hero-thesis p { color: var(--ink-2); max-width: 66ch; margin-top: 18px; font-size: clamp(1.02rem, 1.4vw, 1.15rem); }
+  .hero-ctas { display: flex; gap: 14px; margin-top: 26px; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--font-mono); font-size: .85rem; letter-spacing: .12em;
+    text-decoration: none; padding: 12px 22px; border: 1px solid var(--trace-soft);
+    color: var(--trace); background: transparent; position: relative;
+    transition: background .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease);
+  }
+  .btn::before, .btn::after {
+    content: ""; position: absolute; width: 7px; height: 7px; pointer-events: none;
+    border: 1px solid var(--trace);
+  }
+  .btn::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
+  .btn::after { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+  .btn:hover { background: var(--trace); color: #04121b; border-color: var(--trace); }
+  .btn.alt { color: var(--ink-2); border-color: var(--line); }
+  .btn.alt::before, .btn.alt::after { border-color: var(--line); }
+  .btn.alt:hover { background: var(--panel); color: var(--ink); border-color: var(--ink-2); }
+
+  .scope-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr); gap: clamp(24px, 3.5vw, 48px); align-items: start; }
+
+  .scope-frame { position: relative; }
+  .scope-face {
+    position: relative; aspect-ratio: 1; max-width: 620px; margin: 0 auto;
+    border-radius: 50%;
+  }
+  .scope-face canvas { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 50%; display: block; }
+  .contacts { position: absolute; inset: 0; }
+  html:not(.js) .contacts-note { display: block; }
+  .contacts-note { display: none; font-family: var(--font-mono); font-size: .78rem; color: var(--ink-2); text-align: center; padding: 12px; }
+
+  .contact-btn {
+    position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%);
+    background: none; border: 0; cursor: pointer; color: var(--trace);
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    font-family: var(--font-mono); padding: 6px;
+    opacity: calc(.5 + .5 * var(--i, 0));
+    transition: opacity .2s linear;
+  }
+  .contact-btn .blip {
+    width: 9px; height: 9px; border-radius: 50%; background: var(--trace);
+    box-shadow: 0 0 calc(4px + 10px * var(--i, 0)) 1px rgba(99, 230, 162, calc(.35 + .55 * var(--i, 0)));
+  }
+  .contact-btn .cs { font-size: .66rem; letter-spacing: .1em; color: var(--ink); text-shadow: 0 1px 4px rgba(4, 12, 20, .9); }
+  .contact-btn .nm { display: none; }
+  .contact-btn:hover .blip, .contact-btn[aria-pressed="true"] .blip { background: var(--lock); box-shadow: 0 0 12px 2px rgba(240, 180, 101, .6); }
+  .contact-btn[aria-pressed="true"] .cs { color: var(--lock); }
+  .contact-btn[aria-pressed="true"]::after {
+    content: ""; position: absolute; top: 50%; left: 50%; width: 26px; height: 26px;
+    transform: translate(-50%, -50%) rotate(45deg); border: 1px solid var(--lock);
+  }
+  .scope-caption {
+    margin-top: 14px; text-align: center; font-family: var(--font-mono);
+    font-size: .74rem; letter-spacing: .12em; color: var(--ink-2);
+  }
+  .scope-caption b { color: var(--trace); font-weight: 500; }
+
+  .console {
+    border: 1px solid var(--line); background: var(--panel);
+    padding: clamp(20px, 2.5vw, 30px); position: relative;
+  }
+  .console::before {
+    content: ""; position: absolute; top: -1px; left: -1px; width: 14px; height: 14px;
+    border-top: 2px solid var(--trace); border-left: 2px solid var(--trace);
+  }
+  .console::after {
+    content: ""; position: absolute; bottom: -1px; right: -1px; width: 14px; height: 14px;
+    border-bottom: 2px solid var(--trace); border-right: 2px solid var(--trace);
+  }
+  .con-title {
+    font-family: var(--font-mono); font-size: .72rem; letter-spacing: .2em;
+    color: var(--ink-2); border-bottom: 1px solid var(--line-dim);
+    padding-bottom: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; gap: 10px;
+  }
+  .con-title .lock-state { color: var(--lock); }
+  .con-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .con-head svg { color: var(--trace); flex: none; }
+  .con-head .mono { font-size: .78rem; color: var(--trace); letter-spacing: .1em; }
+  .console h3 { margin-bottom: 10px; font-size: 1.2rem; }
+  .console p { color: var(--ink-2); font-size: .96rem; }
+  .con-stack { margin-top: 14px; font-family: var(--font-mono); font-size: .76rem; line-height: 1.7; color: var(--ink-2); border-top: 1px solid var(--line-dim); padding-top: 12px; }
+  .con-link { display: inline-block; margin-top: 14px; font-family: var(--font-mono); font-size: .8rem; letter-spacing: .08em; }
+
+  /* ============ STATIONS (SERVICES) ============ */
+  .stations { background: var(--ground-2); border-block: 1px solid var(--line-dim); }
+  .station-log { border-top: 1px solid var(--line); }
+  .station {
+    display: grid; grid-template-columns: 150px 44px minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: clamp(14px, 2.5vw, 30px); align-items: start;
+    padding: clamp(20px, 3vw, 30px) 0; border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .station::before {
+    content: ""; position: absolute; left: 0; top: -1px; width: 22px; height: 1px; background: var(--trace);
+  }
+  .station .pos { font-family: var(--font-mono); font-size: .76rem; color: var(--trace); letter-spacing: .1em; line-height: 1.9; }
+  .station .pos small { display: block; color: var(--ink-2); font-size: .72rem; }
+  .station .glyph { color: var(--trace); padding-top: 2px; }
+  .station h3 { margin-bottom: 6px; }
+  .station .desc { color: var(--ink-2); font-size: .98rem; max-width: 46ch; }
+  .station .kit { font-family: var(--font-mono); font-size: .8rem; line-height: 2; color: var(--ink-2); }
+  .station .kit b { color: var(--ink); font-weight: 500; }
+
+  /* ============ INTEGRITY (COMPLIANCE) ============ */
+  .integrity-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 60px); align-items: center; }
+  .boundary-svg { width: 100%; max-width: 480px; margin: 0 auto; display: block; }
+  .boundary {
+    fill: none; stroke: var(--trace); stroke-width: 1.6; vector-effect: non-scaling-stroke;
+  }
+  html.js .boundary { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  html.js .drawn .boundary { stroke-dashoffset: 0; transition: stroke-dashoffset 2.6s var(--ease); }
+  .cp { opacity: 1; }
+  html.js .cp { opacity: 0; }
+  html.js .drawn .cp { opacity: 1; transition: opacity .9s var(--ease); transition-delay: var(--d, 0s); }
+  .cp .pip { fill: var(--ground); stroke: var(--trace); stroke-width: 1.4; }
+  .cp .chk { fill: none; stroke: var(--trace); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .cp text { font-family: var(--font-mono); font-size: 11px; fill: var(--trace); letter-spacing: .08em; }
+  .hq-mark text { font-family: var(--font-mono); font-size: 10px; fill: #57798d; letter-spacing: .06em; }
+  .hq-mark rect { fill: none; stroke: #57798d; stroke-width: 1.2; }
+
+  .check-list { list-style: none; }
+  .check-list li {
+    display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 14px;
+    padding: 16px 0; border-bottom: 1px solid var(--line-dim); align-items: start;
+  }
+  .check-list svg { color: var(--trace); margin-top: 3px; }
+  .check-list b { display: block; font-weight: 600; margin-bottom: 2px; }
+  .check-list span { color: var(--ink-2); font-size: .95rem; }
+  .integrity-foot { margin-top: 20px; font-family: var(--font-mono); font-size: .78rem; letter-spacing: .1em; color: var(--trace); }
+
+  /* ============ COMMAND (PROOF) ============ */
+  .command { background: var(--ground-2); border-block: 1px solid var(--line-dim); }
+  .command-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(28px, 4vw, 64px); }
+  .command-copy p + p { margin-top: 16px; }
+  .command-copy .lead-p { font-size: clamp(1.05rem, 1.5vw, 1.2rem); }
+  .command-copy p { color: var(--ink-2); max-width: 58ch; }
+  .command-copy p strong { color: var(--ink); font-weight: 600; }
+  .transmission {
+    margin-top: 28px; border: 1px solid var(--line); background: var(--panel);
+    padding: 20px 24px; position: relative;
+  }
+  .transmission::before { content: ""; position: absolute; top: -1px; left: -1px; width: 12px; height: 12px; border-top: 2px solid var(--trace); border-left: 2px solid var(--trace); }
+  .transmission p { font-size: 1.02rem; color: var(--ink); max-width: 44ch; }
+  .transmission footer { margin-top: 10px; font-family: var(--font-mono); font-size: .72rem; letter-spacing: .16em; color: var(--ink-2); }
+
+  .ratings h3, .watch-history h3 { margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+  .ratings ul, .watch-history ul { list-style: none; }
+  .ratings li, .watch-history li {
+    display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 12px; align-items: start;
+    padding: 10px 0; border-bottom: 1px solid var(--line-dim);
+    color: var(--ink-2); font-size: .96rem;
+  }
+  .ratings svg, .watch-history svg { color: var(--trace); margin-top: 4px; }
+  .watch-history { margin-top: 34px; }
+
+  /* ============ ROTATION (PROCESS) ============ */
+  .rotation-line { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(16px, 2.5vw, 32px); position: relative; list-style: none; }
+  .rotation-line::before {
+    content: ""; position: absolute; top: 17px; left: 4%; right: 4%; height: 1px;
+    background: var(--line);
+  }
+  .step { position: relative; padding-top: 52px; }
+  .step .dial {
+    position: absolute; top: 0; left: 0; width: 35px; height: 35px; border-radius: 50%;
+    border: 1px solid var(--trace-soft); background: var(--ground);
+    display: grid; place-items: center;
+    font-family: var(--font-mono); font-size: .8rem; color: var(--trace);
+  }
+  .step h3 { margin-bottom: 6px; }
+  .step p { color: var(--ink-2); font-size: .95rem; max-width: 30ch; }
+
+  /* ============ CHANNEL (CONTACT) ============ */
+  .channel-console {
+    border: 1px solid var(--line); background: var(--panel);
+    padding: clamp(24px, 4vw, 48px); position: relative; max-width: 880px;
+  }
+  .channel-console::before { content: ""; position: absolute; top: -1px; left: -1px; width: 18px; height: 18px; border-top: 2px solid var(--trace); border-left: 2px solid var(--trace); }
+  .channel-console::after { content: ""; position: absolute; bottom: -1px; right: -1px; width: 18px; height: 18px; border-bottom: 2px solid var(--trace); border-right: 2px solid var(--trace); }
+  .channel-console > p { color: var(--ink-2); max-width: 56ch; margin-bottom: 26px; }
+  .freq { list-style: none; }
+  .freq li {
+    display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: clamp(12px, 3vw, 28px);
+    padding: 18px 0; border-top: 1px solid var(--line-dim); align-items: baseline;
+  }
+  .freq .band { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .18em; color: var(--ink-2); }
+  .freq a {
+    font-family: var(--font-mono); font-size: clamp(1rem, 2.4vw, 1.35rem);
+    letter-spacing: .04em; text-decoration: none; color: var(--trace);
+    border-bottom: 1px solid var(--trace-soft); padding-bottom: 2px;
+    transition: border-color .3s var(--ease), color .3s var(--ease);
+  }
+  .freq a:hover { border-color: var(--trace); color: #a7f4c9; }
+  .freq .addr { font-size: 1rem; color: var(--ink); }
+  .freq .coords { display: block; font-family: var(--font-mono); font-size: .78rem; color: var(--ink-2); letter-spacing: .1em; margin-top: 4px; }
+  .channel-note { margin-top: 24px; font-size: .92rem; color: var(--ink-2); max-width: 56ch; }
+
+  /* ============ FOOTER ============ */
+  .site-foot {
+    border-top: 1px solid var(--line-dim); padding: 28px clamp(16px, 4vw, 40px);
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    font-family: var(--font-mono); font-size: .76rem; letter-spacing: .1em; color: var(--ink-2);
+  }
+  .site-foot b { color: var(--trace); font-weight: 500; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 960px) {
+    .scope-grid, .integrity-grid, .command-grid { grid-template-columns: minmax(0, 1fr); }
+    .station { grid-template-columns: 44px minmax(0, 1fr); grid-template-rows: auto auto auto; }
+    .station .pos { grid-column: 2; order: 3; }
+    .station .glyph { grid-row: 1; }
+    .station h3 { grid-column: 2; }
+    .station > div:nth-child(3) { grid-column: 2; }
+    .station .kit { grid-column: 2; }
+    .rotation-line { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 36px; }
+    .rotation-line::before { display: none; }
+  }
+  @media (max-width: 720px) {
+    :root { --header-h: 92px; }
+    .scope-face { max-width: 420px; aspect-ratio: auto; }
+    .scope-face canvas { position: static; width: 100%; height: auto; aspect-ratio: 1; }
+    .contacts { position: static; margin-top: 18px; display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+    .contact-btn {
+      position: static; transform: none; flex-direction: row; align-items: center;
+      gap: 12px; padding: 12px 4px; border-bottom: 1px solid var(--line-dim);
+      opacity: 1; text-align: left;
+    }
+    .contact-btn .nm { display: block; font-family: var(--font-body); font-size: .95rem; color: var(--ink); }
+    .contact-btn .cs { width: 84px; flex: none; }
+    .contact-btn[aria-pressed="true"]::after { display: none; }
+    .freq li { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+    .readout .sec-name { display: none; }
+  }
+
+  /* ============ MOTION OFF ============ */
+  @media (prefers-reduced-motion: reduce) {
+    * { transition-duration: .01ms !important; animation: none !important; }
+    html.js .boundary { stroke-dashoffset: 0; }
+    html.js .cp { opacity: 1; }
+    .contact-btn { opacity: 1; }
+  }
+</style>
+
+<a class="skip" href="#stations">Skip to station log</a>
+
+<header>
+  <div class="hd-row">
+    <a class="brand" href="#scope">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/>
+        <path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+      IRONRIM
+    </a>
+    <p class="readout" aria-hidden="true">BRG <b id="brgVal">000</b> <span class="sec-name" id="brgSec">SCOPE</span></p>
+  </div>
+  <nav class="tape" aria-label="Sections">
+    <div class="tape-track" id="tapeTrack">
+      <a href="#scope" data-brg="0">SCOPE</a>
+      <a href="#stations" data-brg="45">STATIONS</a>
+      <a href="#integrity" data-brg="135">INTEGRITY</a>
+      <a href="#command" data-brg="200">COMMAND</a>
+      <a href="#rotation" data-brg="260">ROTATION</a>
+      <a href="#channel" data-brg="315">CHANNEL</a>
+    </div>
+    <div class="tape-cursor" aria-hidden="true"></div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ============ HERO: THE SCOPE ============ -->
+  <section class="hero" id="scope">
+    <div class="wrap">
+      <div class="hero-thesis">
+        <h1>Every enterprise runs inside a perimeter. We hold it.</h1>
+        <p>IronRim architects and operates the systems enterprises bet on: AI platforms, cloud infrastructure, and the observability, security, and compliance that keep them trustworthy.</p>
+        <div class="hero-ctas">
+          <a class="btn" href="#channel">OPEN A CHANNEL</a>
+          <a class="btn alt" href="#stations">REVIEW THE STATIONS</a>
+        </div>
+      </div>
+
+      <div class="scope-grid">
+        <div class="scope-frame">
+          <div class="scope-face" id="scopeFace">
+            <canvas id="radar"></canvas>
+            <div class="contacts" id="contacts">
+              <p class="contacts-note">Sweep offline. All eight stations are listed in full in the station log below.</p>
+            </div>
+          </div>
+          <p class="scope-caption">STATION HQ <b>COLUMBUS OH</b> 39.96&#176; N / 83.00&#176; W</p>
+        </div>
+
+        <aside class="console" aria-live="polite">
+          <p class="con-title">TRACK CONSOLE <span class="lock-state" id="lockState">LOCKED</span></p>
+          <div id="conBody">
+            <div class="con-head">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="5.5" r="2"/><circle cx="5.5" cy="17.5" r="2"/><circle cx="18.5" cy="17.5" r="2"/><path d="M10.6 7.1 6.6 15.8M13.4 7.1l4 8.7M7.5 17.5h9"/><circle cx="12" cy="13" r="1" fill="currentColor" stroke="none"/></svg>
+              <span class="mono">RIM-01 / BRG 020</span>
+            </div>
+            <h3>AI &amp; GenAI Engineering</h3>
+            <p>LLM platforms, RAG pipelines, MLOps, and the guardrails and governance that keep AI inside policy.</p>
+            <p class="con-stack">AWS Bedrock / SageMaker / Azure OpenAI / LangChain / vector databases</p>
+            <a class="con-link" href="#svc-1">Full log entry</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATIONS: SERVICES ============ -->
+  <section class="stations" id="stations">
+    <div class="wrap">
+      <div class="h-line">
+        <h2>Eight stations on the ring</h2>
+        <span class="brg-tag">BRG 045</span>
+      </div>
+      <p class="lede" style="margin-bottom: 34px;">Each contact on the scope is a discipline we run end to end. The full station log follows; nothing here is locked behind the sweep.</p>
+
+      <div class="station-log">
+        <article class="station" id="svc-1">
+          <p class="pos">RIM-01<small>BRG 020</small></p>
+          <span class="glyph"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="5.5" r="2"/><circle cx="5.5" cy="17.5" r="2"/><circle cx="18.5" cy="17.5" r="2"/><path d="M10.6 7.1 6.6 15.8M13.4 7.1l4 8.7M7.5 17.5h9"/><circle cx="12" cy="13" r="1" fill="currentColor" stroke="none"/></svg></span>
+          <div>
+            <h3>AI &amp; GenAI Engineering</h3>
+            <p class="desc">LLM platforms, RAG pipelines, and MLOps, with AI guardrails and governance built in from the first commit, not bolted on after the demo.</p>
+          </div>
+          <p class="kit"><b>On station:</b> AWS Bedrock, SageMaker, Azure OpenAI, LangChain, vector databases.</p>
+        </article>
+
+        <article class="station" id="svc-2">
+          <p class="pos">RIM-02<small>BRG 062</small></p>
+          <span class="glyph"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 12m-9 0a9 9 0 0 1 9-9" /><path d="M12 12m-5.5 0a5.5 5.5 0 0 1 5.5-5.5"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/><path d="M12 12l6 6"/></svg></span>
+          <div>
+            <h3>Observability &amp; SRE</h3>
+            <p class="desc">SLOs, alerting, incident readiness, and cost visibility. If it moves inside your perimeter, it is on a graph before it is a surprise.</p>
+          </div>
+          <p class="kit"><b>On station:</b> Dynatrace, Datadog, Splunk, Prometheus, Grafana, OpenTelemetry.</p>
+        </article>
+
+        <article class="station" id="svc-3">
+          <p class="pos">RIM-03<small>BRG 108</small></p>
+          <span class="glyph"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M18 3v3.5h-3.5"/><circle cx="12" cy="12" r="2"/></svg></span>
+          <div>
+            <h3>DevOps &amp; Platform Engineering</h3>
+            <p class="desc">CI/CD pipelines and Kubernetes platforms run as products, with GitOps as the operating doctrine and Helm charts as the standing orders.</p>
+          </div>
+          <p class="kit"><b>On station:</b> Jenkins, GitHub Actions, Azure DevOps, ArgoCD, Kubernetes, OpenShift, Helm.</p>
+        </article>
+
+        <article class="station" id="svc-4">
+          <p class="pos">RIM-04<small>BRG 150</small></p>
+          <span class="glyph"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5 12 4l8 4.5M4 12.5l8 4.5 8-4.5M4 16.5 12 21l8-4.5" opacity=".9"/><path d="M4 8.5l8 4.5 8-4.5"/></svg></span>
+          <div>
+            <h3>Cloud Architecture</h3>
+            <p class="desc">Landing zones, multi-region resilience, migration and modernization across the three major clouds, designed before the first bill arrives.</p>
+          </div>
+          <p class="kit"><b>On station:</b> AWS, Azure, GCP.</p>
+        </article>
+
+        <article class="station" id="svc-5">
+          <p class="pos">RIM-05<small>BRG 197</small></p>
+          <span class="glyph"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/><circle cx="16.5" cy="16.5" r="1.2" fill="currentColor" stroke="none"/></svg></span>
+          <div>
+            <h3>Infrastructure as Code</h3>
+            <p class="desc">Reusable modules and repeatable environments. Drift is a hole in the fence; automation keeps it at zero.</p>
+          </div>
+          <p class="kit"><b>On station:</b> Terraform, ARM, CloudFormation, Ansible.</p>
+        </article>
+
+        <article class="station" id="svc-6">
+          <p class="pos">RIM-06<small>BRG 243</small></p>
+          <span class="glyph"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5 21 12l-9 9.5L3 12z"/><circle cx="12" cy="12" r="2.2"/><path d="M12 6v2M12 16v2M7 12h2M15 12h2"/></svg></span>
+          <div>
+            <h3>Security &amp; Identity</h3>
+            <p class="desc">Identity, isolation, and keys: the inner ring of the perimeter, extended to cover AI workloads that older controls never saw coming.</p>
+          </div>
+          <p class="kit"><b>On station:</b> IAM, network isolation, KMS and Key Vault, DLP, RBAC, secure AI workloads.</p>
+        </article>
+
+        <article class="station" id="svc-7">
+          <p class="pos">RIM-07<small>BRG 288</small></p>
+          <span class="glyph"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/><path d="M12 2v1.6M12 20.4V22M2 12h1.6M20.4 12H22"/></svg></span>
+          <div>
+            <h3>Compliance</h3>
+            <p class="desc">FedRAMP High and Moderate, NIST, CIS, HIPAA, GxP. Azure Government experience on workloads where an audit is a certainty, not a risk.</p>
+          </div>
+          <p class="kit"><b>On station:</b> FedRAMP High and Moderate, NIST, CIS, HIPAA, GxP, Azure Government.</p>
+        </article>
+
+        <article class="station" id="svc-8">
+          <p class="pos">RIM-08<small>BRG 333</small></p>
+          <span class="glyph"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7.5" ry="2.8"/><path d="M4.5 5.5v13c0 1.55 3.36 2.8 7.5 2.8s7.5-1.25 7.5-2.8v-13"/><path d="M4.5 12c0 1.55 3.36 2.8 7.5 2.8s7.5-1.25 7.5-2.8"/></svg></span>
+          <div>
+            <h3>Data &amp; Analytics</h3>
+            <p class="desc">Data platforms and pipelines that feed AI, built to be trusted before they are queried.</p>
+          </div>
+          <p class="kit"><b>On station:</b> Snowflake, Databricks.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INTEGRITY: COMPLIANCE ============ -->
+  <section id="integrity">
+    <div class="wrap">
+      <div class="h-line">
+        <h2>Perimeter integrity report</h2>
+        <span class="brg-tag">BRG 135</span>
+      </div>
+      <div class="integrity-grid" id="integrityGrid">
+        <svg class="boundary-svg" viewBox="0 0 440 420" role="img" aria-label="Perimeter diagram with five verified compliance checkpoints: FedRAMP, NIST, CIS, HIPAA, and GxP, around station HQ">
+          <path class="boundary" pathLength="1" d="M 220 30 L 368 110 L 392 264 L 250 388 L 80 326 L 46 138 Z"/>
+          <g class="hq-mark">
+            <rect x="214" y="200" width="12" height="12" transform="rotate(45 220 206)"/>
+            <text x="220" y="232" text-anchor="middle">HQ 39.96N 83.00W</text>
+          </g>
+          <g class="cp" style="--d:.5s">
+            <circle class="pip" cx="220" cy="30" r="8"/>
+            <path class="chk" d="M216.5 30l2.4 2.4 4.6-5"/>
+            <text x="220" y="58" text-anchor="middle">FEDRAMP</text>
+          </g>
+          <g class="cp" style="--d:.9s">
+            <circle class="pip" cx="368" cy="110" r="8"/>
+            <path class="chk" d="M364.5 110l2.4 2.4 4.6-5"/>
+            <text x="352" y="100" text-anchor="end">NIST</text>
+          </g>
+          <g class="cp" style="--d:1.3s">
+            <circle class="pip" cx="392" cy="264" r="8"/>
+            <path class="chk" d="M388.5 264l2.4 2.4 4.6-5"/>
+            <text x="376" y="258" text-anchor="end">CIS</text>
+          </g>
+          <g class="cp" style="--d:1.7s">
+            <circle class="pip" cx="250" cy="388" r="8"/>
+            <path class="chk" d="M246.5 388l2.4 2.4 4.6-5"/>
+            <text x="250" y="372" text-anchor="middle">HIPAA</text>
+          </g>
+          <g class="cp" style="--d:2.1s">
+            <circle class="pip" cx="80" cy="326" r="8"/>
+            <path class="chk" d="M76.5 326l2.4 2.4 4.6-5"/>
+            <text x="98" y="318" text-anchor="start">GXP</text>
+          </g>
+        </svg>
+
+        <div>
+          <ul class="check-list">
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.3l2.5 2.5 5-5.4"/></svg>
+              <div><b>FedRAMP High and Moderate</b><span>Federal-grade baselines, engineered and operated on Azure Government.</span></div>
+            </li>
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.3l2.5 2.5 5-5.4"/></svg>
+              <div><b>NIST</b><span>Control mapping and hardening against NIST frameworks.</span></div>
+            </li>
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.3l2.5 2.5 5-5.4"/></svg>
+              <div><b>CIS</b><span>Benchmarked configuration baselines, enforced as code.</span></div>
+            </li>
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.3l2.5 2.5 5-5.4"/></svg>
+              <div><b>HIPAA</b><span>Safeguards for regulated health data across cloud workloads.</span></div>
+            </li>
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.3l2.5 2.5 5-5.4"/></svg>
+              <div><b>GxP</b><span>Validated environments for pharma manufacturing systems.</span></div>
+            </li>
+          </ul>
+          <p class="integrity-foot">BOUNDARY VERIFIED / 5 OF 5 CHECKPOINTS HELD</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMMAND: PROOF ============ -->
+  <section class="command" id="command">
+    <div class="wrap">
+      <div class="h-line">
+        <h2>Who stands the watch</h2>
+        <span class="brg-tag">BRG 200</span>
+      </div>
+      <div class="command-grid">
+        <div class="command-copy">
+          <p class="lead-p">IronRim is led by principal architect <strong>Prashant Chawla</strong>: 17+ years in enterprise infrastructure, 9 of them inside JP Morgan Chase Global Technology Infrastructure, and before that an engineer at Amazon.</p>
+          <p>That is 10 years standing watch on AWS and 8 on Azure, in rooms where the perimeter was never allowed to fail quietly.</p>
+          <blockquote class="transmission">
+            <p>Rare expertise, delivered with customer obsession, accountability, and timeliness.</p>
+            <footer>STANDING ORDER / IRONRIM</footer>
+          </blockquote>
+        </div>
+        <div>
+          <div class="ratings">
+            <h3>Ratings held</h3>
+            <ul>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l4.5 4.5 10-10.5"/></svg>Microsoft Certified: Azure Solutions Architect Expert</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l4.5 4.5 10-10.5"/></svg>AWS Certified Solutions Architect, Professional</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l4.5 4.5 10-10.5"/></svg>AWS Certified Solutions Architect, Associate</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l4.5 4.5 10-10.5"/></svg>Certified Kubernetes Administrator (CKA)</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l4.5 4.5 10-10.5"/></svg>Dynatrace Associate Certified</li>
+            </ul>
+          </div>
+          <div class="watch-history">
+            <h3>Watch history</h3>
+            <ul>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="8"/></svg>Fortune 500 financial services</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="8"/></svg>Big Four consulting</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="8"/></svg>US federal agencies on Azure Government, FedRAMP High workloads</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="8"/></svg>Healthcare and pharma manufacturing</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ROTATION: PROCESS ============ -->
+  <section id="rotation">
+    <div class="wrap">
+      <div class="h-line">
+        <h2>The rotation</h2>
+        <span class="brg-tag">BRG 260</span>
+      </div>
+      <p class="lede" style="margin-bottom: 44px;">Four phases, run in order, every engagement. The sequence is the point: nothing gets automated before it is architected, and nothing gets operated before it is automated.</p>
+      <ol class="rotation-line">
+        <li class="step">
+          <span class="dial" aria-hidden="true">1</span>
+          <h3>Assess</h3>
+          <p>We map what you run, what it costs, and where it breaks.</p>
+        </li>
+        <li class="step">
+          <span class="dial" aria-hidden="true">2</span>
+          <h3>Architect</h3>
+          <p>We design the target state and the route to it, in writing.</p>
+        </li>
+        <li class="step">
+          <span class="dial" aria-hidden="true">3</span>
+          <h3>Automate</h3>
+          <p>We build it as code so every environment is repeatable.</p>
+        </li>
+        <li class="step">
+          <span class="dial" aria-hidden="true">4</span>
+          <h3>Operate</h3>
+          <p>We instrument it, watch it, and hand you the controls.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ CHANNEL: CONTACT ============ -->
+  <section id="channel">
+    <div class="wrap">
+      <div class="h-line">
+        <h2>Open channel</h2>
+        <span class="brg-tag">BRG 315</span>
+      </div>
+      <div class="channel-console">
+        <p>The station answers. Hail on any frequency below; a person reads both.</p>
+        <ul class="freq">
+          <li>
+            <span class="band">VOICE</span>
+            <a href="tel:+19182550687">+1 918 255 0687</a>
+          </li>
+          <li>
+            <span class="band">TRAFFIC</span>
+            <a href="mailto:info@ironrim.com">info@ironrim.com</a>
+          </li>
+          <li>
+            <span class="band">STATION</span>
+            <div>
+              <p class="addr">470 W Broad St, Columbus, OH 43215</p>
+              <span class="coords">39.96&#176; N / 83.00&#176; W</span>
+            </div>
+          </li>
+        </ul>
+        <p class="channel-note">Tell us what you run and what keeps you up at night. We will come back with questions, not a pitch deck.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <span>&#169; 2026 <b>IRONRIM</b>. Columbus, Ohio.</span>
+  <span aria-hidden="true">PERIMETER HELD / SWEEP CONTINUOUS</span>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  document.documentElement.classList.add("js");
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- shared data: the eight contacts ---------- */
+  var SERVICES = [
+    { brg: 20,  r: .62, cs: "RIM-01", tag: "AI",     name: "AI & GenAI Engineering",
+      desc: "LLM platforms, RAG pipelines, MLOps, and the guardrails and governance that keep AI inside policy.",
+      kit: "AWS Bedrock / SageMaker / Azure OpenAI / LangChain / vector databases" },
+    { brg: 62,  r: .78, cs: "RIM-02", tag: "SRE",    name: "Observability & SRE",
+      desc: "SLOs, alerting, incident readiness, and cost visibility. If it moves inside your perimeter, it is on a graph.",
+      kit: "Dynatrace / Datadog / Splunk / Prometheus / Grafana / OpenTelemetry" },
+    { brg: 108, r: .55, cs: "RIM-03", tag: "DEVOPS", name: "DevOps & Platform Engineering",
+      desc: "CI/CD pipelines and Kubernetes platforms run as products, with GitOps as the operating doctrine.",
+      kit: "Jenkins / GitHub Actions / Azure DevOps / ArgoCD / Kubernetes / OpenShift / Helm" },
+    { brg: 150, r: .72, cs: "RIM-04", tag: "CLOUD",  name: "Cloud Architecture",
+      desc: "Landing zones, multi-region resilience, migration and modernization across the three major clouds.",
+      kit: "AWS / Azure / GCP" },
+    { brg: 197, r: .60, cs: "RIM-05", tag: "IAC",    name: "Infrastructure as Code",
+      desc: "Reusable modules and repeatable environments. Drift is a hole in the fence; automation keeps it at zero.",
+      kit: "Terraform / ARM / CloudFormation / Ansible" },
+    { brg: 243, r: .80, cs: "RIM-06", tag: "SEC",    name: "Security & Identity",
+      desc: "Identity, isolation, and keys: the inner ring of the perimeter, extended to secure AI workloads.",
+      kit: "IAM / network isolation / KMS and Key Vault / DLP / RBAC" },
+    { brg: 288, r: .66, cs: "RIM-07", tag: "COMPLY", name: "Compliance",
+      desc: "FedRAMP High and Moderate, NIST, CIS, HIPAA, GxP. Azure Government experience on federal workloads.",
+      kit: "FedRAMP High and Moderate / NIST / CIS / HIPAA / GxP / Azure Government" },
+    { brg: 333, r: .74, cs: "RIM-08", tag: "DATA",   name: "Data & Analytics",
+      desc: "Data platforms and pipelines that feed AI, built to be trusted before they are queried.",
+      kit: "Snowflake / Databricks" }
+  ];
+  var ICONS = SERVICES.map(function (s, i) {
+    var el = document.querySelector("#svc-" + (i + 1) + " .glyph svg");
+    return el ? el.outerHTML : "";
+  });
+
+  /* ---------- contact buttons over the scope ---------- */
+  var contactsEl = document.getElementById("contacts");
+  var conBody = document.getElementById("conBody");
+  var lockState = document.getElementById("lockState");
+  var buttons = [];
+  var lockedIdx = 0;
+
+  SERVICES.forEach(function (s, i) {
+    var a = s.brg * Math.PI / 180;
+    var x = 50 + s.r * 46 * Math.sin(a);
+    var y = 50 - s.r * 46 * Math.cos(a);
+    var b = document.createElement("button");
+    b.className = "contact-btn";
+    b.type = "button";
+    b.setAttribute("aria-label", "Lock track: " + s.name);
+    b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+    b.style.setProperty("--x", x + "%");
+    b.style.setProperty("--y", y + "%");
+    b.innerHTML = '<span class="blip" aria-hidden="true"></span>' +
+      '<span class="cs" aria-hidden="true">' + s.cs.slice(4) + " " + s.tag + "</span>" +
+      '<span class="nm" aria-hidden="true">' + s.name.replace("&", "&amp;") + "</span>";
+    b.addEventListener("click", function () { lock(i); });
+    contactsEl.appendChild(b);
+    buttons.push(b);
+  });
+
+  function pad3(n) { return ("00" + Math.round(n)).slice(-3); }
+
+  function lock(i) {
+    lockedIdx = i;
+    buttons.forEach(function (b, j) { b.setAttribute("aria-pressed", j === i ? "true" : "false"); });
+    var s = SERVICES[i];
+    conBody.innerHTML =
+      '<div class="con-head">' + ICONS[i].replace('width="28" height="28"', 'width="26" height="26"') +
+      '<span class="mono">' + s.cs + " / BRG " + pad3(s.brg) + "</span></div>" +
+      "<h3>" + s.name.replace("&", "&amp;") + "</h3>" +
+      "<p>" + s.desc + "</p>" +
+      '<p class="con-stack">' + s.kit + "</p>" +
+      '<a class="con-link" href="#svc-' + (i + 1) + '">Full log entry</a>';
+    lockState.textContent = "LOCKED";
+  }
+
+  /* ---------- radar canvas: sweep + afterglow ---------- */
+  var canvas = document.getElementById("radar");
+  var face = document.getElementById("scopeFace");
+  var ctx = canvas.getContext("2d");
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var size = 0, cx = 0, cy = 0, R = 0;
+  var sweep = 315;                      /* degrees, 0 = north, clockwise */
+  var SPEED = 42;                       /* deg per second */
+  var intensities = SERVICES.map(function () { return 0; });
+  var running = false, lastT = 0;
+
+  function fit() {
+    var w = face.clientWidth;
+    if (!w) return;
+    size = w; cx = w / 2; cy = w / 2; R = w / 2 - 4;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(w * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    baseFrame(1);
+  }
+
+  function polar(brg, r) {
+    var a = brg * Math.PI / 180;
+    return [cx + r * Math.sin(a), cy - r * Math.cos(a)];
+  }
+
+  function grid(alpha) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.strokeStyle = "#16324a";
+    ctx.lineWidth = 1;
+    [0.25, 0.5, 0.75, 0.985].forEach(function (f) {
+      ctx.beginPath(); ctx.arc(cx, cy, R * f, 0, Math.PI * 2); ctx.stroke();
+    });
+    ctx.beginPath();
+    ctx.moveTo(cx - R, cy); ctx.lineTo(cx + R, cy);
+    ctx.moveTo(cx, cy - R); ctx.lineTo(cx, cy + R);
+    ctx.stroke();
+    for (var d = 0; d < 360; d += 10) {
+      var inner = polar(d, R * (d % 30 === 0 ? 0.93 : 0.955));
+      var outer = polar(d, R * 0.985);
+      ctx.beginPath(); ctx.moveTo(inner[0], inner[1]); ctx.lineTo(outer[0], outer[1]); ctx.stroke();
+    }
+    ctx.fillStyle = "#57798d";
+    ctx.font = "500 " + Math.max(9, size * 0.021) + "px 'Red Hat Mono', monospace";
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    [0, 90, 180, 270].forEach(function (d) {
+      var p = polar(d, R * 0.865);
+      ctx.fillText(pad3(d), p[0], p[1]);
+    });
+    ctx.restore();
+  }
+
+  function blips() {
+    var rad = Math.max(7, R * 0.045);
+    SERVICES.forEach(function (s, i) {
+      var it = intensities[i];
+      if (it < 0.02) return;
+      var p = polar(s.brg, s.r * R * 0.92);
+      var g = ctx.createRadialGradient(p[0], p[1], 0, p[0], p[1], rad);
+      g.addColorStop(0, "rgba(99,230,162," + (0.75 * it) + ")");
+      g.addColorStop(1, "rgba(99,230,162,0)");
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(p[0], p[1], rad, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "rgba(190,255,216," + it + ")";
+      ctx.beginPath(); ctx.arc(p[0], p[1], 2, 0, Math.PI * 2); ctx.fill();
+    });
+  }
+
+  function clipScope() {
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.clip();
+  }
+
+  function baseFrame(litAll) {
+    /* full static render: used at init, on resize, and as the reduced-motion state */
+    ctx.save();
+    clipScope();
+    ctx.fillStyle = "#04101b";
+    ctx.fillRect(0, 0, size, size);
+    grid(0.9);
+    if (litAll) {
+      intensities = SERVICES.map(function () { return 1; });
+      blips();
+      buttons.forEach(function (b) { b.style.setProperty("--i", 1); });
+    }
+    ctx.restore();
+    ctx.strokeStyle = "#2a516d"; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.stroke();
+  }
+
+  function frame(t) {
+    if (!running) return;
+    var dt = Math.min((t - lastT) / 1000, 0.1);
+    lastT = t;
+    sweep = (sweep + SPEED * dt) % 360;
+
+    ctx.save();
+    clipScope();
+    /* phosphor decay: fade the whole scope a little each frame */
+    ctx.fillStyle = "rgba(4,16,27,0.06)";
+    ctx.fillRect(0, 0, size, size);
+    grid(0.06);
+
+    /* sweep arm with a short trailing fan */
+    for (var k = 0; k < 14; k++) {
+      var a = sweep - k * 1.1;
+      var p = polar(a, R * 0.985);
+      ctx.strokeStyle = "rgba(120,240,175," + (0.5 * Math.exp(-k / 4)) + ")";
+      ctx.lineWidth = k === 0 ? 1.8 : 1.2;
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(p[0], p[1]); ctx.stroke();
+    }
+
+    /* contact paint + decay */
+    SERVICES.forEach(function (s, i) {
+      var diff = (sweep - s.brg + 360) % 360;
+      if (diff < SPEED * dt + 2) intensities[i] = 1;
+      else intensities[i] *= Math.exp(-dt / 2.8);
+      buttons[i].style.setProperty("--i", intensities[i].toFixed(3));
+    });
+    blips();
+
+    /* lock diamond on the held track */
+    var s = SERVICES[lockedIdx];
+    var lp = polar(s.brg, s.r * R * 0.92);
+    var ds = Math.max(6, R * 0.04);
+    ctx.strokeStyle = "rgba(240,180,101,0.9)"; ctx.lineWidth = 1.2;
+    ctx.save();
+    ctx.translate(lp[0], lp[1]); ctx.rotate(Math.PI / 4);
+    ctx.strokeRect(-ds, -ds, ds * 2, ds * 2);
+    ctx.restore();
+
+    /* center pip */
+    ctx.fillStyle = "#63e6a2";
+    ctx.beginPath(); ctx.arc(cx, cy, 2, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+
+    ctx.strokeStyle = "#2a516d"; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.stroke();
+
+    requestAnimationFrame(frame);
+  }
+
+  function start() {
+    if (running || reduced) return;
+    running = true;
+    lastT = performance.now();
+    requestAnimationFrame(frame);
+  }
+  function stop() { running = false; }
+
+  fit();
+  if (reduced) {
+    baseFrame(1);
+  } else {
+    /* only sweep while the scope is on screen */
+    new IntersectionObserver(function (entries) {
+      entries[0].isIntersecting ? start() : stop();
+    }, { threshold: 0.05 }).observe(face);
+  }
+  var rsT;
+  window.addEventListener("resize", function () {
+    clearTimeout(rsT);
+    rsT = setTimeout(function () { fit(); if (reduced) baseFrame(1); }, 120);
+  });
+
+  /* ---------- compass tape ---------- */
+  var PX = 4, PAD = 60;                 /* px per degree, degrees rendered before 0 */
+  var track = document.getElementById("tapeTrack");
+  var brgVal = document.getElementById("brgVal");
+  var brgSec = document.getElementById("brgSec");
+  var tapeLinks = Array.prototype.slice.call(track.querySelectorAll("a"));
+
+  var fragTicks = document.createDocumentFragment();
+  for (var d = -PAD; d <= 420; d += 5) {
+    var tick = document.createElement("span");
+    var deg = ((d % 360) + 360) % 360;
+    tick.className = "tick" + (deg % 30 === 0 ? " major" : deg % 15 === 0 ? " mid" : "");
+    tick.style.left = (d + PAD) * PX + "px";
+    fragTicks.appendChild(tick);
+    if (deg % 30 === 0) {
+      var num = document.createElement("span");
+      num.className = "tick-num";
+      num.style.left = (d + PAD) * PX + "px";
+      num.textContent = pad3(deg);
+      fragTicks.appendChild(num);
+    }
+  }
+  track.insertBefore(fragTicks, track.firstChild);
+  tapeLinks.forEach(function (a) {
+    a.style.left = (parseFloat(a.dataset.brg) + PAD) * PX + "px";
+  });
+
+  var sections = tapeLinks.map(function (a) {
+    return { el: document.querySelector(a.getAttribute("href")), brg: parseFloat(a.dataset.brg), link: a };
+  });
+
+  var curBrg = 0, targetBrg = 0, tapeRunning = false;
+
+  function computeBearing() {
+    var probe = window.scrollY + window.innerHeight * 0.35;
+    var i, tops = sections.map(function (s) { return s.el.offsetTop; });
+    if (probe <= tops[0]) return { brg: sections[0].brg, idx: 0 };
+    for (i = 0; i < sections.length - 1; i++) {
+      if (probe < tops[i + 1]) {
+        var f = (probe - tops[i]) / (tops[i + 1] - tops[i]);
+        return { brg: sections[i].brg + f * (sections[i + 1].brg - sections[i].brg), idx: f < 0.5 ? i : i + 1 };
+      }
+    }
+    return { brg: sections[sections.length - 1].brg, idx: sections.length - 1 };
+  }
+
+  function paintTape(brg, idx) {
+    track.style.transform = "translateX(" + (-(brg + PAD) * PX) + "px)";
+    brgVal.textContent = pad3(brg);
+    brgSec.textContent = sections[idx].link.textContent;
+    sections.forEach(function (s, j) { s.link.classList.toggle("here", j === idx); });
+  }
+
+  function tapeFrame() {
+    var c = computeBearing();
+    targetBrg = c.brg;
+    curBrg += (targetBrg - curBrg) * 0.14;
+    if (Math.abs(targetBrg - curBrg) < 0.05) curBrg = targetBrg;
+    paintTape(curBrg, c.idx);
+    if (curBrg !== targetBrg) requestAnimationFrame(tapeFrame);
+    else tapeRunning = false;
+  }
+
+  function onScroll() {
+    if (reduced) {
+      var c = computeBearing();
+      curBrg = c.brg;
+      paintTape(c.brg, c.idx);
+      return;
+    }
+    if (!tapeRunning) { tapeRunning = true; requestAnimationFrame(tapeFrame); }
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- boundary self-draw ---------- */
+  var grid2 = document.getElementById("integrityGrid");
+  new IntersectionObserver(function (entries, obs) {
+    if (entries[0].isIntersecting) {
+      grid2.classList.add("drawn");
+      obs.disconnect();
+    }
+  }, { threshold: 0.3 }).observe(grid2);
+})();
+</script>

@@ -1,0 +1,728 @@
+<!doctype html>
+<!--
+THESIS: IronRim's capability case, presented as a federal dossier the visitor opens and reads on the record.
+OWN-WORLD: Aged manila and off-white paper, typewriter ink, bureau forms, folder tabs, punched holes, honest rubber stamps. Every control is paper: tabs navigate, form buttons act, typed underlines link.
+STORY: Cover turns open, summary memorandum, Standard Form IR-8 of eight services, personnel qualification record, procedure routing slip, tagged contact card, end of file.
+FIRST VIEWPORT: The closed case file on the desk, stamped and numbered, opening on a hinge to the summary memorandum.
+FORM: One long dossier of stacked sheets; folder-tab navigation; stamps thump in on scroll; a treasury tag swings with the contact details; reduced-motion readers get the file already open and everything readable.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="IronRim capability dossier. AI platforms, cloud infrastructure, observability, security, and compliance. Columbus, Ohio.">
+<meta name="color-scheme" content="light">
+<title>IronRim - The Dossier</title>
+<script>
+(function(){var r=document.documentElement;r.className=r.className.replace('no-js','js');
+try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window){r.className+=' fx file-closed';}}catch(e){}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{
+  --desk:#383025;
+  --desk-deep:#2c261d;
+  --manila:#d9c697;
+  --manila-deep:#c8b280;
+  --paper:#f2e9d3;
+  --paper-warm:#ece0c2;
+  --ink:#282217;
+  --ink-soft:#5d4f36;
+  --ink-faint:rgba(40,34,23,.42);
+  --red:#93281c;
+  --blue:#2e4a6b;
+  --serif:'Old Standard TT',Georgia,'Times New Roman',serif;
+  --type:'Special Elite','Courier New',monospace;
+  --mono:'Courier Prime','Courier New',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.25 0 0 0 0 0.2 0 0 0 0 0.1 0 0 0 0.055 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-padding-top:6.25rem}
+@media (prefers-reduced-motion: no-preference){html{scroll-behavior:smooth}}
+html.fx.file-closed{overflow:hidden}
+
+body{
+  background:var(--desk) radial-gradient(120% 90% at 50% 0%, #453b2c 0%, var(--desk) 55%, var(--desk-deep) 100%);
+  color:var(--ink);
+  font-family:var(--mono);
+  font-size:1.02rem;
+  line-height:1.68;
+  overflow-x:clip;
+  -webkit-font-smoothing:antialiased;
+}
+
+::selection{background:var(--ink);color:var(--paper)}
+html{scrollbar-color:#6b5b3e var(--desk-deep)}
+::-webkit-scrollbar{width:13px;background:var(--desk-deep)}
+::-webkit-scrollbar-thumb{background:#6b5b3e;border:3px solid var(--desk-deep);border-radius:8px}
+:focus-visible{outline:2px dashed var(--ink);outline-offset:3px;border-radius:1px}
+.cover :focus-visible,.footer :focus-visible{outline-color:var(--manila)}
+
+a{color:var(--ink);text-decoration-thickness:1px;text-underline-offset:.22em;text-decoration-color:rgba(40,34,23,.6)}
+a:hover{text-decoration-thickness:2px;background:rgba(147,40,28,.08)}
+
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.skip{position:fixed;top:.6rem;left:.6rem;z-index:120;background:var(--paper);color:var(--ink);padding:.5rem 1rem;font-family:var(--type);transform:translateY(-300%);border:1px solid var(--ink)}
+.skip:focus{transform:none}
+
+/* ============ THE COVER ============ */
+.cover{position:fixed;inset:0;z-index:90;display:none;perspective:1500px;background:transparent}
+html.fx .cover{display:block}
+html.fx.file-closed .cover{background:var(--desk)}
+.folder{
+  position:absolute;inset:0;width:100%;height:100%;border:0;cursor:pointer;
+  font:inherit;color:var(--ink);text-align:center;
+  background:var(--manila);background-image:var(--grain);
+  box-shadow:inset 0 0 140px rgba(58,43,18,.32), inset 0 0 4px rgba(58,43,18,.4);
+  transform-origin:left center;backface-visibility:hidden;
+  transition:transform 1.25s var(--ease);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.65rem;
+  padding:2rem 1.25rem;
+}
+html.file-open .cover{pointer-events:none;background:transparent}
+html.file-open .folder{transform:rotateY(-114deg)}
+.folder-tab{
+  position:absolute;top:0;left:6%;
+  background:var(--manila-deep);color:var(--ink);
+  font-family:var(--type);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;
+  padding:.5rem 1.6rem .35rem;
+  clip-path:polygon(12px 0,calc(100% - 12px) 0,100% 100%,0 100%);
+  transform:translateY(0);
+}
+.f-case{font-family:var(--serif);letter-spacing:.42em;text-transform:uppercase;font-size:.85rem;color:var(--ink-soft);display:block}
+.f-title{font-family:var(--serif);font-weight:700;font-size:clamp(2.6rem,8vw,4.6rem);letter-spacing:.14em;text-transform:uppercase;display:block;line-height:1.1}
+.f-rule{display:block;width:min(30rem,74vw);border-top:3px solid var(--ink);position:relative;margin:.35rem 0 .6rem}
+.f-rule::after{content:"";position:absolute;left:0;right:0;top:3px;border-top:1px solid var(--ink)}
+.f-sub{font-family:var(--type);font-size:clamp(.92rem,2.4vw,1.08rem);letter-spacing:.05em;display:block}
+.f-meta{font-family:var(--type);font-size:.82rem;color:var(--ink-soft);letter-spacing:.08em;display:block;margin-top:.25rem}
+.f-stamp{margin-top:1.4rem}
+.f-hint{font-family:var(--type);font-size:.85rem;color:var(--ink-soft);display:block;margin-top:2.6rem;letter-spacing:.06em}
+.caret{display:inline-block;width:.55em;height:1em;background:var(--ink-soft);vertical-align:-.15em;margin-left:.25em;animation:blink 1.15s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* ============ FOLDER TAB NAV ============ */
+.tabs{position:sticky;top:0;z-index:40;padding:.85rem .75rem 0;
+  background:linear-gradient(var(--desk-deep),rgba(44,38,29,.96));
+  box-shadow:0 14px 28px -18px rgba(0,0,0,.8)}
+.tabs ul{list-style:none;display:flex;justify-content:center;overflow-x:auto;scrollbar-width:none;padding:.35rem .25rem 0}
+.tabs ul::-webkit-scrollbar{display:none}
+.tabs li{margin-left:-7px;flex:none}
+.tabs li:first-child{margin-left:0}
+.tabs a{
+  position:relative;display:block;padding:.5rem 1.35rem .6rem;white-space:nowrap;
+  font-family:var(--serif);font-size:.8rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink);text-decoration:none;
+  transition:transform .3s var(--ease);
+  z-index:1;
+}
+.tabs a::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:var(--tabc,var(--manila));background-image:var(--grain);
+  clip-path:polygon(11px 0,calc(100% - 11px) 0,100% 100%,0 100%);
+  box-shadow:inset 0 -6px 8px -6px rgba(58,43,18,.5);
+}
+.tabs li:nth-child(1) a{--tabc:#d7c391}
+.tabs li:nth-child(2) a{--tabc:#ccb783}
+.tabs li:nth-child(3) a{--tabc:#dbc99c}
+.tabs li:nth-child(4) a{--tabc:#c6ae78}
+.tabs li:nth-child(5) a{--tabc:#d2bd8a}
+.tabs a:hover{transform:translateY(-5px);z-index:6;background:none}
+.tabs a[aria-current]{transform:translateY(-3px);z-index:5}
+.tabs a[aria-current]::before{background:var(--paper)}
+
+/* ============ SHEETS ============ */
+main{display:block;padding:3.2rem 0 1rem}
+.sheet{
+  position:relative;
+  width:min(59rem,93vw);
+  margin:0 auto 3.4rem;
+  background:var(--paper);background-image:var(--grain);
+  color:var(--ink);
+  padding:4rem clamp(1.25rem,5vw,4rem) 3.4rem;
+  transform:rotate(var(--lean,0deg));
+  box-shadow:0 24px 44px -20px rgba(12,8,3,.65), 0 4px 10px -4px rgba(12,8,3,.4);
+}
+.sheet.alt{background-color:var(--paper-warm)}
+.sheet::before{ /* two punch holes, desk shows through */
+  content:"";position:absolute;top:15px;left:50%;transform:translateX(-50%);
+  width:124px;height:18px;
+  background-image:
+    radial-gradient(circle at 9px 9px, var(--desk-deep) 6.5px, rgba(0,0,0,.5) 7px, rgba(58,43,18,.35) 8px, transparent 9px),
+    radial-gradient(circle at 9px 9px, var(--desk-deep) 6.5px, rgba(0,0,0,.5) 7px, rgba(58,43,18,.35) 8px, transparent 9px);
+  background-size:18px 18px;background-repeat:no-repeat;
+  background-position:0 0,106px 0;
+}
+html.fx .sheet.pulled{animation:pull .55s var(--ease)}
+@keyframes pull{
+  0%{transform:translateY(14px) rotate(calc(var(--lean,0deg) + .45deg));box-shadow:0 34px 54px -20px rgba(12,8,3,.75)}
+  100%{transform:rotate(var(--lean,0deg))}
+}
+
+.sheet-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.35rem 1.5rem;margin-bottom:.6rem}
+.sheet-head h2{font-family:var(--serif);font-weight:700;font-size:clamp(1.45rem,3.4vw,2.05rem);letter-spacing:.09em;text-transform:uppercase;text-wrap:balance}
+.form-no{font-family:var(--type);font-size:.82rem;color:var(--ink-soft);letter-spacing:.1em;text-transform:uppercase}
+.rule{border-top:3px solid var(--ink);position:relative;margin-bottom:2rem}
+.rule::after{content:"";position:absolute;left:0;right:0;top:2px;border-top:1px solid var(--ink)}
+
+p{max-width:70ch}
+.typed{font-family:var(--type)}
+.soft{color:var(--ink-soft)}
+
+/* ============ STAMPS ============ */
+.stamp{
+  display:inline-block;font-family:var(--type);text-transform:uppercase;
+  color:var(--red);border:3px double currentColor;padding:.28em .6em .2em;
+  font-size:clamp(.8rem,1.9vw,1.02rem);letter-spacing:.08em;line-height:1.25;text-align:center;
+  transform:rotate(var(--tilt,-5deg));
+  mix-blend-mode:multiply;opacity:.88;
+  filter:url(#roughen);
+  text-shadow:0 0 1px rgba(147,40,28,.35);
+  pointer-events:none;
+}
+.stamp.blue{color:var(--blue);text-shadow:0 0 1px rgba(46,74,107,.35)}
+html.fx .stamp[data-thump]{opacity:0}
+html.fx .stamp[data-thump].hit{animation:thump .55s var(--ease) forwards}
+@keyframes thump{
+  0%{opacity:0;transform:rotate(var(--tilt,-5deg)) scale(2.1);text-shadow:none}
+  55%{opacity:.92;transform:rotate(var(--tilt,-5deg)) scale(.94);text-shadow:0 0 7px currentColor}
+  100%{opacity:.88;transform:rotate(var(--tilt,-5deg)) scale(1);text-shadow:0 0 1px rgba(147,40,28,.35)}
+}
+.stamp.abs{position:absolute}
+
+/* ============ SUMMARY MEMO ============ */
+.letterhead{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1.25rem;position:relative;margin-bottom:.75rem}
+.seal{color:var(--ink);flex:none}
+.wordmark h1{font-family:var(--serif);font-weight:700;font-size:clamp(1.9rem,5vw,3rem);letter-spacing:.28em;text-transform:uppercase;line-height:1.05}
+.wordmark .lh-sub{font-family:var(--serif);font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin-top:.3rem}
+.file-meta{font-family:var(--type);font-size:.8rem;color:var(--ink-soft);text-align:right;line-height:1.9;letter-spacing:.05em}
+.memo-fields{margin:1.9rem 0 1.6rem;border-top:1px solid var(--ink-faint)}
+.memo-fields > div{display:grid;grid-template-columns:7.5rem 1fr;gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--ink-faint)}
+.memo-fields dt{font-family:var(--serif);font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);padding-top:.3em}
+.memo-fields dd{font-family:var(--type);font-size:1.02rem}
+.thesis{font-family:var(--type);font-size:clamp(1.18rem,2.6vw,1.55rem);line-height:1.55;max-width:34em;margin:1.4rem 0 1.6rem;text-wrap:pretty}
+.heritage{margin:1.8rem 0 2rem;padding:1rem 1.4rem;border-left:1px solid var(--ink);max-width:60ch}
+.heritage blockquote{font-family:var(--serif);font-style:italic;font-size:1.12rem;line-height:1.6}
+.heritage figcaption{font-family:var(--type);font-size:.8rem;color:var(--ink-soft);margin-top:.45rem;letter-spacing:.06em}
+.memo-ctas{font-family:var(--type);display:flex;flex-wrap:wrap;gap:.5rem 2.2rem;font-size:1rem}
+.stamp-est{right:clamp(.5rem,4vw,2.5rem);bottom:-1.1rem;--tilt:-7deg}
+
+/* ============ SERVICES FORM ============ */
+.form-box{border:1.5px solid var(--ink);box-shadow:inset 0 0 0 3px var(--paper),inset 0 0 0 4px var(--ink);background:inherit}
+.sheet.alt .form-box{box-shadow:inset 0 0 0 3px var(--paper-warm),inset 0 0 0 4px var(--ink)}
+.form-box-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.25rem 1.5rem;padding:.8rem 1.4rem;border-bottom:1.5px solid var(--ink);font-family:var(--serif);font-size:.74rem;font-weight:700;letter-spacing:.17em;text-transform:uppercase}
+.form-box-head .soft{font-weight:400}
+.entries{list-style:none;counter-reset:entry}
+.entry{position:relative;display:grid;grid-template-columns:5rem 1fr;gap:0 1.25rem;padding:1.35rem 1.4rem 1.3rem;border-bottom:1px solid var(--ink-faint)}
+.entry:last-child{border-bottom:0}
+.entry-no{font-family:var(--serif);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);padding-top:.5em}
+.entry-no b{display:block;font-family:var(--type);font-size:1.35rem;font-weight:400;color:var(--ink);letter-spacing:0}
+.entry h3{font-family:var(--type);font-weight:400;font-size:clamp(1.12rem,2.4vw,1.32rem);letter-spacing:.02em;border-bottom:1px solid rgba(40,34,23,.55);display:inline-block;padding:0 .35em .1em 0;text-shadow:.4px 0 0 rgba(40,34,23,.3)}
+.entry p{font-size:.94rem;color:var(--ink-soft);margin-top:.5rem;max-width:64ch}
+.stamp-fedramp{right:1.2rem;top:50%;translate:0 -50%;--tilt:6deg}
+
+/* ============ PERSONNEL RECORD ============ */
+.pgrid{display:grid;grid-template-columns:2fr 1.2fr 1fr;gap:1px;background:var(--ink);border:1.5px solid var(--ink);margin:0 0 2rem}
+.pgrid > div{background:var(--paper-warm);padding:.7rem .9rem .8rem}
+.sheet:not(.alt) .pgrid > div{background:var(--paper)}
+.pgrid .wide{grid-column:span 2}
+.pgrid .full{grid-column:1 / -1}
+.cell-label{display:block;font-family:var(--serif);font-size:.66rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.3rem}
+.cell-value{font-family:var(--type);font-size:1.08rem;line-height:1.5;text-shadow:.4px 0 0 rgba(40,34,23,.3)}
+.sub-head{font-family:var(--serif);font-size:.8rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin:2.2rem 0 .9rem;display:flex;align-items:baseline;gap:1rem}
+.sub-head::after{content:"";flex:1;border-top:1px solid var(--ink-faint);translate:0 -.35em}
+.record-list{list-style:none;position:relative}
+.record-list li{display:flex;gap:.8rem;align-items:baseline;padding:.55rem 0;border-bottom:1px dotted rgba(40,34,23,.4);font-family:var(--type);font-size:1.02rem}
+.record-list li:last-child{border-bottom:0}
+.record-list svg{flex:none;translate:0 .2em;color:var(--ink)}
+.cert-block{position:relative;padding-right:clamp(0rem,14vw,11rem)}
+.stamp-cka{right:0;top:.4rem;--tilt:8deg}
+.redact-line{font-family:var(--type);font-size:.95rem;color:var(--ink-soft);margin-top:1.6rem}
+.redact{display:inline-block;width:11.5em;max-width:52vw;height:.95em;background:var(--ink);vertical-align:-.12em;border-radius:1px}
+
+/* ============ PROCEDURE ============ */
+.steps{list-style:none;max-width:62ch}
+.steps li{position:relative;display:grid;grid-template-columns:3.4rem 1fr;gap:0 1.3rem;padding:0 0 2.1rem}
+.steps li:last-child{padding-bottom:.4rem}
+.steps li::before{content:"";position:absolute;left:1.65rem;top:3rem;bottom:.4rem;border-left:1px dashed rgba(40,34,23,.45)}
+.steps li:last-child::before{display:none}
+.step-no{width:3.05rem;height:3.05rem;border:1.5px solid var(--ink);border-radius:50%;display:grid;place-items:center;font-family:var(--type);font-size:1.3rem;background:inherit;position:relative;z-index:1}
+.steps h3{font-family:var(--type);font-weight:400;font-size:1.28rem;padding-top:.55rem;text-shadow:.4px 0 0 rgba(40,34,23,.3)}
+.steps p{font-size:.96rem;color:var(--ink-soft);margin-top:.35rem}
+
+/* ============ CONTACT ============ */
+.contact-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:2.5rem 3rem;align-items:start}
+.contact-copy p{margin-bottom:1.1rem}
+.btn{
+  display:inline-block;font-family:var(--type);font-size:.98rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink);text-decoration:none;background:var(--paper-warm);
+  border:1px solid var(--ink);
+  box-shadow:inset 0 0 0 3px var(--paper-warm),inset 0 0 0 4px var(--ink),0 3px 8px -3px rgba(12,8,3,.45);
+  padding:.85rem 1.5rem .8rem;
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .25s var(--ease);
+}
+.btn:hover{background:var(--manila);box-shadow:inset 0 0 0 3px var(--manila),inset 0 0 0 4px var(--ink),0 6px 12px -4px rgba(12,8,3,.5);transform:translateY(-2px)}
+.btn:active{transform:translateY(1px);box-shadow:inset 0 0 0 3px var(--manila),inset 0 0 0 4px var(--ink),0 1px 3px -1px rgba(12,8,3,.5)}
+.btn-row{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.7rem}
+
+.tag-anchor{position:relative;justify-self:center;padding-top:3.4rem}
+.fastener{position:absolute;top:.4rem;left:50%;translate:-50% 0;color:var(--ink)}
+.tag-swing{transform-origin:50% -2.6rem;will-change:transform;transform:rotate(var(--swing,-2deg))}
+.string{display:block;margin:-16px auto -6px;color:var(--ink-soft)}
+.tag-card{
+  width:min(19.5rem,78vw);background:var(--manila);background-image:var(--grain);
+  border:1px solid rgba(40,34,23,.6);
+  box-shadow:0 14px 26px -12px rgba(12,8,3,.6);
+  padding:2.1rem 1.5rem 1.5rem;position:relative;text-align:left;
+  clip-path:polygon(0 14px,14px 0,calc(100% - 14px) 0,100% 14px,100% 100%,0 100%);
+}
+.tag-hole{position:absolute;top:.65rem;left:50%;translate:-50% 0;width:20px;height:20px;border-radius:50%;
+  background:radial-gradient(circle at 50% 50%, var(--desk) 4.5px, rgba(0,0,0,.45) 5px, var(--paper-warm) 6px, rgba(40,34,23,.65) 9px, transparent 10px)}
+.tag-title{font-family:var(--serif);font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;text-align:center;color:var(--ink-soft);margin-bottom:1rem}
+.tag-card ul{list-style:none}
+.tag-card li{display:flex;gap:.7rem;align-items:baseline;font-family:var(--type);font-size:.95rem;line-height:1.5;padding:.5rem 0;border-top:1px dotted rgba(40,34,23,.45)}
+.tag-card li:first-child{border-top:0}
+.tag-card svg{flex:none;translate:0 .25em;color:var(--ink)}
+.tag-card a{text-decoration-color:rgba(40,34,23,.55)}
+
+/* ============ FOOTER ============ */
+.footer{color:#cdbf9d;text-align:center;padding:1.2rem 1rem 3.2rem;font-family:var(--type);letter-spacing:.08em}
+.footer .eof{font-family:var(--serif);font-size:.72rem;letter-spacing:.42em;text-transform:uppercase;color:#b5a57e;display:block;margin-bottom:.7rem}
+.footer small{font-size:.9rem}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:760px){
+  .letterhead{grid-template-columns:auto 1fr;row-gap:.5rem}
+  .file-meta{grid-column:1 / -1;text-align:left;border-top:1px solid var(--ink-faint);padding-top:.6rem}
+  .pgrid{grid-template-columns:1fr 1fr}
+  .pgrid .wide{grid-column:1 / -1}
+  .contact-grid{grid-template-columns:1fr}
+  .tabs ul{justify-content:flex-start}
+  .tabs a{padding:.45rem 1rem .55rem;font-size:.72rem}
+}
+@media (max-width:620px){
+  .entry{grid-template-columns:1fr;gap:.3rem}
+  .entry-no{display:flex;gap:.5rem;align-items:baseline;padding:0}
+  .entry-no b{font-size:1.05rem}
+  .stamp.abs.stamp-fedramp{position:static;translate:none;margin-top:.9rem;justify-self:start}
+  .stamp.abs.stamp-est{position:static;margin-top:1.2rem;grid-column:1 / -1;justify-self:start;white-space:nowrap}
+  .cert-block{padding-right:0}
+  .stamp.abs.stamp-cka{position:static;margin:.6rem 0 0;display:inline-block}
+  .memo-fields > div{grid-template-columns:1fr;gap:.1rem;padding:.5rem 0}
+  .sheet{padding-top:3.4rem}
+}
+
+/* ============ REDUCED MOTION ============ */
+@media (prefers-reduced-motion: reduce){
+  .cover{display:none !important}
+  .caret{animation:none}
+  *{transition-duration:.01ms !important;animation-duration:.01ms !important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#summary">Skip to the summary sheet</a>
+
+<!-- Hidden SVG defs: ink roughening for the rubber stamps -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="roughen" x="-6%" y="-6%" width="112%" height="112%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="2" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6"/>
+  </filter>
+</svg>
+
+<!-- ============ COVER ============ -->
+<div class="cover" id="cover">
+  <button class="folder" id="openBtn" type="button" aria-label="Open the IronRim case file">
+    <span class="folder-tab">Case file · IR-0470</span>
+    <span class="f-case">Capability dossier</span>
+    <span class="f-title">IronRim</span>
+    <span class="f-rule" aria-hidden="true"></span>
+    <span class="f-sub">Enterprise technology consulting</span>
+    <span class="f-meta">Columbus, Ohio &middot; File No. IR-0470</span>
+    <span class="stamp blue f-stamp" style="--tilt:-4deg">Open record</span>
+    <span class="f-hint">Press, or scroll, to open the file<span class="caret" aria-hidden="true"></span></span>
+  </button>
+</div>
+
+<!-- ============ FOLDER TABS ============ -->
+<nav class="tabs" aria-label="Dossier sections">
+  <ul>
+    <li><a href="#summary" aria-current="true">Summary</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#personnel">Personnel</a></li>
+    <li><a href="#procedure">Procedure</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main id="main">
+
+  <!-- ============ SUMMARY MEMORANDUM ============ -->
+  <section class="sheet" id="summary" style="--lean:-.3deg" aria-labelledby="summary-h">
+    <header class="letterhead">
+      <svg class="seal" width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false">
+        <circle cx="32" cy="32" r="29"/>
+        <circle cx="32" cy="32" r="23.5"/>
+        <circle cx="32" cy="32" r="12"/>
+        <circle cx="32" cy="32" r="3.2"/>
+        <path d="M32 20v8M32 36v8M20 32h8M36 32h8M23.5 23.5l5.7 5.7M34.8 34.8l5.7 5.7M40.5 23.5l-5.7 5.7M29.2 34.8l-5.7 5.7"/>
+      </svg>
+      <div class="wordmark">
+        <h1>IronRim</h1>
+        <p class="lh-sub">Enterprise technology consulting &middot; Columbus, Ohio</p>
+      </div>
+      <p class="file-meta">
+        File No. IR-0470<br>
+        Filed: Columbus, Ohio<br>
+        Status: open record
+      </p>
+      <span class="stamp abs stamp-est" data-thump>Est. Columbus OH</span>
+    </header>
+    <div class="rule" aria-hidden="true"></div>
+
+    <h2 class="visually-hidden" id="summary-h">Summary of capability</h2>
+    <dl class="memo-fields">
+      <div><dt>To</dt><dd class="typed">The prospective client, upon review</dd></div>
+      <div><dt>From</dt><dd class="typed">IronRim, principal desk</dd></div>
+      <div><dt>Subject</dt><dd class="typed">Summary of capability</dd></div>
+    </dl>
+
+    <p class="thesis">We architect and operate the systems enterprises bet on: AI platforms, cloud infrastructure, and the observability, security, and compliance that keep them trustworthy.</p>
+
+    <p>This file contains the full record: eight services rendered, the qualification record of our principal architect, our four-step procedure of engagement, and the routing for correspondence. Nothing in it is padded, and nothing you need has been withheld.</p>
+
+    <figure class="heritage">
+      <blockquote>&ldquo;Rare expertise, delivered with customer obsession, accountability, and timeliness.&rdquo;</blockquote>
+      <figcaption>Standing instruction, applied to every engagement.</figcaption>
+    </figure>
+
+    <p class="memo-ctas">
+      <a href="#services">Proceed to Form IR-8: Services</a>
+      <a href="#contact">Skip to correspondence</a>
+    </p>
+  </section>
+
+  <!-- ============ SERVICES: STANDARD FORM IR-8 ============ -->
+  <section class="sheet alt" id="services" style="--lean:.35deg" aria-labelledby="services-h">
+    <header class="sheet-head">
+      <h2 id="services-h">Services rendered</h2>
+      <span class="form-no">Standard Form IR-8 &middot; complete in full</span>
+    </header>
+    <div class="rule" aria-hidden="true"></div>
+
+    <div class="form-box">
+      <div class="form-box-head">
+        <span>Schedule of services &middot; eight entries</span>
+        <span class="soft">Type or print firmly</span>
+      </div>
+      <ol class="entries">
+        <li class="entry">
+          <span class="entry-no">Entry <b>No. 1</b></span>
+          <div>
+            <h3>AI &amp; GenAI Engineering</h3>
+            <p>LLM platforms, RAG pipelines, MLOps, AI guardrails and governance. Instruments of record: AWS Bedrock, SageMaker, Azure OpenAI, LangChain, vector databases.</p>
+          </div>
+        </li>
+        <li class="entry">
+          <span class="entry-no">Entry <b>No. 2</b></span>
+          <div>
+            <h3>Observability &amp; SRE</h3>
+            <p>Dynatrace, Datadog, Splunk, Prometheus, Grafana, OpenTelemetry. SLOs, alerting, incident readiness, cost visibility.</p>
+          </div>
+        </li>
+        <li class="entry">
+          <span class="entry-no">Entry <b>No. 3</b></span>
+          <div>
+            <h3>DevOps &amp; Platform Engineering</h3>
+            <p>CI/CD with Jenkins, GitHub Actions, Azure DevOps, ArgoCD. Kubernetes and OpenShift platforms, Helm, GitOps.</p>
+          </div>
+        </li>
+        <li class="entry">
+          <span class="entry-no">Entry <b>No. 4</b></span>
+          <div>
+            <h3>Cloud Architecture</h3>
+            <p>AWS, Azure, GCP. Landing zones, multi-region resilience, migration and modernization.</p>
+          </div>
+        </li>
+        <li class="entry">
+          <span class="entry-no">Entry <b>No. 5</b></span>
+          <div>
+            <h3>Infrastructure as Code</h3>
+            <p>Terraform, ARM, CloudFormation, Ansible. Reusable modules, repeatable environments, drift-free automation.</p>
+          </div>
+        </li>
+        <li class="entry">
+          <span class="entry-no">Entry <b>No. 6</b></span>
+          <div>
+            <h3>Security &amp; Identity</h3>
+            <p>IAM, network isolation, KMS and Key Vault, DLP, RBAC, secure AI workloads.</p>
+          </div>
+        </li>
+        <li class="entry">
+          <span class="entry-no">Entry <b>No. 7</b></span>
+          <div>
+            <h3>Compliance</h3>
+            <p style="max-width:44ch">FedRAMP High and Moderate, NIST, CIS, HIPAA, GxP. Azure Government experience.</p>
+          </div>
+          <span class="stamp abs stamp-fedramp" data-thump>FedRAMP High<br>experience</span>
+        </li>
+        <li class="entry">
+          <span class="entry-no">Entry <b>No. 8</b></span>
+          <div>
+            <h3>Data &amp; Analytics</h3>
+            <p>Snowflake, Databricks, data platforms and pipelines that feed AI.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ PERSONNEL QUALIFICATION RECORD ============ -->
+  <section class="sheet" id="personnel" style="--lean:-.25deg" aria-labelledby="personnel-h">
+    <header class="sheet-head">
+      <h2 id="personnel-h">Personnel qualification record</h2>
+      <span class="form-no">Form IR-201 &middot; principal architect</span>
+    </header>
+    <div class="rule" aria-hidden="true"></div>
+
+    <p style="margin-bottom:1.8rem">IronRim is led by its principal architect. The firm speaks as one desk, and the desk has a record. It follows, typed in full.</p>
+
+    <div class="pgrid">
+      <div><span class="cell-label">Name (surname, given)</span><span class="cell-value">Chawla, Prashant</span></div>
+      <div><span class="cell-label">Position</span><span class="cell-value">Principal architect</span></div>
+      <div><span class="cell-label">Years in field</span><span class="cell-value">17+</span></div>
+      <div class="wide"><span class="cell-label">Prior service</span><span class="cell-value">JP Morgan Chase, Global Technology Infrastructure, 9 years. Amazon, engineer.</span></div>
+      <div><span class="cell-label">Platform record</span><span class="cell-value">AWS, 10 years<br>Azure, 8 years</span></div>
+      <div class="full"><span class="cell-label">Field of record</span><span class="cell-value">Enterprise infrastructure: the architecture and operation of large systems that are expected not to fail.</span></div>
+    </div>
+
+    <div class="cert-block">
+      <h3 class="sub-head">Certifications of record</h3>
+      <ul class="record-list">
+        <li>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="1.5" y="1.5" width="13" height="13"/><path d="M4.5 8.2l2.4 2.6 4.6-5.4"/></svg>
+          Microsoft Certified: Azure Solutions Architect Expert
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="1.5" y="1.5" width="13" height="13"/><path d="M4.5 8.2l2.4 2.6 4.6-5.4"/></svg>
+          AWS Certified Solutions Architect, Professional
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="1.5" y="1.5" width="13" height="13"/><path d="M4.5 8.2l2.4 2.6 4.6-5.4"/></svg>
+          AWS Certified Solutions Architect, Associate
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="1.5" y="1.5" width="13" height="13"/><path d="M4.5 8.2l2.4 2.6 4.6-5.4"/></svg>
+          Certified Kubernetes Administrator (CKA)
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="1.5" y="1.5" width="13" height="13"/><path d="M4.5 8.2l2.4 2.6 4.6-5.4"/></svg>
+          Dynatrace Associate Certified
+        </li>
+      </ul>
+      <span class="stamp abs stamp-cka" data-thump>CKA certified</span>
+    </div>
+
+    <h3 class="sub-head">Engagement record, descriptors only</h3>
+    <ul class="record-list">
+      <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M2 13.5V4l3-2h6l3 2v9.5M2 13.5h12M5.5 6.5v4M8 6.5v4M10.5 6.5v4"/></svg>Fortune 500 financial services</li>
+      <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M2 13.5V4l3-2h6l3 2v9.5M2 13.5h12M5.5 6.5v4M8 6.5v4M10.5 6.5v4"/></svg>Big Four consulting</li>
+      <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M2 13.5V4l3-2h6l3 2v9.5M2 13.5h12M5.5 6.5v4M8 6.5v4M10.5 6.5v4"/></svg>US federal agencies on Azure Government, FedRAMP High workloads</li>
+      <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M2 13.5V4l3-2h6l3 2v9.5M2 13.5h12M5.5 6.5v4M8 6.5v4M10.5 6.5v4"/></svg>Healthcare and pharma manufacturing</li>
+    </ul>
+
+    <p class="redact-line">Client names: <span class="redact" aria-hidden="true"></span> withheld as a matter of policy. The descriptors above tell you everything you need.</p>
+  </section>
+
+  <!-- ============ PROCEDURE ROUTING SLIP ============ -->
+  <section class="sheet alt" id="procedure" style="--lean:.3deg" aria-labelledby="procedure-h">
+    <header class="sheet-head">
+      <h2 id="procedure-h">Procedure of engagement</h2>
+      <span class="form-no">Routing slip &middot; four actions, in order</span>
+    </header>
+    <div class="rule" aria-hidden="true"></div>
+
+    <ol class="steps">
+      <li>
+        <span class="step-no" aria-hidden="true">1</span>
+        <div>
+          <h3>Assess</h3>
+          <p>We read the file before we write in it: your current systems, your constraints, and what is actually at stake.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no" aria-hidden="true">2</span>
+        <div>
+          <h3>Architect</h3>
+          <p>We draw the design, name the trade-offs out loud, and put both in writing before anything is built.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no" aria-hidden="true">3</span>
+        <div>
+          <h3>Automate</h3>
+          <p>We build it as code, so every environment is repeatable, reviewable, and free of drift.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no" aria-hidden="true">4</span>
+        <div>
+          <h3>Operate</h3>
+          <p>We stay on the record after go-live: observability, incident readiness, and steady hands.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ============ CORRESPONDENCE ============ -->
+  <section class="sheet" id="contact" style="--lean:-.2deg" aria-labelledby="contact-h">
+    <header class="sheet-head">
+      <h2 id="contact-h">Correspondence</h2>
+      <span class="form-no">Routing: direct to the principal desk</span>
+    </header>
+    <div class="rule" aria-hidden="true"></div>
+
+    <div class="contact-grid">
+      <div class="contact-copy">
+        <p>Write or call. State your systems and your constraints, and we will come back with questions worth answering. No form letters, no queue.</p>
+        <p class="soft" style="font-size:.95rem">The tag at right carries the full routing details. Attach it to whatever you send around internally; that is what it is for.</p>
+        <div class="btn-row">
+          <a class="btn" href="mailto:info@ironrim.com">Type a letter</a>
+          <a class="btn" href="tel:+19182550687">Place a call</a>
+        </div>
+      </div>
+
+      <div class="tag-anchor">
+        <svg class="fastener" width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false">
+          <circle cx="13" cy="13" r="6"/>
+          <path d="M13 7V2.5M13 19v4.5"/>
+        </svg>
+        <div class="tag-swing" id="tagSwing">
+          <svg class="string" width="60" height="42" viewBox="0 0 60 42" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true" focusable="false">
+            <path d="M30 1 C 22 12, 40 22, 30 41"/>
+          </svg>
+          <div class="tag-card">
+            <span class="tag-hole" aria-hidden="true"></span>
+            <p class="tag-title">Correspondence tag &middot; IronRim</p>
+            <ul>
+              <li>
+                <svg width="17" height="17" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="1.5" y="3" width="14" height="11"/><path d="M1.5 4l7 6 7-6"/></svg>
+                <a href="mailto:info@ironrim.com">info@ironrim.com</a>
+              </li>
+              <li>
+                <svg width="17" height="17" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M3 2h3l1.6 3.8-2 1.7a11 11 0 0 0 4 4l1.7-2 3.7 1.6v3a1 1 0 0 1-1 1A13 13 0 0 1 2 3a1 1 0 0 1 1-1Z"/></svg>
+                <a href="tel:+19182550687">+1 918 255 0687</a>
+              </li>
+              <li>
+                <svg width="17" height="17" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M2 14.5V4.5l3.5-2.5 3.5 2.5v10M9 14.5V7h6v7.5M2 14.5h13M4.5 7v3M11.5 9.5v2"/></svg>
+                <span>470 W Broad St,<br>Columbus, OH 43215</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span class="eof">End of file</span>
+  <small>&copy; 2026 IronRim. Columbus, Ohio.</small>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var root=document.documentElement;
+  var fx=root.classList.contains('fx');
+  var cover=document.getElementById('cover');
+  var openBtn=document.getElementById('openBtn');
+  var inertables=[document.querySelector('.tabs'),document.getElementById('main'),document.querySelector('.footer')];
+
+  /* Cover: opens on press, first scroll intent, any key, or on its own after a beat. */
+  if(fx&&cover){
+    try{history.scrollRestoration='manual';}catch(e){}
+    window.scrollTo(0,0);
+    inertables.forEach(function(el){if(el)el.inert=true;});
+    if(openBtn)openBtn.focus({preventScroll:true});
+    var timer=setTimeout(openFile,2600);
+    var opts={passive:true};
+    window.addEventListener('wheel',openFile,opts);
+    window.addEventListener('touchstart',openFile,opts);
+    window.addEventListener('keydown',keyOpen);
+    if(openBtn)openBtn.addEventListener('click',openFile);
+  }else if(cover){
+    cover.hidden=true;
+  }
+  function keyOpen(e){if(e.key==='Tab')return;openFile();}
+  function openFile(){
+    if(root.classList.contains('file-open'))return;
+    clearTimeout(timer);
+    root.classList.add('file-open');
+    root.classList.remove('file-closed');
+    inertables.forEach(function(el){if(el)el.inert=false;});
+    window.removeEventListener('wheel',openFile);
+    window.removeEventListener('touchstart',openFile);
+    window.removeEventListener('keydown',keyOpen);
+    setTimeout(function(){cover.hidden=true;},1350);
+  }
+
+  /* Stamps thump in when their sheet scrolls into view. */
+  if(fx){
+    var so=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){en.target.classList.add('hit');so.unobserve(en.target);}
+      });
+    },{threshold:.6,rootMargin:'0px 0px -6% 0px'});
+    document.querySelectorAll('.stamp[data-thump]').forEach(function(s){so.observe(s);});
+  }
+
+  /* Folder tabs: mark the section under the reader, pull a sheet forward on tab press. */
+  var tabLinks=Array.prototype.slice.call(document.querySelectorAll('.tabs a'));
+  var byId={};
+  tabLinks.forEach(function(a){byId[a.getAttribute('href').slice(1)]=a;});
+  function setCurrent(id){
+    tabLinks.forEach(function(a){a.removeAttribute('aria-current');});
+    if(byId[id])byId[id].setAttribute('aria-current','true');
+  }
+  if('IntersectionObserver' in window){
+    var no=new IntersectionObserver(function(es){
+      es.forEach(function(en){if(en.isIntersecting)setCurrent(en.target.id);});
+    },{rootMargin:'-38% 0px -55% 0px'});
+    document.querySelectorAll('main .sheet').forEach(function(s){no.observe(s);});
+  }
+  tabLinks.forEach(function(a){
+    a.addEventListener('click',function(){
+      setCurrent(a.getAttribute('href').slice(1));
+      if(!fx)return;
+      var sheet=document.getElementById(a.getAttribute('href').slice(1));
+      if(!sheet)return;
+      sheet.classList.remove('pulled');
+      void sheet.offsetWidth;
+      sheet.classList.add('pulled');
+    });
+  });
+
+  /* Treasury tag: swings from scroll momentum, settles like a pendulum. */
+  var tag=document.getElementById('tagSwing');
+  if(fx&&tag){
+    var angle=-2,vel=0,rest=-2,lastY=window.scrollY;
+    (function swing(){
+      var y=window.scrollY,dy=y-lastY;lastY=y;
+      vel+=Math.max(-14,Math.min(14,dy))*.055;
+      vel+=(rest-angle)*.045;      /* pull back to rest */
+      vel*=.945;                   /* air resistance */
+      angle+=vel;
+      tag.style.setProperty('--swing',angle.toFixed(3)+'deg');
+      requestAnimationFrame(swing);
+    })();
+  }
+})();
+</script>
+</body>
+</html>
