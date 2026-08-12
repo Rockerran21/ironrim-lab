@@ -520,6 +520,14 @@
   .contact-form textarea { min-height: 130px; resize: vertical; }
   .contact-form .btn { margin-top: 24px; cursor: pointer; }
   .form-note { color: var(--gray-l); font-size: 0.8125rem; margin-top: 12px; }
+  .contact-layout { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 72px; margin-top: 56px; align-items: start; }
+  @media (max-width: 900px) { .contact-layout { grid-template-columns: 1fr; gap: 48px; } }
+  .contact-form { margin-top: 0; max-width: none; }
+  .contact-rail { display: grid; gap: 28px; }
+  .contact-rail h3 { font-size: 0.9375rem; color: #fff; margin-bottom: 4px; }
+  .contact-rail address { font-style: normal; color: var(--gray-l); line-height: 1.6; }
+  .contact-rail .contact-visual { margin: 8px 0 0; }
+  .contact-rail .contact-visual img { width: 100%; display: block; object-fit: cover; aspect-ratio: 16 / 10; }
 </style>
 </head>
 <body id="top">
@@ -555,14 +563,42 @@
 </header>
 
 <main id="main">
-<section id="contact" class="contact band-dark" aria-labelledby="contact-h">
-  <div class="wrap" data-reveal>
-    <div class="contact-grid">
-      <div>
-        <span class="eyebrow">Contact</span>
-        <h2 id="contact-h">Talk to IronRim</h2>
-        <p class="contact-lede">Tell us what your systems need to do. We will come back with an honest read on the work, the risks, and the path.</p>
-        <div class="contact-cols">
+  <section class="contact band-dark" aria-labelledby="contact-h">
+    <div class="wrap" data-reveal>
+      <span class="eyebrow">Contact</span>
+      <h1 id="contact-h" style="color:#fff; font-size:clamp(2.2rem,5vw,3.75rem); margin-top:8px;">Talk to IronRim</h1>
+      <p class="contact-lede">Tell us what your systems need to do. We will come back with an honest read on the work, the risks, and the path.</p>
+      <div class="contact-layout">
+        <form class="contact-form" id="cform">
+          <h2 style="font-size:1.25rem; color:#fff; margin-bottom:6px;">Send us a message</h2>
+          <div class="frow">
+            <div><label for="cf-name">Your name</label>
+            <input id="cf-name" name="name" type="text" autocomplete="name" required></div>
+            <div><label for="cf-company">Company</label>
+            <input id="cf-company" name="company" type="text" autocomplete="organization"></div>
+          </div>
+          <div class="frow">
+            <div><label for="cf-email">Work email</label>
+            <input id="cf-email" name="email" type="email" autocomplete="email" required></div>
+            <div><label for="cf-topic">What do you need</label>
+            <select id="cf-topic" name="topic">
+              <option>General enquiry</option>
+              <option>AI &amp; GenAI Engineering</option>
+              <option>Observability &amp; SRE</option>
+              <option>DevOps &amp; Platform Engineering</option>
+              <option>Cloud Architecture</option>
+              <option>Infrastructure as Code</option>
+              <option>Security &amp; Identity</option>
+              <option>Compliance</option>
+              <option>Data &amp; Analytics</option>
+            </select></div>
+          </div>
+          <label for="cf-msg">Message</label>
+          <textarea id="cf-msg" name="message" required></textarea>
+          <button class="btn btn-outline" type="submit">Send message <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></button>
+          <p class="form-note">Sending opens your email client with the message addressed to info@ironrim.com.</p>
+        </form>
+        <aside class="contact-rail">
           <div>
             <h3>Email</h3>
             <p><a class="big" href="mailto:info@ironrim.com">info@ironrim.com</a></p>
@@ -575,45 +611,13 @@
             <h3>Headquarters</h3>
             <address>IronRim<br>470 W Broad St<br>Columbus, OH 43215, USA</address>
           </div>
-        </div>
-        <a class="btn btn-outline" href="mailto:info@ironrim.com?subject=Consultation%20request">Book a consultation <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
+          <figure class="contact-visual">
+            <img src="../../img/contact-abstract.jpg" loading="lazy" decoding="async" alt="Abstract render of a connected network of blue nodes">
+          </figure>
+        </aside>
       </div>
-      <figure class="contact-visual">
-        <img src="../../img/contact-abstract.jpg" alt="Abstract render of a connected network of blue nodes" loading="lazy" decoding="async" width="1600" height="900">
-      </figure>
     </div>
-  </div>
-      <form class="contact-form" id="cform" data-reveal>
-        <h3>Send us a message</h3>
-        <div class="frow">
-          <div><label for="cf-name">Your name</label>
-          <input id="cf-name" name="name" type="text" autocomplete="name" required></div>
-          <div><label for="cf-company">Company</label>
-          <input id="cf-company" name="company" type="text" autocomplete="organization"></div>
-        </div>
-        <div class="frow">
-          <div><label for="cf-email">Work email</label>
-          <input id="cf-email" name="email" type="email" autocomplete="email" required></div>
-          <div><label for="cf-topic">What do you need</label>
-          <select id="cf-topic" name="topic">
-          <option>General enquiry</option>
-          <option>AI &amp; GenAI Engineering</option>
-          <option>Observability &amp; SRE</option>
-          <option>DevOps &amp; Platform Engineering</option>
-          <option>Cloud Architecture</option>
-          <option>Infrastructure as Code</option>
-          <option>Security &amp; Identity</option>
-          <option>Compliance</option>
-          <option>Data &amp; Analytics</option>
-        </select></div>
-        </div>
-        <label for="cf-msg">Message</label>
-        <textarea id="cf-msg" name="message" required></textarea>
-        <button class="btn btn-outline" type="submit">Send message <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></button>
-        <p class="form-note">Sending opens your email client with the message addressed to info@ironrim.com.</p>
-      </form>
-</section>
-
+  </section>
 </main>
 
 <!-- ============ FOOTER ============ -->
