@@ -144,6 +144,12 @@
       "slug": "24-burgundy",
       "name": "Deep Burgundy & Warm Gray",
       "status": "palette-variant"
+    },
+    {
+      "n": 25,
+      "slug": "25-multipage",
+      "name": "Multi-page (Slate)",
+      "status": "candidate"
     }
   ]
 }
