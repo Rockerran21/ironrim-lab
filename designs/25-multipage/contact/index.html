@@ -507,7 +507,9 @@
   .cta-band { padding: 88px 0; }
   .cta-band h2 { color: #fff; font-size: clamp(1.6rem, 3.4vw, 2.5rem); max-width: 26ch; }
   .cta-band .btn { margin-top: 28px; }
-  .contact-form { margin-top: 48px; max-width: 640px; }
+  .contact-form { margin-top: 56px; max-width: 720px; }
+  .contact-form .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+  @media (max-width: 640px) { .contact-form .frow { grid-template-columns: 1fr; } }
   .contact-form h3 { margin-bottom: 18px; }
   .contact-form label { display: block; font-size: 0.875rem; font-weight: 500; color: #fff; margin: 18px 0 6px; }
   .contact-form input, .contact-form select, .contact-form textarea {
@@ -547,7 +549,6 @@
       <a class="nav-link" href="../teams/">Teams</a>
       <a class="nav-link" href="../locations/">Locations</a>
       <a class="nav-link" href="../company/">Company</a>
-      <a class="nav-link" aria-current="page" href="../contact/">Contact</a>
       <a class="btn btn-outline btn-nav" href="mailto:info@ironrim.com?subject=Consultation%20request">Book a consultation <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
     </nav>
   </div>
@@ -584,14 +585,17 @@
   </div>
       <form class="contact-form" id="cform" data-reveal>
         <h3>Send us a message</h3>
-        <label for="cf-name">Your name</label>
-        <input id="cf-name" name="name" type="text" autocomplete="name" required>
-        <label for="cf-company">Company</label>
-        <input id="cf-company" name="company" type="text" autocomplete="organization">
-        <label for="cf-email">Work email</label>
-        <input id="cf-email" name="email" type="email" autocomplete="email" required>
-        <label for="cf-topic">What do you need</label>
-        <select id="cf-topic" name="topic">
+        <div class="frow">
+          <div><label for="cf-name">Your name</label>
+          <input id="cf-name" name="name" type="text" autocomplete="name" required></div>
+          <div><label for="cf-company">Company</label>
+          <input id="cf-company" name="company" type="text" autocomplete="organization"></div>
+        </div>
+        <div class="frow">
+          <div><label for="cf-email">Work email</label>
+          <input id="cf-email" name="email" type="email" autocomplete="email" required></div>
+          <div><label for="cf-topic">What do you need</label>
+          <select id="cf-topic" name="topic">
           <option>General enquiry</option>
           <option>AI &amp; GenAI Engineering</option>
           <option>Observability &amp; SRE</option>
@@ -601,7 +605,8 @@
           <option>Security &amp; Identity</option>
           <option>Compliance</option>
           <option>Data &amp; Analytics</option>
-        </select>
+        </select></div>
+        </div>
         <label for="cf-msg">Message</label>
         <textarea id="cf-msg" name="message" required></textarea>
         <button class="btn btn-outline" type="submit">Send message <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></button>
