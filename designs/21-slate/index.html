@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IronRim - Slate Blue & Cool Gray</title>
 <meta name="description" content="IronRim is an enterprise technology consulting firm headquartered in Columbus, Ohio, delivering cloud, AI, observability, and DevOps platforms from eight locations worldwide.">
+<meta property="og:title" content="IronRim - Enterprise Cloud, AI and DevOps Consulting">
+<meta property="og:description" content="Enterprise systems, architected to hold. Cloud, AI, observability, and DevOps delivery from eight locations worldwide.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<!-- og:image: add og.png (1200x630, on the generation list) beside this file, then: <meta property="og:image" content="og.png"> -->
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="%23C8C9CB"/><circle cx="16" cy="16" r="13" fill="%23B87333"/><circle cx="16" cy="16" r="8.5" fill="%23C8C9CB"/><circle cx="16" cy="16" r="7" fill="%231F49C9"/><path d="M10 14c2-2 5-2.5 7.5-1.5M12 19c2.5 1 5.5.5 7.5-1" stroke="%23E8ECF2" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,300&display=swap" rel="stylesheet">
@@ -147,6 +153,11 @@
     padding: 6px 0; border-bottom: 2px solid transparent;
   }
   .site-nav a.nav-link:hover { color: #fff; border-bottom-color: #fff; }
+  .site-nav a.nav-link[aria-current="true"] { color: #fff; border-bottom-color: var(--accent); }
+  .btn svg, .text-link svg { transition: transform 0.25s var(--ease); }
+  .btn:hover svg, .text-link:hover svg { transform: translateX(4px); }
+  html { scrollbar-color: var(--d3) var(--surface-l); }
+  address, a[href^="tel:"] { font-variant-numeric: tabular-nums; }
 
   @media (max-width: 880px) {
     .nav-toggle { display: inline-flex; }
@@ -205,6 +216,14 @@
 
   /* ---------- Proof band ---------- */
   .proof { border-top: 1px solid var(--d3); padding: 56px 0; }
+  .stat-row {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+    margin-top: 48px; padding-top: 48px; border-top: 1px solid var(--d3);
+  }
+  @media (max-width: 760px) { .stat-row { grid-template-columns: repeat(2, 1fr); } }
+  .stat-row .dash { display: block; width: 24px; height: 4px; background: var(--accent); margin-bottom: 14px; }
+  .stat-row strong { display: block; font-size: clamp(2rem, 4vw, 3rem); font-weight: 500; letter-spacing: -0.02em; color: #fff; font-variant-numeric: tabular-nums; }
+  .stat-row span.cap { display: block; margin-top: 6px; font-size: 0.875rem; color: var(--gray-l); }
   .cert-row {
     display: flex; flex-wrap: wrap; gap: 14px 40px;
     list-style: none; margin-bottom: 28px;
@@ -360,6 +379,10 @@
     color: var(--gray-l); font-size: 0.8125rem;
   }
   .footer-bottom .brand { font-size: 1.0625rem; }
+  .back-top { display: inline-flex; align-items: center; gap: 6px; color: var(--gray-l); text-decoration: none; font-size: 0.875rem; }
+  .back-top:hover { color: var(--accent-tint); }
+  .back-top:hover svg { transform: translateY(-3px); }
+  .back-top svg { transition: transform 0.25s var(--ease); }
 
   /* ---------- Reveal motion (one system, gated) ---------- */
   @media (prefers-reduced-motion: no-preference) {
@@ -371,7 +394,7 @@
   }
 </style>
 </head>
-<body>
+<body id="top">
 
 <a class="skip-link" href="#main">Skip to content</a>
 
@@ -546,6 +569,12 @@
         <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.4l4 4L16.5 5.6" stroke="currentColor" stroke-width="2"/></svg> Dynatrace Associate</li>
       </ul>
       <p class="proof-line">17+ years enterprise infrastructure &middot; 9 years JP Morgan Chase Global Technology Infrastructure &middot; Former Amazon engineer &middot; FedRAMP High experience on Azure Government</p>
+      <dl class="stat-row">
+        <div><span class="dash" aria-hidden="true"></span><dt class="cap-dt" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Years of experience</dt><dd><strong>17+</strong><span class="cap">years in enterprise infrastructure</span></dd></div>
+        <div><span class="dash" aria-hidden="true"></span><dt style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Certifications</dt><dd><strong>5</strong><span class="cap">architect-level certifications</span></dd></div>
+        <div><span class="dash" aria-hidden="true"></span><dt style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Locations</dt><dd><strong>8</strong><span class="cap">delivery locations worldwide</span></dd></div>
+        <div><span class="dash" aria-hidden="true"></span><dt style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Coverage</dt><dd><strong>24h</strong><span class="cap">follow-the-sun coverage</span></dd></div>
+      </dl>
     </div>
   </section>
 
@@ -971,6 +1000,7 @@
         IronRim
       </span>
       <span>&copy; 2026 IronRim. Columbus, Ohio.</span>
+      <a href="#top" class="back-top">Back to top <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 12V2M3 6l4-4 4 4" stroke="currentColor" stroke-width="1.5"/></svg></a>
     </div>
   </div>
 </footer>
@@ -1032,6 +1062,23 @@
     items.forEach(function (el) { io.observe(el); });
   } else {
     items.forEach(function (el) { el.classList.add("revealed"); });
+  }
+
+  // Scrollspy: mark the nav link of the section in view
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll(".site-nav a.nav-link"));
+  var spySections = navLinks
+    .map(function (a) { return document.querySelector(a.getAttribute("href")); })
+    .filter(Boolean);
+  if ("IntersectionObserver" in window && spySections.length) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach(function (a) {
+          a.toggleAttribute("aria-current", a.getAttribute("href") === "#" + entry.target.id);
+        });
+      });
+    }, { rootMargin: "-30% 0px -60% 0px" });
+    spySections.forEach(function (s) { spy.observe(s); });
   }
 })();
 </script>
