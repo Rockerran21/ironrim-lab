@@ -518,6 +518,15 @@
   .contact-form textarea { min-height: 130px; resize: vertical; }
   .contact-form .btn { margin-top: 24px; cursor: pointer; }
   .form-note { color: var(--gray-l); font-size: 0.8125rem; margin-top: 12px; }
+  .mini-grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  @media (max-width: 1020px) { .mini-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .mini-grid { grid-template-columns: 1fr; } }
+  .mini-card { background: var(--surface-l); padding: 26px 26px 22px; display: flex; flex-direction: column; gap: 10px; }
+  .mini-card h3 { font-size: 1.0625rem; }
+  .mini-card h3 a { color: var(--black); text-decoration: none; }
+  .mini-card h3 a:hover { color: var(--accent-hover); }
+  .mini-card p { color: var(--gray); font-size: 0.875rem; line-height: 1.55; flex: 1; }
+  .mini-card .more { font-size: 0.875rem; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
 </style>
 </head>
 <body id="top">
@@ -705,6 +714,58 @@
 
   <!-- ============ TEAMS ============ -->
 <!-- SNIPPET A -->
+
+  <section class="whatwedo band-light" aria-labelledby="wwd-h">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">What we do</span>
+        <h2 id="wwd-h">Eight practices, one standard of delivery</h2>
+        <p>Cloud, AI, and the operations that keep them trustworthy. <a class="text-link" href="services/">See all services <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a></p>
+      </div>
+      <ul class="mini-grid" data-reveal>
+        <li class="mini-card">
+          <h3><a href="services/ai/">AI &amp; GenAI Engineering</a></h3>
+          <p>We design, build, and run LLM platforms that move generative AI out of pilots and into governed production systems.</p>
+          <a class="more" href="services/ai/" aria-label="Read more about AI and GenAI Engineering">Read more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
+        </li>
+        <li class="mini-card">
+          <h3><a href="services/observability/">Observability &amp; SRE</a></h3>
+          <p>We instrument your estate end to end so teams see failures before customers do, and reliability becomes a measured practice.</p>
+          <a class="more" href="services/observability/" aria-label="Read more about Observability and SRE">Read more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
+        </li>
+        <li class="mini-card">
+          <h3><a href="services/devops/">DevOps &amp; Platform Engineering</a></h3>
+          <p>We build internal platforms and delivery pipelines that let engineering teams ship faster without giving up control.</p>
+          <a class="more" href="services/devops/" aria-label="Read more about DevOps and Platform Engineering">Read more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
+        </li>
+        <li class="mini-card">
+          <h3><a href="services/cloud/">Cloud Architecture</a></h3>
+          <p>We architect cloud estates that hold up under scale, audit, and change, on the platforms your enterprise already trusts.</p>
+          <a class="more" href="services/cloud/" aria-label="Read more about Cloud Architecture">Read more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
+        </li>
+        <li class="mini-card">
+          <h3><a href="services/iac/">Infrastructure as Code</a></h3>
+          <p>We codify your infrastructure so every environment is reproducible, reviewable, and recoverable.</p>
+          <a class="more" href="services/iac/" aria-label="Read more about Infrastructure as Code">Read more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
+        </li>
+        <li class="mini-card">
+          <h3><a href="services/security/">Security &amp; Identity</a></h3>
+          <p>We harden identity, access, and secrets across your cloud estate, treating security as an architectural property rather than an add-on.</p>
+          <a class="more" href="services/security/" aria-label="Read more about Security and Identity">Read more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
+        </li>
+        <li class="mini-card">
+          <h3><a href="services/compliance/">Compliance</a></h3>
+          <p>We prepare regulated workloads for audit, drawing on delivery experience in FedRAMP High environments on Azure Government.</p>
+          <a class="more" href="services/compliance/" aria-label="Read more about Compliance">Read more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
+        </li>
+        <li class="mini-card">
+          <h3><a href="services/data/">Data &amp; Analytics</a></h3>
+          <p>We build the pipelines and platforms that turn operational data into decisions your teams can defend.</p>
+          <a class="more" href="services/data/" aria-label="Read more about Data and Analytics">Read more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
+        </li>
+      </ul>
+    </div>
+  </section>
 
   <section class="testimonial band-light" aria-label="Client testimonials">
     <div class="wrap">
