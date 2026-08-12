@@ -427,6 +427,31 @@
   }
   .teams-photo { margin: 8px 0 40px; }
   .teams-photo img { width: 100%; display: block; object-fit: cover; aspect-ratio: 21 / 9; filter: saturate(0.8); }
+  .testimonial { padding: 96px 0; }
+  .testimonial .client-quote { margin: 0; }
+  .testimonial .client-quote > p {
+    font-size: clamp(1.375rem, 2.6vw, 1.875rem); font-weight: 500;
+    letter-spacing: -0.02em; line-height: 1.4; max-width: 52ch; text-wrap: balance;
+  }
+  .testimonial .client-quote > p::before { content: ""; display: block; width: 24px; height: 4px; background: var(--accent); margin-bottom: 22px; }
+  .testimonial .client-quote footer { margin-top: 22px; color: var(--gray); font-size: 0.875rem; }
+  .svc-fig {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-bottom: 18px;
+    color: var(--gray);
+  }
+  .svc-fig .acc {
+    stroke: var(--accent);
+  }
+  .svc-fig .acc-text {
+    stroke: none;
+    fill: var(--accent);
+  }
+  .svc-fig text {
+    letter-spacing: 0.08em;
+  }
 </style>
 </head>
 <body>
@@ -617,48 +642,204 @@
       </div>
       <ul class="services-grid">
         <li class="service-card" id="svc-ai" data-reveal>
+          <svg class="svc-fig" viewBox="0 0 320 100" fill="none" aria-hidden="true" focusable="false">
+  <g stroke="currentColor" stroke-width="1.3">
+    <rect x="10" y="20" width="28" height="10" />
+    <rect x="10" y="34" width="28" height="10" />
+    <rect x="10" y="48" width="28" height="10" />
+    <text x="12" y="62" font-size="7" font-family="inherit" fill="currentColor">DOCS</text>
+    <line x1="42" y1="40" x2="68" y2="40" />
+    <circle cx="78" cy="32" r="3.5" />
+    <circle cx="90" cy="32" r="3.5" />
+    <circle cx="102" cy="32" r="3.5" />
+    <circle cx="78" cy="44" r="3.5" />
+    <circle cx="90" cy="44" r="3.5" />
+    <circle cx="102" cy="44" r="3.5" />
+    <text x="78" y="58" font-size="7" font-family="inherit" fill="currentColor">INDEX</text>
+    <line x1="106" y1="38" x2="128" y2="38" />
+    <rect class="acc" x="130" y="26" width="36" height="16" rx="4" />
+    <text x="138" y="37" font-size="7" font-family="inherit" fill="currentColor">LLM</text>
+    <line x1="170" y1="34" x2="194" y2="34" />
+    <rect x="196" y="22" width="42" height="24" rx="8" />
+    <line x1="196" y1="30" x2="216" y2="30" />
+    <line x1="200" y1="38" x2="220" y2="38" />
+    <text x="204" y="54" font-size="7" font-family="inherit" fill="currentColor">ANSWER</text>
+    <line x1="220" y1="50" x2="90" y2="50" stroke-dasharray="3,3" />
+    <polygon points="90,48 90,52 94,50" fill="currentColor" stroke="none" />
+    <text x="150" y="64" font-size="7" font-family="inherit" fill="currentColor">GROUND</text>
+  </g>
+</svg>
           <h3>AI &amp; GenAI Engineering</h3>
           <p>We design, build, and run LLM platforms that move generative AI out of pilots and into governed production systems.</p>
           <p class="meta">Azure OpenAI &middot; AWS Bedrock &middot; RAG pipelines &middot; MLOps</p>
           <a class="more" href="#contact" aria-label="Learn more about AI and GenAI Engineering">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#1F6FEB" stroke-width="1.5"/></svg></a>
         </li>
         <li class="service-card" id="svc-observability" data-reveal>
+          <svg class="svc-fig" viewBox="0 0 320 100" fill="none" aria-hidden="true" focusable="false">
+  <g stroke="currentColor" stroke-width="1.3">
+    <line x1="20" y1="82" x2="300" y2="82" />
+    <line x1="20" y1="80" x2="20" y2="84" />
+    <line x1="300" y1="80" x2="300" y2="84" />
+    <text x="286" y="92" font-size="7" font-family="inherit" fill="currentColor">P99</text>
+    <rect x="40" y="72" width="200" height="5" />
+    <rect x="40" y="62" width="160" height="5" />
+    <rect x="40" y="52" width="120" height="5" />
+    <rect class="acc" x="40" y="42" width="180" height="5" />
+    <rect x="40" y="32" width="80" height="5" />
+    <polygon class="acc" points="210,38 224,38 217,28" fill="none" />
+    <text x="210" y="24" font-size="7" font-family="inherit" fill="currentColor">SLOW</text>
+  </g>
+</svg>
           <h3>Observability &amp; SRE</h3>
           <p>We instrument your estate end to end so teams see failures before customers do, and reliability becomes a measured practice.</p>
           <p class="meta">Dynatrace &middot; OpenTelemetry &middot; SLOs &middot; Incident response</p>
           <a class="more" href="#contact" aria-label="Learn more about Observability and SRE">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#1F6FEB" stroke-width="1.5"/></svg></a>
         </li>
         <li class="service-card" id="svc-devops" data-reveal>
+          <svg class="svc-fig" viewBox="0 0 320 100" fill="none" aria-hidden="true" focusable="false">
+  <g stroke="currentColor" stroke-width="1.3">
+    <circle cx="30" cy="50" r="10" />
+    <text x="20" y="54" font-size="7" font-family="inherit" fill="currentColor">BUILD</text>
+    <line x1="40" y1="50" x2="70" y2="50" />
+    <circle cx="80" cy="50" r="10" />
+    <text x="72" y="54" font-size="7" font-family="inherit" fill="currentColor">TEST</text>
+    <line x1="90" y1="50" x2="120" y2="50" />
+    <circle class="acc" cx="130" cy="50" r="10" />
+    <text x="120" y="54" font-size="7" font-family="inherit" fill="currentColor">DEPLOY</text>
+    <line x1="140" y1="50" x2="170" y2="50" />
+    <circle cx="180" cy="50" r="10" />
+    <text x="172" y="54" font-size="7" font-family="inherit" fill="currentColor">RUN</text>
+    <path d="M130 60 C130 78 80 78 80 62" stroke-dasharray="3,3" />
+    <polygon points="80,62 78,70 84,68" fill="currentColor" stroke="none" />
+  </g>
+</svg>
           <h3>DevOps &amp; Platform Engineering</h3>
           <p>We build internal platforms and delivery pipelines that let engineering teams ship faster without giving up control.</p>
           <p class="meta">Kubernetes &middot; OpenShift &middot; GitOps &middot; CI/CD</p>
           <a class="more" href="#contact" aria-label="Learn more about DevOps and Platform Engineering">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#1F6FEB" stroke-width="1.5"/></svg></a>
         </li>
         <li class="service-card" id="svc-cloud" data-reveal>
+          <svg class="svc-fig" viewBox="0 0 320 100" fill="none" aria-hidden="true" focusable="false">
+  <g stroke="currentColor" stroke-width="1.3">
+    <circle cx="14" cy="50" r="6" />
+    <text x="6" y="68" font-size="7" font-family="inherit" fill="currentColor">ONPREM</text>
+    <line x1="20" y1="44" x2="52" y2="30" />
+    <line x1="20" y1="56" x2="52" y2="70" />
+    <rect x="52" y="20" width="250" height="68" />
+    <rect class="acc" x="252" y="10" width="14" height="16" />
+    <path d="M259 10 L259 16 L263 16 M259 16 L255 20 M259 16 L263 20" />
+    <rect x="62" y="30" width="70" height="16" />
+    <text x="72" y="42" font-size="7" font-family="inherit" fill="currentColor">PROD</text>
+    <rect x="140" y="30" width="70" height="16" />
+    <text x="145" y="42" font-size="7" font-family="inherit" fill="currentColor">NONPROD</text>
+    <rect x="218" y="30" width="70" height="16" />
+    <text x="228" y="42" font-size="7" font-family="inherit" fill="currentColor">SHARED</text>
+  </g>
+</svg>
           <h3>Cloud Architecture</h3>
           <p>We architect cloud estates that hold up under scale, audit, and change, on the platforms your enterprise already trusts.</p>
           <p class="meta">Azure &middot; AWS &middot; Landing zones &middot; Migration</p>
           <a class="more" href="#contact" aria-label="Learn more about Cloud Architecture">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#1F6FEB" stroke-width="1.5"/></svg></a>
         </li>
         <li class="service-card" id="svc-iac" data-reveal>
+          <svg class="svc-fig" viewBox="0 0 320 100" fill="none" aria-hidden="true" focusable="false">
+  <g stroke="currentColor" stroke-width="1.3">
+    <rect x="10" y="30" width="40" height="30" />
+    <line x1="18" y1="40" x2="42" y2="40" />
+    <line x1="18" y1="48" x2="42" y2="48" />
+    <line x1="18" y1="56" x2="34" y2="56" />
+    <text x="20" y="70" font-size="7" font-family="inherit" fill="currentColor">PLAN</text>
+    <line x1="54" y1="45" x2="90" y2="45" />
+    <polygon points="90,43 90,47 94,45" fill="currentColor" stroke="none" />
+    <rect x="110" y="30" width="50" height="30" />
+    <line class="acc" x1="118" y1="40" x2="150" y2="40" />
+    <text class="acc-text" x="118" y="40" font-size="7" font-family="inherit">+</text>
+    <line x1="118" y1="50" x2="146" y2="50" stroke-dasharray="2,2" />
+    <text x="128" y="70" font-size="7" font-family="inherit" fill="currentColor">APPLY</text>
+    <line x1="164" y1="45" x2="200" y2="45" />
+    <polygon points="200,43 200,47 204,45" fill="currentColor" stroke="none" />
+    <rect class="acc" x="220" y="28" width="20" height="10" />
+    <rect x="220" y="42" width="20" height="10" />
+    <rect x="220" y="56" width="20" height="10" />
+  </g>
+</svg>
           <h3>Infrastructure as Code</h3>
           <p>We codify your infrastructure so every environment is reproducible, reviewable, and recoverable.</p>
           <p class="meta">Terraform &middot; Ansible &middot; Policy as code</p>
           <a class="more" href="#contact" aria-label="Learn more about Infrastructure as Code">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#1F6FEB" stroke-width="1.5"/></svg></a>
         </li>
         <li class="service-card" id="svc-security" data-reveal>
+          <svg class="svc-fig" viewBox="0 0 320 100" fill="none" aria-hidden="true" focusable="false">
+  <g stroke="currentColor" stroke-width="1.3">
+    <circle cx="160" cy="50" r="32" />
+    <circle cx="160" cy="50" r="22" />
+    <circle cx="160" cy="50" r="12" />
+    <path class="acc" d="M160 44 L166 54 L154 54 Z" fill="none" />
+    <line x1="160" y1="50" x2="155" y2="48" />
+    <rect x="120" y="14" width="8" height="8" />
+    <rect x="156" y="14" width="8" height="8" />
+    <rect x="192" y="14" width="8" height="8" />
+    <rect x="120" y="50" width="8" height="8" />
+    <rect x="192" y="50" width="8" height="8" />
+    <rect class="acc" x="156" y="50" width="8" height="8" />
+    <line class="acc" x1="156" y1="54" x2="164" y2="54" />
+    <line class="acc" x1="160" y1="50" x2="160" y2="58" />
+    <text x="144" y="42" font-size="7" font-family="inherit" fill="currentColor">VERIFY</text>
+  </g>
+</svg>
           <h3>Security &amp; Identity</h3>
           <p>We harden identity, access, and secrets across your cloud estate, treating security as an architectural property rather than an add-on.</p>
           <p class="meta">IAM &middot; Zero trust &middot; Secrets management</p>
           <a class="more" href="#contact" aria-label="Learn more about Security and Identity">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#1F6FEB" stroke-width="1.5"/></svg></a>
         </li>
         <li class="service-card" id="svc-compliance" data-reveal>
+          <svg class="svc-fig" viewBox="0 0 320 100" fill="none" aria-hidden="true" focusable="false">
+  <g stroke="currentColor" stroke-width="1.3">
+    <rect x="60" y="14" width="120" height="72" rx="4" />
+    <line x1="60" y1="24" x2="180" y2="24" />
+    <rect x="70" y="34" width="8" height="8" />
+    <polyline points="72,38 75,41 80,35" />
+    <line x1="84" y1="38" x2="168" y2="38" />
+    <rect x="70" y="50" width="8" height="8" />
+    <polyline points="72,54 75,57 80,51" />
+    <line x1="84" y1="54" x2="168" y2="54" />
+    <rect x="70" y="66" width="8" height="8" />
+    <polyline points="72,70 75,73 80,67" />
+    <line x1="84" y1="70" x2="168" y2="70" />
+    <rect x="70" y="82" width="8" height="8" />
+    <line x1="84" y1="86" x2="168" y2="86" />
+    <circle cx="208" cy="78" r="20" />
+    <text x="198" y="82" font-size="7" font-family="inherit" fill="currentColor">AUDIT</text>
+    <circle class="acc" cx="208" cy="78" r="18" stroke-dasharray="4,3" />
+    <text x="188" y="94" font-size="7" font-family="inherit" fill="currentColor">⏱</text>
+  </g>
+</svg>
           <h3>Compliance</h3>
           <p>We prepare regulated workloads for audit, drawing on delivery experience in FedRAMP High environments on Azure Government.</p>
           <p class="meta">FedRAMP High &middot; Azure Government &middot; Controls automation</p>
           <a class="more" href="#contact" aria-label="Learn more about Compliance">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#1F6FEB" stroke-width="1.5"/></svg></a>
         </li>
         <li class="service-card" id="svc-data" data-reveal>
+          <svg class="svc-fig" viewBox="0 0 320 100" fill="none" aria-hidden="true" focusable="false">
+  <g stroke="currentColor" stroke-width="1.3">
+    <path d="M20 40 Q20 30 30 30 Q40 30 40 40 L40 70 Q40 80 30 80 Q20 80 20 70 Z" />
+    <path d="M20 40 Q20 50 30 50 Q40 50 40 40" />
+    <text x="20" y="88" font-size="7" font-family="inherit" fill="currentColor">DB</text>
+    <line x1="44" y1="45" x2="70" y2="45" />
+    <line x1="44" y1="55" x2="70" y2="55" />
+    <polygon points="70,55 90,38 110,38 90,55 90,72 70,55" />
+    <line x1="114" y1="55" x2="140" y2="55" />
+    <rect x="140" y="30" width="60" height="40" />
+    <rect class="acc" x="150" y="50" width="6" height="18" />
+    <rect x="160" y="40" width="6" height="28" />
+    <rect x="170" y="34" width="6" height="34" />
+    <rect x="180" y="28" width="6" height="40" />
+    <text x="150" y="80" font-size="7" font-family="inherit" fill="currentColor">AI</text>
+    <line x1="200" y1="35" x2="220" y2="35" stroke-dasharray="3,3" />
+    <circle cx="230" cy="35" r="8" />
+    <text x="222" y="50" font-size="7" font-family="inherit" fill="currentColor">AI</text>
+  </g>
+</svg>
           <h3>Data &amp; Analytics</h3>
           <p>We build the pipelines and platforms that turn operational data into decisions your teams can defend.</p>
           <p class="meta">Snowflake &middot; Databricks &middot; Data pipelines</p>
@@ -732,6 +913,15 @@
   </section>
 
   <!-- ============ LOCATIONS ============ -->
+  <section class="testimonial band-light" aria-label="Client testimonial">
+    <div class="wrap" data-reveal>
+      <blockquote class="client-quote">
+        <p>Kubernetes is a great buzzword! But to "Operationalize Kubernetes" was our biggest challenge. IronRim not only did the PoCs at blazing speed, setup Kubernetes Foundation but excelled into deep diving each part of Kubernetes and operationalized our Kubernetes environment. Their developed DevOps pipelines accelerated our production release cycles to speeds we never imagined before.</p>
+        <footer>Client testimonial, from a Kubernetes operationalization engagement</footer>
+      </blockquote>
+    </div>
+  </section>
+
   <section id="locations" aria-labelledby="locations-h">
     <div class="band-dark loc-map-band">
       <div class="wrap">
