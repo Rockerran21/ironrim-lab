@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clients - IronRim</title>
+<title>Observability & SRE - IronRim</title>
 <meta name="description" content="IronRim is an enterprise technology consulting firm headquartered in Columbus, Ohio, delivering cloud, AI, observability, and DevOps platforms from eight locations worldwide.">
 <meta property="og:title" content="IronRim - Enterprise Cloud, AI and DevOps Consulting">
 <meta property="og:description" content="Enterprise systems, architected to hold. Cloud, AI, observability, and DevOps delivery from eight locations worldwide.">
@@ -533,7 +533,7 @@
 
 <header class="site-header band-dark">
   <div class="wrap">
-    <a class="brand" href="../" aria-label="IronRim home">
+    <a class="brand" href="../../" aria-label="IronRim home">
       <svg width="38" height="38" viewBox="0 0 100 100" aria-hidden="true"><use href="#ironrim-badge"/></svg>
       IronRim
     </a>
@@ -543,100 +543,85 @@
       </svg>
     </button>
     <nav class="site-nav" id="site-nav" aria-label="Main">
-      <a class="nav-link" href="../services/">Services</a>
-      <a class="nav-link" href="../teams/">Teams</a>
-      <a class="nav-link" href="../locations/">Locations</a>
-      <a class="nav-link" href="../company/">Company</a>
-      <a class="nav-link" href="../contact/">Contact</a>
+      <a class="nav-link" aria-current="page" href="../../services/">Services</a>
+      <a class="nav-link" href="../../teams/">Teams</a>
+      <a class="nav-link" href="../../locations/">Locations</a>
+      <a class="nav-link" href="../../company/">Company</a>
+      <a class="nav-link" href="../../contact/">Contact</a>
       <a class="btn btn-outline btn-nav" href="mailto:info@ironrim.com?subject=Consultation%20request">Book a consultation <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
     </nav>
   </div>
 </header>
 
 <main id="main">
-  <section class="testimonial band-light" aria-label="Client testimonials">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <span class="eyebrow">Testimonials</span>
-        <h2>What clients say</h2>
-      </div>
-      <div class="quote-grid">
-        <blockquote class="client-quote" data-reveal>
-          <p>Kubernetes is a great buzzword! But to "Operationalize Kubernetes" was our biggest challenge. IronRim not only did the PoCs at blazing speed, setup Kubernetes Foundation but excelled into deep diving each part of Kubernetes and operationalized our Kubernetes environment. Their developed DevOps pipelines accelerated our production release cycles to speeds we never imagined before.</p>
-          <footer>IT Director, Molina Healthcare</footer>
-        </blockquote>
-        <blockquote class="client-quote" data-reveal>
-          <p>We are advanced in DevOps and Kubernetes in Cloud. It was not easy for many vendors out there to first understand our technically deeper problems and then remediate them. IronRim actually gave us pretty good confidence and resolved tons of complex Cloud, DevOps, Compliance and Kubernetes problems and at the same time brought down our Cloud costs significantly.</p>
-          <footer>Director, Site Reliability Engineering, McGrawHill Education</footer>
-        </blockquote>
+  <section class="svc-hero band-dark" aria-labelledby="svc-h">
+    <div class="wrap" data-reveal>
+      <span class="eyebrow">Services</span>
+      <h1 id="svc-h">Observability & SRE</h1>
+      <p class="lede">We instrument your estate end to end so teams see failures before customers do, and reliability becomes a measured practice.</p>
+    </div>
+  </section>
+
+  <section class="svc-detail band-light" aria-label="What we do">
+    <div class="wrap" data-reveal>
+      <svg class="svc-fig" viewBox="0 0 320 100" fill="none" aria-hidden="true" focusable="false">
+  <g stroke="currentColor" stroke-width="1.3">
+    <line x1="20" y1="82" x2="300" y2="82" />
+    <line x1="20" y1="80" x2="20" y2="84" />
+    <line x1="300" y1="80" x2="300" y2="84" />
+    <text x="286" y="92" font-size="7" font-family="inherit" fill="currentColor">P99</text>
+    <rect x="40" y="72" width="200" height="5" />
+    <rect x="40" y="62" width="160" height="5" />
+    <rect x="40" y="52" width="120" height="5" />
+    <rect class="acc" x="40" y="42" width="180" height="5" />
+    <rect x="40" y="32" width="80" height="5" />
+    <polygon class="acc" points="210,38 224,38 217,28" fill="none" />
+    <text x="210" y="24" font-size="7" font-family="inherit" fill="currentColor">SLOW</text>
+  </g>
+</svg>
+      <div class="cols">
+        <div>
+          <h2>How we work in this practice</h2>
+          <p>We instrument estates end to end with Dynatrace, Datadog, Splunk, Prometheus, Grafana, and OpenTelemetry collectors, so teams see failures before customers feel them. Our principal architect is Dynatrace Associate certified.</p>
+          <p>Instrumentation is only the start: we define SLOs and error budgets that mean something to the business, build alerting that wakes the right person for the right reason, and set up incident readiness and cost visibility, including AI workload monitoring down to token usage and cost per request.</p>
+          <p class="meta" style="margin-top:18px">Dynatrace · Datadog · Splunk · Prometheus · Grafana · OpenTelemetry · PagerDuty</p>
+        </div>
+        <div>
+          <h2>What we deliver</h2>
+          <ul>
+            <li>End-to-end tracing, metrics, and log pipelines with OpenTelemetry</li>
+            <li>Dynatrace and Datadog rollouts across hybrid estates</li>
+            <li>SLO design, error budgets, and alert quality engineering</li>
+            <li>Incident response readiness and runbook automation</li>
+            <li>Cloud and AI cost observability</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="cases band-light" aria-labelledby="cases-h">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <span class="eyebrow">Case studies</span>
-        <h2 id="cases-h">Case studies of trusted customers</h2>
+  <section class="band-light" aria-label="Other services" style="padding-top:0">
+    <div class="wrap" data-reveal>
+      <div class="section-head">
+        <span class="eyebrow">More practices</span>
+        <h2>Other services</h2>
       </div>
-      <ul class="case-grid">
-        <li class="case-card" data-reveal>
-          <img src="../../img/jpmorgan.png" alt="JP Morgan Chase logo" loading="lazy" decoding="async">
-          <h3>JP Morgan Chase</h3>
-          <p>At JP we did cloud readiness assessments, setup AWS and Azure foundation, migrated multi-billion-dollar CPG, Retail, Card and Asset Mgmt. applications into the AWS cloud. We setup continuous security compliance frameworks according to CIS, NIST, SOC, ISO, PCI DSS, and GDPR. We also set up an archival solution to the bank to meet offsite banking regulatory requirements and migrated 20PB+ of data into AWS cloud for archival, saving millions of dollars on archival storage for the bank.</p>
-        </li>
-        <li class="case-card" data-reveal>
-          <img src="../../img/molina.png" alt="Molina Healthcare logo" loading="lazy" decoding="async">
-          <h3>Molina Healthcare</h3>
-          <p>Molina Healthcare the largest Medicare &amp; Medicaid Health Insurance provider for US Govt. We set up and manage Kubernetes on Azure for Molina Healthcare. We also set up and manage Azure DevOps and continue to modernize their cloud environment. With more than 1700 applications overall being migrated to Azure that uses Azure DevOps, and 500+ applications that qualified for Kubernetes. Their business was struggling with poor production service reliability and production release frequency. We solved both with Kubernetes and Azure DevOps Pipelines. The business was very happy with the achievements.</p>
-        </li>
-        <li class="case-card" data-reveal>
-          <img src="../../img/mcgrawhill.png" alt="McGrawHill Education logo" loading="lazy" decoding="async">
-          <h3>McGrawHill Education</h3>
-          <p>McGrawHill Education is top in the education industry. They are a very advanced DevOps and Kubernetes shop. There challenges with maturing in Kubernetes and DevOps, in area of better DevOps pipeline management, DevOps integrations, Continuous Monitoring, DevSecOps security management, Kubernetes security, performance, and networking management, and its automation were the main challenges. We got them DevSecOps, AWS Cloud and Kubernetes skills they lacked, and delivering complex solutions in an ongoing manner. They have grown significantly with this boost in business, their open learning platform is very stable now with a lot more advanced features.</p>
-        </li>
-        <li class="case-card" data-reveal>
-          <img src="../../img/bimbo.png" alt="Grupo Bimbo USA logo" loading="lazy" decoding="async">
-          <h3>Grupo Bimbo USA</h3>
-          <p>Grupo Bimbo is the largest bakery in the world. With its multi-billion dollar operations in the USA, EMEA, and Asiapac their cakes and bread make it to billions of breakfast tables every day. We have successfully setup AWS and Azure cloud foundation for them, performed cloud migrations for 50+ large applications to AWS cloud, setup DevOps (100+ CICD Pipelines) in AWS and Azure, perform application modernization for various types of apps, setup continuous improvement and perform cloud security reviews.</p>
-        </li>
+      <ul class="other-grid">
+        <li><a href="../../services/ai/">AI & GenAI Engineering</a></li>
+        <li><a href="../../services/devops/">DevOps & Platform Engineering</a></li>
+        <li><a href="../../services/cloud/">Cloud Architecture</a></li>
+        <li><a href="../../services/iac/">Infrastructure as Code</a></li>
+        <li><a href="../../services/security/">Security & Identity</a></li>
+        <li><a href="../../services/compliance/">Compliance</a></li>
+        <li><a href="../../services/data/">Data & Analytics</a></li>
       </ul>
     </div>
   </section>
 
-  <section class="tech band-dark" aria-labelledby="tech-h">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <span class="eyebrow">Technologies</span>
-        <h2 id="tech-h">The stack we work in</h2>
-        <p>Every tool below is one we have architected with, automated, or operated in production.</p>
-      </div>
-      <div class="tech-grid" data-reveal>
-        <div class="tech-group">
-          <h3>Cloud platforms</h3>
-          <p>AWS, Azure, GCP, Azure Government, VMware, OpenShift</p>
-        </div>
-        <div class="tech-group">
-          <h3>DevOps and infrastructure as code</h3>
-          <p>Kubernetes, Terraform, Ansible, Chef, Puppet, Jenkins, Azure DevOps, GitHub Actions, ArgoCD, Helm, Git, CloudFormation</p>
-        </div>
-        <div class="tech-group">
-          <h3>AI and data</h3>
-          <p>Azure OpenAI, AWS Bedrock, SageMaker, LangChain, Snowflake, Databricks, Oracle, SQL Server, MySQL, Redis, NoSQL</p>
-        </div>
-        <div class="tech-group">
-          <h3>Observability and SRE</h3>
-          <p>Dynatrace, Datadog, Splunk, Prometheus, Grafana, OpenTelemetry, PagerDuty</p>
-        </div>
-        <div class="tech-group">
-          <h3>Security, network, and code quality</h3>
-          <p>Cisco, Fortinet, Juniper, Palo Alto, ZScaler, SonarQube, Veracode, Synopsys, MicroFocus</p>
-        </div>
-        <div class="tech-group">
-          <h3>Languages</h3>
-          <p>Python, Go, Java, .NET, JavaScript, Shell, PowerShell</p>
-        </div>
-      </div>
+  <section class="cta-band band-dark" aria-label="Contact IronRim">
+    <div class="wrap" data-reveal>
+      <h2>Talk to IronRim about Observability &amp; SRE</h2>
+      <a class="btn btn-outline" href="../../contact/">Contact us <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
     </div>
   </section>
 
@@ -649,37 +634,37 @@
       <nav aria-label="Services">
         <h3>Services</h3>
         <ul>
-          <li><a href="../services/ai/">AI &amp; GenAI Engineering</a></li>
-          <li><a href="../services/observability/">Observability &amp; SRE</a></li>
-          <li><a href="../services/devops/">DevOps &amp; Platform Engineering</a></li>
-          <li><a href="../services/cloud/">Cloud Architecture</a></li>
-          <li><a href="../services/iac/">Infrastructure as Code</a></li>
-          <li><a href="../services/security/">Security &amp; Identity</a></li>
-          <li><a href="../services/compliance/">Compliance</a></li>
-          <li><a href="../services/data/">Data &amp; Analytics</a></li>
+          <li><a href="../../services/ai/">AI &amp; GenAI Engineering</a></li>
+          <li><a href="../../services/observability/">Observability &amp; SRE</a></li>
+          <li><a href="../../services/devops/">DevOps &amp; Platform Engineering</a></li>
+          <li><a href="../../services/cloud/">Cloud Architecture</a></li>
+          <li><a href="../../services/iac/">Infrastructure as Code</a></li>
+          <li><a href="../../services/security/">Security &amp; Identity</a></li>
+          <li><a href="../../services/compliance/">Compliance</a></li>
+          <li><a href="../../services/data/">Data &amp; Analytics</a></li>
         </ul>
       </nav>
       <nav aria-label="Company">
         <h3>Company</h3>
         <ul>
-          <li><a href="../teams/">Teams</a></li>
-          <li><a href="../locations/">Locations</a></li>
-          <li><a href="../company/#process">How we work</a></li>
-          <li><a href="../company/">Company</a></li>
-          <li><a href="../contact/">Contact</a></li>
+          <li><a href="../../teams/">Teams</a></li>
+          <li><a href="../../locations/">Locations</a></li>
+          <li><a href="../../company/#process">How we work</a></li>
+          <li><a href="../../company/">Company</a></li>
+          <li><a href="../../contact/">Contact</a></li>
         </ul>
       </nav>
       <nav aria-label="Locations">
         <h3>Locations</h3>
         <ul>
-          <li><a href="../locations/">Columbus, Ohio</a></li>
-          <li><a href="../locations/">Miami, Florida</a></li>
-          <li><a href="../locations/">Houston, Texas</a></li>
-          <li><a href="../locations/">San Francisco, California</a></li>
-          <li><a href="../locations/">London, United Kingdom</a></li>
-          <li><a href="../locations/">Delhi NCR, India</a></li>
-          <li><a href="../locations/">Bengaluru, India</a></li>
-          <li><a href="../locations/">Singapore</a></li>
+          <li><a href="../../locations/">Columbus, Ohio</a></li>
+          <li><a href="../../locations/">Miami, Florida</a></li>
+          <li><a href="../../locations/">Houston, Texas</a></li>
+          <li><a href="../../locations/">San Francisco, California</a></li>
+          <li><a href="../../locations/">London, United Kingdom</a></li>
+          <li><a href="../../locations/">Delhi NCR, India</a></li>
+          <li><a href="../../locations/">Bengaluru, India</a></li>
+          <li><a href="../../locations/">Singapore</a></li>
         </ul>
       </nav>
       <div>

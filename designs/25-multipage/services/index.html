@@ -489,6 +489,35 @@
   @media (max-width: 620px) { .tech-grid { grid-template-columns: 1fr; } }
   .tech-group h3 { font-size: 0.9375rem; color: #fff; margin-bottom: 8px; }
   .tech-group p { color: var(--gray-l); font-size: 0.9375rem; line-height: 1.7; }
+  .svc-hero { padding: 96px 0 72px; }
+  .svc-hero h1 { font-size: clamp(2.2rem, 5vw, 3.75rem); color: #fff; margin-top: 8px; }
+  .svc-hero .lede { color: var(--gray-l); max-width: 60ch; margin-top: 18px; font-size: 1.125rem; }
+  .svc-detail { padding: 80px 0; }
+  .svc-detail .svc-fig { max-width: 420px; color: var(--gray); margin-bottom: 32px; }
+  .svc-detail .cols { display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px; }
+  @media (max-width: 900px) { .svc-detail .cols { grid-template-columns: 1fr; } }
+  .svc-detail h2 { font-size: 1.375rem; margin-bottom: 14px; }
+  .svc-detail p + p { margin-top: 14px; }
+  .svc-detail ul { list-style: none; padding: 0; display: grid; gap: 12px; }
+  .svc-detail ul li { padding-left: 34px; position: relative; color: var(--gray); }
+  .svc-detail ul li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 22px; height: 3px; background: var(--accent); }
+  .other-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; list-style: none; padding: 0; }
+  .other-grid a { display: block; padding: 18px 20px; background: var(--surface-l); color: var(--black); text-decoration: none; font-weight: 500; font-size: 0.9375rem; }
+  .other-grid a:hover { background: var(--line-l); }
+  .cta-band { padding: 88px 0; }
+  .cta-band h2 { color: #fff; font-size: clamp(1.6rem, 3.4vw, 2.5rem); max-width: 26ch; }
+  .cta-band .btn { margin-top: 28px; }
+  .contact-form { margin-top: 48px; max-width: 640px; }
+  .contact-form h3 { margin-bottom: 18px; }
+  .contact-form label { display: block; font-size: 0.875rem; font-weight: 500; color: #fff; margin: 18px 0 6px; }
+  .contact-form input, .contact-form select, .contact-form textarea {
+    width: 100%; background: var(--d1); border: 1px solid var(--d3); color: #fff;
+    font: inherit; font-size: 0.9375rem; padding: 12px 14px; border-radius: 0; caret-color: var(--accent);
+  }
+  .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: transparent; }
+  .contact-form textarea { min-height: 130px; resize: vertical; }
+  .contact-form .btn { margin-top: 24px; cursor: pointer; }
+  .form-note { color: var(--gray-l); font-size: 0.8125rem; margin-top: 12px; }
 </style>
 </head>
 <body id="top">
@@ -517,7 +546,6 @@
       <a class="nav-link" aria-current="page" href="../services/">Services</a>
       <a class="nav-link" href="../teams/">Teams</a>
       <a class="nav-link" href="../locations/">Locations</a>
-      <a class="nav-link" href="../clients/">Clients</a>
       <a class="nav-link" href="../company/">Company</a>
       <a class="nav-link" href="../contact/">Contact</a>
       <a class="btn btn-outline btn-nav" href="mailto:info@ironrim.com?subject=Consultation%20request">Book a consultation <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
@@ -565,7 +593,7 @@
           <h3>AI &amp; GenAI Engineering</h3>
           <p>We design, build, and run LLM platforms that move generative AI out of pilots and into governed production systems.</p>
           <p class="meta">Azure OpenAI &middot; AWS Bedrock &middot; RAG pipelines &middot; MLOps</p>
-          <a class="more" href="../contact/" aria-label="Learn more about AI and GenAI Engineering">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
+          <a class="more" href="../services/ai/" aria-label="Learn more about AI and GenAI Engineering">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
         </li>
         <li class="service-card" id="svc-observability" data-reveal>
           <svg class="svc-fig" viewBox="0 0 320 100" fill="none" aria-hidden="true" focusable="false">
@@ -586,7 +614,7 @@
           <h3>Observability &amp; SRE</h3>
           <p>We instrument your estate end to end so teams see failures before customers do, and reliability becomes a measured practice.</p>
           <p class="meta">Dynatrace &middot; OpenTelemetry &middot; SLOs &middot; Incident response</p>
-          <a class="more" href="../contact/" aria-label="Learn more about Observability and SRE">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
+          <a class="more" href="../services/observability/" aria-label="Learn more about Observability and SRE">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
         </li>
         <li class="service-card" id="svc-devops" data-reveal>
           <svg class="svc-fig" viewBox="0 0 320 100" fill="none" aria-hidden="true" focusable="false">
@@ -609,7 +637,7 @@
           <h3>DevOps &amp; Platform Engineering</h3>
           <p>We build internal platforms and delivery pipelines that let engineering teams ship faster without giving up control.</p>
           <p class="meta">Kubernetes &middot; OpenShift &middot; GitOps &middot; CI/CD</p>
-          <a class="more" href="../contact/" aria-label="Learn more about DevOps and Platform Engineering">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
+          <a class="more" href="../services/devops/" aria-label="Learn more about DevOps and Platform Engineering">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
         </li>
         <li class="service-card" id="svc-cloud" data-reveal>
           <svg class="svc-fig" viewBox="0 0 320 100" fill="none" aria-hidden="true" focusable="false">
@@ -632,7 +660,7 @@
           <h3>Cloud Architecture</h3>
           <p>We architect cloud estates that hold up under scale, audit, and change, on the platforms your enterprise already trusts.</p>
           <p class="meta">Azure &middot; AWS &middot; Landing zones &middot; Migration</p>
-          <a class="more" href="../contact/" aria-label="Learn more about Cloud Architecture">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
+          <a class="more" href="../services/cloud/" aria-label="Learn more about Cloud Architecture">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
         </li>
         <li class="service-card" id="svc-iac" data-reveal>
           <svg class="svc-fig" viewBox="0 0 320 100" fill="none" aria-hidden="true" focusable="false">
@@ -659,7 +687,7 @@
           <h3>Infrastructure as Code</h3>
           <p>We codify your infrastructure so every environment is reproducible, reviewable, and recoverable.</p>
           <p class="meta">Terraform &middot; Ansible &middot; Policy as code</p>
-          <a class="more" href="../contact/" aria-label="Learn more about Infrastructure as Code">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
+          <a class="more" href="../services/iac/" aria-label="Learn more about Infrastructure as Code">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
         </li>
         <li class="service-card" id="svc-security" data-reveal>
           <svg class="svc-fig" viewBox="0 0 320 100" fill="none" aria-hidden="true" focusable="false">
@@ -683,7 +711,7 @@
           <h3>Security &amp; Identity</h3>
           <p>We harden identity, access, and secrets across your cloud estate, treating security as an architectural property rather than an add-on.</p>
           <p class="meta">IAM &middot; Zero trust &middot; Secrets management</p>
-          <a class="more" href="../contact/" aria-label="Learn more about Security and Identity">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
+          <a class="more" href="../services/security/" aria-label="Learn more about Security and Identity">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
         </li>
         <li class="service-card" id="svc-compliance" data-reveal>
           <svg class="svc-fig" viewBox="0 0 320 100" fill="none" aria-hidden="true" focusable="false">
@@ -710,7 +738,7 @@
           <h3>Compliance</h3>
           <p>We prepare regulated workloads for audit, drawing on delivery experience in FedRAMP High environments on Azure Government.</p>
           <p class="meta">FedRAMP High &middot; Azure Government &middot; Controls automation</p>
-          <a class="more" href="../contact/" aria-label="Learn more about Compliance">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
+          <a class="more" href="../services/compliance/" aria-label="Learn more about Compliance">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
         </li>
         <li class="service-card" id="svc-data" data-reveal>
           <svg class="svc-fig" viewBox="0 0 320 100" fill="none" aria-hidden="true" focusable="false">
@@ -736,7 +764,7 @@
           <h3>Data &amp; Analytics</h3>
           <p>We build the pipelines and platforms that turn operational data into decisions your teams can defend.</p>
           <p class="meta">Snowflake &middot; Databricks &middot; Data pipelines</p>
-          <a class="more" href="../contact/" aria-label="Learn more about Data and Analytics">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
+          <a class="more" href="../services/data/" aria-label="Learn more about Data and Analytics">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9.5M7.5 3 11.5 7l-4 4" stroke="#4C6FE8" stroke-width="1.5"/></svg></a>
         </li>
       </ul>
     </div>
@@ -744,6 +772,42 @@
 
   <!-- ============ TEAMS ============ -->
 <!-- SNIPPET A -->
+  <section class="tech band-dark" aria-labelledby="tech-h">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Technologies</span>
+        <h2 id="tech-h">The stack we work in</h2>
+        <p>Every tool below is one we have architected with, automated, or operated in production.</p>
+      </div>
+      <div class="tech-grid" data-reveal>
+        <div class="tech-group">
+          <h3>Cloud platforms</h3>
+          <p>AWS, Azure, GCP, Azure Government, VMware, OpenShift</p>
+        </div>
+        <div class="tech-group">
+          <h3>DevOps and infrastructure as code</h3>
+          <p>Kubernetes, Terraform, Ansible, Chef, Puppet, Jenkins, Azure DevOps, GitHub Actions, ArgoCD, Helm, Git, CloudFormation</p>
+        </div>
+        <div class="tech-group">
+          <h3>AI and data</h3>
+          <p>Azure OpenAI, AWS Bedrock, SageMaker, LangChain, Snowflake, Databricks, Oracle, SQL Server, MySQL, Redis, NoSQL</p>
+        </div>
+        <div class="tech-group">
+          <h3>Observability and SRE</h3>
+          <p>Dynatrace, Datadog, Splunk, Prometheus, Grafana, OpenTelemetry, PagerDuty</p>
+        </div>
+        <div class="tech-group">
+          <h3>Security, network, and code quality</h3>
+          <p>Cisco, Fortinet, Juniper, Palo Alto, ZScaler, SonarQube, Veracode, Synopsys, MicroFocus</p>
+        </div>
+        <div class="tech-group">
+          <h3>Languages</h3>
+          <p>Python, Go, Java, .NET, JavaScript, Shell, PowerShell</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <!-- ============ FOOTER ============ -->
@@ -753,14 +817,14 @@
       <nav aria-label="Services">
         <h3>Services</h3>
         <ul>
-          <li><a href="../services/#svc-ai">AI &amp; GenAI Engineering</a></li>
-          <li><a href="../services/#svc-observability">Observability &amp; SRE</a></li>
-          <li><a href="../services/#svc-devops">DevOps &amp; Platform Engineering</a></li>
-          <li><a href="../services/#svc-cloud">Cloud Architecture</a></li>
-          <li><a href="../services/#svc-iac">Infrastructure as Code</a></li>
-          <li><a href="../services/#svc-security">Security &amp; Identity</a></li>
-          <li><a href="../services/#svc-compliance">Compliance</a></li>
-          <li><a href="../services/#svc-data">Data &amp; Analytics</a></li>
+          <li><a href="../services/ai/">AI &amp; GenAI Engineering</a></li>
+          <li><a href="../services/observability/">Observability &amp; SRE</a></li>
+          <li><a href="../services/devops/">DevOps &amp; Platform Engineering</a></li>
+          <li><a href="../services/cloud/">Cloud Architecture</a></li>
+          <li><a href="../services/iac/">Infrastructure as Code</a></li>
+          <li><a href="../services/security/">Security &amp; Identity</a></li>
+          <li><a href="../services/compliance/">Compliance</a></li>
+          <li><a href="../services/data/">Data &amp; Analytics</a></li>
         </ul>
       </nav>
       <nav aria-label="Company">
