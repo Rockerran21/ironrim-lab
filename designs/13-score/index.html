@@ -1,0 +1,698 @@
+<!--
+THESIS: Kubernetes orchestration made literal. IronRim is the conductor, the enterprise is the orchestra, this page is the engraved score.
+OWN-WORLD: A first-edition orchestral score. Cream engraving paper, hairline black staves, Bodoni titling, italic tempo markings, engraver's vermilion for the baton and dynamics. Nav, buttons, focus, selection and scrollbar are all plate-engraved.
+STORY: Title page, then the orchestra: eight instrument sections, one per service, each staff engraving itself as the conductor's beat line sweeps down the page. The process is a symphony in four movements. Credentials are the programme notes. Contact is the encore.
+FIRST VIEWPORT: The score's title page: IRONRIM engraved above a grand stave that draws itself into an opening chord.
+FORM: One file, native CSS/JS, all notation authored as SVG geometry by a single engraving routine; scroll-tied beat line; reduced motion serves the score fully engraved.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IronRim - The Score</title>
+<meta name="description" content="IronRim architects and operates the systems enterprises bet on: AI platforms, cloud infrastructure, and the observability, security, and compliance that keep them trustworthy. Columbus, Ohio.">
+<meta name="theme-color" content="#f5efe0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=EB+Garamond:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f5efe0;
+  --paper-low:#ede4cd;
+  --ink:#231a0f;
+  --ink-soft:#5d4f38;
+  --rule:#cfc09b;
+  --verm:#a5330f;
+  --ease:cubic-bezier(.19,.84,.28,.99);
+  --serif:"EB Garamond", Garamond, Georgia, serif;
+  --didone:"Bodoni Moda", "Bodoni MT", Didot, serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-padding-top:84px}
+@media (prefers-reduced-motion: no-preference){html{scroll-behavior:smooth}}
+body{
+  background:var(--paper);
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.14 0 0 0 0 0.10 0 0 0 0 0.05 0 0 0 0.045 0'/></filter><rect width='260' height='260' filter='url(%23n)'/></svg>");
+  color:var(--ink);
+  font-family:var(--serif);
+  font-size:1.155rem;
+  line-height:1.62;
+  overflow-x:clip;
+}
+::selection{background:var(--verm);color:var(--paper)}
+html{scrollbar-color:var(--ink) var(--paper-low);scrollbar-width:thin}
+::-webkit-scrollbar{width:9px}
+::-webkit-scrollbar-track{background:var(--paper-low)}
+::-webkit-scrollbar-thumb{background:var(--ink);border:2px solid var(--paper-low)}
+:focus-visible{outline:2px solid var(--verm);outline-offset:3px;border-radius:1px}
+a{color:var(--verm);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em;transition:color .3s var(--ease)}
+a:hover{color:var(--ink)}
+img,svg{max-width:100%;height:auto}
+
+.sr-skip{position:absolute;left:-999px;top:0;background:var(--ink);color:var(--paper);padding:.5rem 1rem;z-index:50}
+.sr-skip:focus{left:12px;top:12px}
+
+/* ---------- header ---------- */
+header.masthead{
+  display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+  max-width:1180px;margin:0 auto;padding:1.4rem clamp(1rem,4vw,2.5rem) 0;
+}
+.wordmark{font-family:var(--didone);font-weight:600;font-size:1.15rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);text-decoration:none}
+.wordmark:hover{color:var(--verm)}
+nav.top{display:flex;gap:1.6rem;flex-wrap:wrap}
+nav.top a{font-variant:all-small-caps;letter-spacing:.14em;font-size:1.05rem;color:var(--ink-soft);text-decoration:none}
+nav.top a:hover{color:var(--verm)}
+
+/* ---------- hero: the title page ---------- */
+.titlepage{max-width:980px;margin:0 auto;padding:clamp(3rem,8vh,5.5rem) clamp(1rem,4vw,2.5rem) 3.5rem;text-align:center}
+.titlepage h1{
+  font-family:var(--didone);font-weight:700;
+  font-size:clamp(2.9rem,8.5vw,5.9rem);
+  letter-spacing:.13em;text-transform:uppercase;line-height:1.04;
+  text-wrap:balance;
+}
+.titlepage .work{
+  font-style:italic;font-size:clamp(1.1rem,2.4vw,1.4rem);color:var(--ink-soft);
+  margin-top:.9rem;
+}
+.grandstave{margin:2.8rem auto 2.4rem;max-width:900px}
+.grandstave svg{display:block;width:100%}
+.thesis{max-width:66ch;margin:0 auto;font-size:clamp(1.15rem,2vw,1.3rem);text-wrap:pretty}
+.thesis strong{font-weight:600}
+.attacca{display:inline-block;margin-top:2rem;font-style:italic;font-size:1.1rem}
+.imprint{margin-top:3rem;font-variant:all-small-caps;letter-spacing:.22em;font-size:.95rem;color:var(--ink-soft)}
+
+/* ---------- section frame ---------- */
+section.mvt{max-width:1180px;margin:0 auto;padding:clamp(3rem,7vh,5rem) clamp(1rem,4vw,2.5rem)}
+section.mvt > h2, .mvt-head h2{
+  font-family:var(--didone);font-weight:600;font-size:clamp(2rem,4.5vw,3rem);
+  letter-spacing:.04em;line-height:1.1;text-wrap:balance;
+}
+.tagline{font-style:italic;color:var(--ink-soft);margin-top:.5rem;font-size:1.15rem}
+
+/* hairpin dividers */
+.hairpin-row{display:flex;align-items:center;justify-content:center;gap:.9rem;max-width:1180px;margin:0 auto;padding:0 clamp(1rem,4vw,2.5rem)}
+.hairpin-row em{font-family:var(--serif);font-style:italic;color:var(--ink-soft);font-size:1rem}
+.hairpin-row svg{width:min(300px,46vw);flex:none}
+.hairpin-row path{stroke:var(--ink-soft);stroke-width:1.2;fill:none}
+
+/* ---------- the orchestra ---------- */
+.orchestra-grid{display:grid;grid-template-columns:225px minmax(0,1fr);gap:0 clamp(2rem,4vw,3.5rem);margin-top:2.6rem}
+.margin-nav{position:sticky;top:96px;align-self:start}
+.margin-nav h3{font-variant:all-small-caps;letter-spacing:.2em;font-weight:600;font-size:1rem;color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:.5rem}
+.margin-nav ol{list-style:none;margin-top:.4rem}
+.margin-nav li{border-bottom:1px solid var(--rule)}
+.margin-nav a{display:flex;align-items:baseline;gap:.55rem;padding:.55rem .1rem;text-decoration:none;color:var(--ink-soft)}
+.margin-nav .mi-inst{font-family:var(--didone);font-size:.98rem;font-weight:500;letter-spacing:.02em;color:inherit;flex:none}
+.margin-nav .mi-svc{font-size:.86rem;line-height:1.3;color:inherit}
+.margin-nav .mi-dyn{font-family:var(--serif);font-style:italic;font-weight:700;font-size:1.05rem;color:var(--verm);margin-left:auto;opacity:0;transition:opacity .4s var(--ease)}
+.margin-nav li.done a{color:var(--ink)}
+.margin-nav li.live a{color:var(--verm)}
+.margin-nav li.live .mi-dyn{opacity:1}
+.margin-nav a:hover{color:var(--verm)}
+
+.staff-block{padding:2.1rem 0 2.3rem;border-bottom:1px solid var(--rule)}
+.staff-block:last-child{border-bottom:0}
+.staff-block h3{
+  font-family:var(--didone);font-weight:600;font-size:clamp(1.35rem,2.6vw,1.7rem);
+  letter-spacing:.02em;line-height:1.2;
+}
+.staff-block h3 .inst{font-weight:400;font-style:italic;color:var(--ink-soft);font-size:.78em;letter-spacing:.01em}
+.staffsvg{display:block;width:100%;margin-top:.55rem}
+.sb-body{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:1rem 2.5rem;margin-top:.4rem}
+.sb-body p{max-width:62ch;text-wrap:pretty}
+.sb-instr{font-size:.98rem;color:var(--ink-soft);line-height:1.7}
+.sb-instr b{font-variant:all-small-caps;letter-spacing:.16em;font-weight:600;color:var(--ink);display:block}
+
+/* SVG engraving styles */
+.sline{stroke:var(--ink);stroke-width:1.05;fill:none}
+.sbar{stroke:var(--ink);stroke-width:1.3;fill:none}
+.sbar.thick{stroke-width:4}
+.sclef{stroke:var(--ink);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.sdot{fill:var(--ink)}
+.shead{fill:var(--ink)}
+.shead.open{fill:none;stroke:var(--ink);stroke-width:1.9}
+.sstem{stroke:var(--ink);stroke-width:1.5;stroke-linecap:round}
+.sbeam{stroke:var(--ink);stroke-width:4.2;stroke-linecap:butt}
+.sslur{stroke:var(--ink);stroke-width:1.4;fill:none;stroke-linecap:round}
+.saccent{stroke:var(--verm);stroke-width:1.5;fill:none;stroke-linejoin:miter}
+.slabel{font:italic 500 13px var(--serif);fill:var(--ink-soft)}
+.smark{font:italic 500 15px var(--serif);fill:var(--ink-soft)}
+.sdyn{font:italic 700 16px var(--serif);fill:var(--verm)}
+.stsig{font:700 19px var(--didone);fill:var(--ink)}
+
+/* ---------- beat line (the baton) ---------- */
+.beatline{position:fixed;left:0;right:0;top:42vh;z-index:6;pointer-events:none;opacity:0;transition:opacity .5s var(--ease)}
+.beatline.on{opacity:1}
+.beatline .bl-rule{border-top:1px solid var(--verm);opacity:.55}
+.beatline .bl-tip{position:absolute;left:clamp(4px,1.5vw,18px);top:-5px;width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:9px solid var(--verm)}
+.beatline .bl-word{position:absolute;right:clamp(6px,2vw,22px);top:4px;font:italic 600 .82rem var(--serif);color:var(--verm);letter-spacing:.08em}
+
+/* ---------- the symphony (process) ---------- */
+.movements{max-width:780px;margin:2.4rem auto 0}
+.movement{display:grid;grid-template-columns:5.2rem minmax(0,1fr);gap:0 1.6rem;padding:1.7rem 0;border-top:1px solid var(--rule)}
+.movement:last-child{border-bottom:1px solid var(--rule)}
+.movement .num{font-family:var(--didone);font-weight:500;font-size:2.4rem;line-height:1;color:var(--verm);text-align:right}
+.movement h3{font-family:var(--didone);font-weight:600;font-size:1.45rem;letter-spacing:.02em}
+.movement h3 em{font-family:var(--serif);font-weight:400;font-style:italic;color:var(--ink-soft);font-size:.8em}
+.movement p{margin-top:.35rem;max-width:58ch;text-wrap:pretty}
+
+/* ---------- programme notes ---------- */
+.epigraph{max-width:56ch;margin:2.2rem auto 0;text-align:center;font-style:italic;font-size:clamp(1.2rem,2.4vw,1.45rem);line-height:1.5;text-wrap:balance}
+.notes-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:2rem clamp(2.5rem,5vw,4.5rem);margin-top:2.8rem}
+.notes-grid h3{font-family:var(--didone);font-weight:600;font-size:1.4rem;margin-bottom:.7rem}
+.bio p{max-width:62ch;text-wrap:pretty}
+.bio p + p{margin-top:1rem}
+.honors{list-style:none}
+.honors li{padding:.72rem .1rem;border-bottom:1px solid var(--rule);font-weight:500;line-height:1.4}
+.honors li:first-child{border-top:1px solid var(--ink)}
+.honors li:last-child{border-bottom:1px solid var(--ink)}
+.repertoire{margin-top:2.2rem}
+.repertoire ul{list-style:none}
+.repertoire li{padding:.45rem 0 .45rem 1.3rem;position:relative}
+.repertoire li::before{content:"";position:absolute;left:0;top:.98em;width:.7rem;border-top:1.4px solid var(--verm)}
+.rep-note{font-style:italic;color:var(--ink-soft);font-size:1rem;margin-top:.7rem}
+
+/* ---------- encore ---------- */
+.encore{text-align:center}
+.encore .lead{max-width:52ch;margin:1.6rem auto 0;text-wrap:balance;font-size:clamp(1.15rem,2.2vw,1.35rem)}
+.plates{display:flex;gap:1.1rem;justify-content:center;flex-wrap:wrap;margin-top:2.3rem}
+a.plate{
+  position:relative;display:inline-block;padding:.95rem 1.9rem;
+  font-family:var(--didone);font-weight:600;font-size:1.12rem;letter-spacing:.05em;
+  color:var(--verm);text-decoration:none;border:1px solid var(--verm);
+  transition:background .35s var(--ease),color .35s var(--ease);
+}
+a.plate::after{content:"";position:absolute;inset:3px;border:1px solid currentColor;opacity:.55;pointer-events:none;transition:opacity .35s var(--ease)}
+a.plate:hover{background:var(--verm);color:var(--paper)}
+a.plate.alt{color:var(--ink);border-color:var(--ink)}
+a.plate.alt:hover{background:var(--ink);color:var(--paper)}
+.podium{margin-top:2.2rem;font-variant:all-small-caps;letter-spacing:.18em;font-size:1.02rem;color:var(--ink-soft)}
+.finalbar{margin:2.6rem auto 0;width:64px}
+.finalbar path{stroke:var(--ink)}
+
+footer{max-width:1180px;margin:0 auto;padding:1.6rem clamp(1rem,4vw,2.5rem) 2.4rem;text-align:center;color:var(--ink-soft);font-size:.98rem}
+footer .plateno{font-variant:all-small-caps;letter-spacing:.24em;display:block;margin-top:.3rem}
+
+/* ---------- motion system (single ease, gated) ---------- */
+.js-anim .anim-score .sline{stroke-dasharray:1;stroke-dashoffset:1}
+.js-anim .anim-score .sfix{opacity:0}
+.js-anim .anim-score .note{opacity:0;transform:translateY(7px)}
+.js-anim .anim-score.played .sline{stroke-dashoffset:0;transition:stroke-dashoffset .95s var(--ease);transition-delay:calc(var(--l,0)*85ms)}
+.js-anim .anim-score.played .sfix{opacity:1;transition:opacity .7s var(--ease) .3s}
+.js-anim .anim-score.played .note{opacity:1;transform:none;transition:opacity .45s var(--ease),transform .45s var(--ease);transition-delay:calc(.28s + var(--i,0)*70ms)}
+.js-anim .staff-block .sb-body{opacity:0;transform:translateY(9px)}
+.js-anim .staff-block.played .sb-body{opacity:1;transform:none;transition:opacity .7s var(--ease) .5s,transform .7s var(--ease) .5s}
+/* hover: the section plays a silent run, notes lift in sequence */
+.js-anim .staff-block.played:hover .note{transform:translateY(-3.5px);transition-delay:calc(var(--i,0)*45ms)}
+@media (prefers-reduced-motion: reduce){
+  .beatline{display:none}
+  *,*::before,*::after{transition:none !important;animation:none !important}
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .orchestra-grid{grid-template-columns:minmax(0,1fr)}
+  .margin-nav{display:none}
+  .sb-body{grid-template-columns:minmax(0,1fr)}
+  .notes-grid{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:560px){
+  nav.top{gap:1rem}
+  .movement{grid-template-columns:3.4rem minmax(0,1fr);gap:0 1rem}
+  .movement .num{font-size:1.8rem}
+}
+</style>
+</head>
+<body>
+<a class="sr-skip" href="#orchestra">Skip to the orchestra</a>
+
+<header class="masthead">
+  <a class="wordmark" href="#top">IronRim</a>
+  <nav class="top" aria-label="Score">
+    <a href="#orchestra">The Orchestra</a>
+    <a href="#symphony">The Symphony</a>
+    <a href="#programme">Programme Notes</a>
+    <a href="#encore">Encore</a>
+  </nav>
+</header>
+
+<!-- ============ TITLE PAGE ============ -->
+<section class="titlepage" id="top">
+  <h1>IronRim</h1>
+  <p class="work">a score for full orchestra of systems, in four movements</p>
+
+  <figure class="grandstave anim-score" id="grandstave" aria-hidden="true">
+    <svg id="herosvg" viewBox="0 0 900 224" preserveAspectRatio="xMidYMid meet" focusable="false"></svg>
+  </figure>
+
+  <p class="thesis">An enterprise is an orchestra of systems. Without a conductor and a score, it is noise. <strong>IronRim writes the score and conducts.</strong> We architect and operate the systems enterprises bet on: AI platforms, cloud infrastructure, and the observability, security, and compliance that keep them trustworthy.</p>
+
+  <a class="attacca" href="#orchestra">attacca: to the orchestra</a>
+  <p class="imprint">Engraved at Columbus, Ohio · MMXXVI</p>
+</section>
+
+<div class="hairpin-row" aria-hidden="true">
+  <em>cresc.</em>
+  <svg viewBox="0 0 320 28"><path d="M12 14 L308 4 M12 14 L308 24"/></svg>
+</div>
+
+<!-- ============ THE ORCHESTRA (services) ============ -->
+<section class="mvt" id="orchestra">
+  <h2>The Orchestra</h2>
+  <p class="tagline">eight sections, one score, in traditional seating</p>
+
+  <div class="orchestra-grid">
+    <nav class="margin-nav" aria-label="Instrument sections">
+      <h3>Sections</h3>
+      <ol id="marginlist">
+        <li data-for="svc-oboes"><a href="#svc-oboes"><span class="mi-inst">Oboes</span><span class="mi-svc">Compliance</span><em class="mi-dyn" aria-hidden="true">mp</em></a></li>
+        <li data-for="svc-horns"><a href="#svc-horns"><span class="mi-inst">Horns</span><span class="mi-svc">DevOps &amp; Platform</span><em class="mi-dyn" aria-hidden="true">mf</em></a></li>
+        <li data-for="svc-trumpets"><a href="#svc-trumpets"><span class="mi-inst">Trumpets</span><span class="mi-svc">Security &amp; Identity</span><em class="mi-dyn" aria-hidden="true">f</em></a></li>
+        <li data-for="svc-timpani"><a href="#svc-timpani"><span class="mi-inst">Timpani</span><span class="mi-svc">Observability &amp; SRE</span><em class="mi-dyn" aria-hidden="true">f</em></a></li>
+        <li data-for="svc-vln1"><a href="#svc-vln1"><span class="mi-inst">Violins I</span><span class="mi-svc">AI &amp; GenAI</span><em class="mi-dyn" aria-hidden="true">ff</em></a></li>
+        <li data-for="svc-vln2"><a href="#svc-vln2"><span class="mi-inst">Violins II</span><span class="mi-svc">Data &amp; Analytics</span><em class="mi-dyn" aria-hidden="true">f</em></a></li>
+        <li data-for="svc-cellos"><a href="#svc-cellos"><span class="mi-inst">Cellos</span><span class="mi-svc">Cloud Architecture</span><em class="mi-dyn" aria-hidden="true">mf</em></a></li>
+        <li data-for="svc-basses"><a href="#svc-basses"><span class="mi-inst">Basses</span><span class="mi-svc">Infrastructure as Code</span><em class="mi-dyn" aria-hidden="true">mp</em></a></li>
+      </ol>
+    </nav>
+
+    <div class="staves">
+
+      <article class="staff-block anim-score" id="svc-oboes">
+        <h3>Compliance <span class="inst">· the oboes</span></h3>
+        <svg class="staffsvg" data-part="oboes" viewBox="0 0 740 96" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"></svg>
+        <div class="sb-body">
+          <p>The oboe sounds the A the whole orchestra tunes to. Compliance is that note: FedRAMP High and Moderate, NIST, CIS, HIPAA, and GxP held steady across every section, with Azure Government experience where the programme demands it.</p>
+          <p class="sb-instr"><b>Instrumentation</b>FedRAMP High &amp; Moderate · NIST · CIS · HIPAA · GxP · Azure Government</p>
+        </div>
+      </article>
+
+      <article class="staff-block anim-score" id="svc-horns">
+        <h3>DevOps &amp; Platform Engineering <span class="inst">· the horns</span></h3>
+        <svg class="staffsvg" data-part="horns" viewBox="0 0 740 96" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"></svg>
+        <div class="sb-body">
+          <p>Horns bind the ensemble; platform engineering binds delivery. CI/CD played legato with Jenkins, GitHub Actions, Azure DevOps, and ArgoCD, on Kubernetes and OpenShift platforms with Helm and GitOps, so nothing lands between the beats.</p>
+          <p class="sb-instr"><b>Instrumentation</b>Jenkins · GitHub Actions · Azure DevOps · ArgoCD · Kubernetes · OpenShift · Helm · GitOps</p>
+        </div>
+      </article>
+
+      <article class="staff-block anim-score" id="svc-trumpets">
+        <h3>Security &amp; Identity <span class="inst">· the trumpets</span></h3>
+        <svg class="staffsvg" data-part="trumpets" viewBox="0 0 740 96" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"></svg>
+        <div class="sb-body">
+          <p>The section that guards the gates and sounds the alarm. IAM, network isolation, KMS and Key Vault, DLP, and RBAC, every entrance marked, and AI workloads secured before they take the stage.</p>
+          <p class="sb-instr"><b>Instrumentation</b>IAM · Network isolation · KMS &amp; Key Vault · DLP · RBAC · Secure AI workloads</p>
+        </div>
+      </article>
+
+      <article class="staff-block anim-score" id="svc-timpani">
+        <h3>Observability &amp; SRE <span class="inst">· the timpani</span></h3>
+        <svg class="staffsvg" data-part="timpani" viewBox="0 0 740 96" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"></svg>
+        <div class="sb-body">
+          <p>The timpani keep the pulse; observability keeps yours. Dynatrace, Datadog, Splunk, Prometheus, Grafana, and OpenTelemetry, with SLOs, alerting, incident readiness, and cost visibility, so drift is heard before the audience hears it.</p>
+          <p class="sb-instr"><b>Instrumentation</b>Dynatrace · Datadog · Splunk · Prometheus · Grafana · OpenTelemetry</p>
+        </div>
+      </article>
+
+      <article class="staff-block anim-score" id="svc-vln1">
+        <h3>AI &amp; GenAI Engineering <span class="inst">· the first violins</span></h3>
+        <svg class="staffsvg" data-part="vln1" viewBox="0 0 740 96" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"></svg>
+        <div class="sb-body">
+          <p>The first violins carry the theme. LLM platforms, RAG pipelines, and MLOps carry yours, with AI guardrails and governance keeping the melody inside the key.</p>
+          <p class="sb-instr"><b>Instrumentation</b>AWS Bedrock · SageMaker · Azure OpenAI · LangChain · Vector databases</p>
+        </div>
+      </article>
+
+      <article class="staff-block anim-score" id="svc-vln2">
+        <h3>Data &amp; Analytics <span class="inst">· the second violins</span></h3>
+        <svg class="staffsvg" data-part="vln2" viewBox="0 0 740 96" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"></svg>
+        <div class="sb-body">
+          <p>The second violins run beneath the theme and give it somewhere to stand. Snowflake, Databricks, and the data platforms and pipelines that feed AI: without this line, the melody has nothing under it.</p>
+          <p class="sb-instr"><b>Instrumentation</b>Snowflake · Databricks · Data platforms · Pipelines that feed AI</p>
+        </div>
+      </article>
+
+      <article class="staff-block anim-score" id="svc-cellos">
+        <h3>Cloud Architecture <span class="inst">· the cellos</span></h3>
+        <svg class="staffsvg" data-part="cellos" viewBox="0 0 740 96" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"></svg>
+        <div class="sb-body">
+          <p>The cello line everything above it rests on: AWS, Azure, and GCP. Landing zones, multi-region resilience, migration and modernization, written as long steady bowing rather than stabs.</p>
+          <p class="sb-instr"><b>Instrumentation</b>AWS · Azure · GCP · Landing zones · Multi-region resilience · Migration &amp; modernization</p>
+        </div>
+      </article>
+
+      <article class="staff-block anim-score" id="svc-basses">
+        <h3>Infrastructure as Code <span class="inst">· the double basses</span></h3>
+        <svg class="staffsvg" data-part="basses" viewBox="0 0 740 96" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"></svg>
+        <div class="sb-body">
+          <p>An ostinato is a figure repeated exactly, every time it returns. So is infrastructure as code: Terraform, ARM, CloudFormation, and Ansible in reusable modules, repeatable environments, drift-free automation.</p>
+          <p class="sb-instr"><b>Instrumentation</b>Terraform · ARM · CloudFormation · Ansible · Reusable modules</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<div class="hairpin-row" aria-hidden="true">
+  <em>poco a poco cresc.</em>
+  <svg viewBox="0 0 320 28"><path d="M12 14 L308 4 M12 14 L308 24"/></svg>
+</div>
+
+<!-- ============ THE SYMPHONY (process) ============ -->
+<section class="mvt" id="symphony">
+  <h2>The Symphony</h2>
+  <p class="tagline">every engagement is played in four movements</p>
+
+  <div class="movements">
+    <div class="movement">
+      <div class="num" aria-hidden="true">I.</div>
+      <div>
+        <h3>Assess <em>· andante</em></h3>
+        <p>We listen before we play: current systems, constraints, risks, costs, and what the business actually needs.</p>
+      </div>
+    </div>
+    <div class="movement">
+      <div class="num" aria-hidden="true">II.</div>
+      <div>
+        <h3>Architect <em>· allegro</em></h3>
+        <p>We write the score: target architecture, platform and tooling choices, with security and compliance in the notation from bar one.</p>
+      </div>
+    </div>
+    <div class="movement">
+      <div class="num" aria-hidden="true">III.</div>
+      <div>
+        <h3>Automate <em>· presto</em></h3>
+        <p>Pipelines and infrastructure as code turn the score into performance: repeatable, testable, fast.</p>
+      </div>
+    </div>
+    <div class="movement">
+      <div class="num" aria-hidden="true">IV.</div>
+      <div>
+        <h3>Operate <em>· sostenuto</em></h3>
+        <p>We stay on the podium: observability, SLOs, incident readiness, and steady improvement, held for as long as the system runs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hairpin-row" aria-hidden="true">
+  <svg viewBox="0 0 320 28"><path d="M12 4 L308 14 M12 24 L308 14"/></svg>
+  <em>dim. e calando</em>
+</div>
+
+<!-- ============ PROGRAMME NOTES (credentials) ============ -->
+<section class="mvt" id="programme">
+  <h2>Programme Notes</h2>
+  <p class="tagline">on the conductor, the honors, and the repertoire</p>
+
+  <blockquote class="epigraph">&ldquo;Rare expertise, delivered with customer obsession, accountability, and timeliness.&rdquo;</blockquote>
+
+  <div class="notes-grid">
+    <div class="bio">
+      <h3>The Conductor</h3>
+      <p>IronRim is led by principal architect Prashant Chawla: 17+ years in enterprise infrastructure, nine of them at JP Morgan Chase in Global Technology Infrastructure, and formerly an engineer at Amazon. Ten years conducting on AWS. Eight on Azure.</p>
+      <p>The firm plays as one section: rare expertise on the platforms enterprises actually run, delivered with the tempo the score demands.</p>
+
+      <div class="repertoire">
+        <h3>Repertoire</h3>
+        <ul>
+          <li>Fortune 500 financial services</li>
+          <li>Big Four consulting</li>
+          <li>US federal agencies on Azure Government, FedRAMP High workloads</li>
+          <li>Healthcare and pharma manufacturing</li>
+        </ul>
+        <p class="rep-note">Client names stay off the programme.</p>
+      </div>
+    </div>
+
+    <div>
+      <h3>Honors</h3>
+      <ul class="honors">
+        <li>Microsoft Certified: Azure Solutions Architect Expert</li>
+        <li>AWS Certified Solutions Architect, Professional</li>
+        <li>AWS Certified Solutions Architect, Associate</li>
+        <li>Certified Kubernetes Administrator (CKA)</li>
+        <li>Dynatrace Associate Certified</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="hairpin-row" aria-hidden="true">
+  <em>cresc. al fine</em>
+  <svg viewBox="0 0 320 28"><path d="M12 14 L308 4 M12 14 L308 24"/></svg>
+</div>
+
+<!-- ============ ENCORE (contact) ============ -->
+<section class="mvt encore" id="encore">
+  <h2>Encore</h2>
+  <p class="tagline">the audience decides whether there is another performance</p>
+  <p class="lead">Ours can be scheduled at your convenience. Write to the podium or call the house, and we will bring the score.</p>
+
+  <div class="plates">
+    <a class="plate" href="mailto:info@ironrim.com">info@ironrim.com</a>
+    <a class="plate alt" href="tel:+19182550687">+1 918 255 0687</a>
+  </div>
+
+  <p class="podium">The podium · 470 W Broad St, Columbus, OH 43215</p>
+
+  <svg class="finalbar" viewBox="0 0 64 40" aria-hidden="true">
+    <path d="M2 6 H62 M2 14 H62 M2 22 H62 M2 30 H62 M2 38 H62" stroke-width="1"/>
+    <path d="M50 6 V38" stroke-width="1.4"/>
+    <path d="M58 6 V38" stroke-width="5"/>
+  </svg>
+</section>
+
+<footer>
+  <p>&copy; 2026 IronRim. Columbus, Ohio.</p>
+  <span class="plateno">Plate I.R. 2026 · fine</span>
+</footer>
+
+<div class="beatline" id="beatline" aria-hidden="true">
+  <div class="bl-rule"></div>
+  <span class="bl-tip"></span>
+  <span class="bl-word">battuta</span>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var NS = "http://www.w3.org/2000/svg";
+  function E(name, attrs, parent, text){
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+
+  /* Clef geometry, authored in staff-local space (staff lines y = 0..32). */
+  var GCLEF = [
+    "M14.6 -13 C17.8 -8.2 18.5 -3 16.7 2.2 C15.2 6.6 12.1 9.8 9.4 13.2 C6.3 17 4.4 20.2 4.4 23.9 C4.4 28.6 8 32 12.6 32 C16.9 32 20 29 20 25.1 C20 21.5 17.4 18.9 14.1 18.9 C11 18.9 8.9 21.2 8.9 24 C8.9 26.2 10.3 27.9 12.3 28.4",
+    "M14.6 -13 L11 36 C10.6 39.6 8.9 41.6 6.6 41.6 C4.5 41.6 3.2 40.1 3.2 38.3 C3.2 36.6 4.5 35.3 6.2 35.3 C7.7 35.3 8.8 36.4 8.8 38"
+  ];
+  var FCLEF = "M4.6 10.6 C4.6 4.8 8.6 1.4 13.2 1.4 C17.9 1.4 21 4.6 21 8.8 C21 15.4 14.6 22.4 6.2 27.2";
+
+  var ADV = { q:52, e:30, h:78, w:108 };
+
+  /* Engrave one staff into an svg. ponytail: fixed advance widths, not
+     proportional spacing; upgrade to metric spacing if a musician complains. */
+  function engraveStaff(svg, o){
+    var g = E("g", {}, svg);
+    var top = o.top, bot = top + 32;
+    var i, k;
+    for (i = 0; i < 5; i++){
+      E("path", { d:"M"+o.x0+" "+(top+i*8)+" H"+o.x1, "class":"sline", pathLength:"1", style:"--l:"+i }, g);
+    }
+    if (!o.noStartBar) E("path", { d:"M"+o.x0+" "+top+" V"+bot, "class":"sbar sfix" }, g);
+    E("path", { d:"M"+(o.x1-9)+" "+top+" V"+bot, "class":"sbar sfix" }, g);
+    E("path", { d:"M"+(o.x1-3)+" "+top+" V"+bot, "class":"sbar thick sfix" }, g);
+
+    var cg = E("g", { transform:"translate("+(o.x0+12)+" "+top+")", "class":"sfix" }, g);
+    if (o.clef === "f"){
+      E("path", { d:FCLEF, "class":"sclef" }, cg);
+      E("circle", { cx:4.6, cy:10.6, r:2.8, "class":"sdot" }, cg);
+      E("circle", { cx:25, cy:5.4, r:1.7, "class":"sdot" }, cg);
+      E("circle", { cx:25, cy:11, r:1.7, "class":"sdot" }, cg);
+    } else {
+      E("path", { d:GCLEF[0], "class":"sclef" }, cg);
+      E("path", { d:GCLEF[1], "class":"sclef" }, cg);
+    }
+    E("text", { x:o.x0+56, y:top+14.5, "text-anchor":"middle", "class":"stsig sfix" }, g, "4");
+    E("text", { x:o.x0+56, y:top+30.5, "text-anchor":"middle", "class":"stsig sfix" }, g, "4");
+    if (o.label) E("text", { x:2, y:top+20, "class":"slabel sfix" }, g, o.label);
+
+    var x = o.x0 + 80;
+    if (o.mark) E("text", { x:x-4, y:top-11, "class":"smark sfix" }, g, o.mark);
+    if (o.dyn) E("text", { x:x-2, y:top+50, "class":"sdyn sfix" }, g, o.dyn);
+
+    var pos = [], idx = 0;
+    for (i = 0; i < o.notes.length; i++){
+      var t = o.notes[i];
+      if (t === "|"){
+        E("path", { d:"M"+(x+4)+" "+top+" V"+bot, "class":"sbar sfix" }, g);
+        x += 26;
+        pos.push(null);
+        continue;
+      }
+      var ss = Array.isArray(t.s) ? t.s : [t.s];
+      var ng = E("g", { "class":"note" }, g);
+      ng.style.setProperty("--i", idx);
+      var up = ss[0] < 4;
+      for (k = 0; k < ss.length; k++){
+        var y = bot - ss[k]*4;
+        var open = (t.d === "h" || t.d === "w");
+        E("ellipse", {
+          cx:x, cy:y, rx:(t.d === "w" ? 6 : 5), ry:3.5,
+          transform:"rotate(-18 "+x+" "+y+")",
+          "class": open ? "shead open" : "shead"
+        }, ng);
+      }
+      var y0 = bot - ss[0]*4;
+      if (t.d !== "w"){
+        var sx = up ? x+4.6 : x-4.6;
+        var sy2 = up ? y0-28 : y0+28;
+        E("path", { d:"M"+sx+" "+(up ? y0-1.5 : y0+1.5)+" V"+sy2, "class":"sstem" }, ng);
+      }
+      if (t.a){
+        var ay = up ? y0+11 : y0-17;
+        E("path", { d:"M"+(x-4.5)+" "+ay+" L"+(x+4.5)+" "+(ay+3)+" L"+(x-4.5)+" "+(ay+6), "class":"saccent" }, ng);
+      }
+      pos.push({ x:x, y:y0, d:t.d, up:up, g:ng, idx:idx });
+      x += ADV[t.d];
+      idx++;
+    }
+
+    /* beams: pair consecutive eighths (melodies never leave a lone eighth) */
+    for (i = 0; i < pos.length - 1; i++){
+      var a = pos[i], b = pos[i+1];
+      if (a && b && a.d === "e" && b.d === "e" && !a.beamed && !b.beamed){
+        a.beamed = b.beamed = true;
+        var ax = a.up ? a.x+4.6 : a.x-4.6, ay2 = a.up ? a.y-28 : a.y+28;
+        var bx = a.up ? b.x+4.6 : b.x-4.6, by2 = a.up ? b.y-28 : b.y+28;
+        if (!a.up){
+          E("path", { d:"M"+(b.x-4.6)+" "+(b.y+1.5)+" V"+by2, "class":"sstem" }, b.g);
+        }
+        E("path", { d:"M"+ax+" "+ay2+" L"+bx+" "+by2, "class":"sbeam" }, b.g);
+        i++;
+      }
+    }
+
+    if (o.slur){
+      for (i = 0; i < o.slur.length; i++){
+        var s0 = null, s1 = null, n = -1;
+        for (k = 0; k < pos.length; k++){
+          if (!pos[k]) continue;
+          n++;
+          if (n === o.slur[i][0]) s0 = pos[k];
+          if (n === o.slur[i][1]) s1 = pos[k];
+        }
+        if (s0 && s1){
+          var mx = (s0.x + s1.x)/2;
+          var my = Math.min(s0.y, s1.y) - 24;
+          var sl = E("path", {
+            d:"M"+s0.x+" "+(s0.y-9)+" Q"+mx+" "+my+" "+s1.x+" "+(s1.y-9),
+            "class":"sslur note"
+          }, g);
+          sl.style.setProperty("--i", s1.idx);
+        }
+      }
+    }
+  }
+
+  var PARTS = {
+    oboes:    { clef:"g", label:"Ob.",    mark:"tempo giusto", dyn:"mp",
+      notes:[{s:3,d:"w"},"|",{s:3,d:"q"},{s:3,d:"q"},{s:5,d:"q"},{s:3,d:"q"},"|",{s:6,d:"h"},{s:3,d:"h"}] },
+    horns:    { clef:"g", label:"Cor.",   mark:"legato", dyn:"mf", slur:[[0,2]],
+      notes:[{s:1,d:"q"},{s:3,d:"q"},{s:5,d:"h"},"|",{s:5,d:"e"},{s:6,d:"e"},{s:5,d:"q"},{s:3,d:"q"},"|",{s:4,d:"w"}] },
+    trumpets: { clef:"g", label:"Tr.",    mark:"marcato", dyn:"f",
+      notes:[{s:1,d:"e"},{s:1,d:"e"},{s:3,d:"q",a:1},{s:5,d:"q",a:1},"|",{s:8,d:"h"},{s:5,d:"q",a:1},"|",{s:5,d:"w"}] },
+    timpani:  { clef:"f", label:"Timp.",  mark:"misurato", dyn:"f",
+      notes:[{s:4,d:"q"},{s:4,d:"q"},{s:4,d:"q"},{s:4,d:"q"},"|",{s:2,d:"q"},{s:2,d:"q"},{s:2,d:"h"},"|",{s:4,d:"w"}] },
+    vln1:     { clef:"g", label:"Vl. I",  mark:"cantabile", dyn:"ff", slur:[[0,3]],
+      notes:[{s:4,d:"q"},{s:5,d:"e"},{s:6,d:"e"},{s:7,d:"h"},"|",{s:8,d:"q"},{s:7,d:"q"},{s:6,d:"q"},{s:4,d:"q"},"|",{s:6,d:"w"}] },
+    vln2:     { clef:"g", label:"Vl. II", mark:"scorrevole", dyn:"f",
+      notes:[{s:2,d:"e"},{s:3,d:"e"},{s:4,d:"e"},{s:5,d:"e"},{s:6,d:"e"},{s:5,d:"e"},"|",{s:4,d:"q"},{s:3,d:"q"},{s:2,d:"h"},"|",{s:4,d:"h"},{s:2,d:"h"}] },
+    cellos:   { clef:"f", label:"Vc.",    mark:"maestoso", dyn:"mf",
+      notes:[{s:4,d:"h"},{s:6,d:"h"},"|",{s:4,d:"q"},{s:2,d:"q"},{s:4,d:"h"},"|",{s:4,d:"w"}] },
+    basses:   { clef:"f", label:"Cb.",    mark:"ostinato", dyn:"mp",
+      notes:[{s:0,d:"q"},{s:2,d:"e"},{s:2,d:"e"},{s:0,d:"q"},"|",{s:0,d:"q"},{s:2,d:"e"},{s:2,d:"e"},{s:0,d:"q"},"|",{s:0,d:"w"}] }
+  };
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!reduce) document.documentElement.classList.add("js-anim");
+
+  /* engrave the eight instrument staves */
+  var staffSvgs = document.querySelectorAll(".staffsvg");
+  for (var i = 0; i < staffSvgs.length; i++){
+    var part = PARTS[staffSvgs[i].getAttribute("data-part")];
+    engraveStaff(staffSvgs[i], {
+      top:26, x0:44, x1:724,
+      clef:part.clef, label:part.label, mark:part.mark, dyn:part.dyn,
+      notes:part.notes, slur:part.slur
+    });
+  }
+
+  /* engrave the grand stave on the title page */
+  var hero = document.getElementById("herosvg");
+  if (hero){
+    E("path", { d:"M30 42 C12 62 12 82 28 103 C12 124 12 144 30 164", "class":"sclef sfix" }, hero);
+    E("path", { d:"M36 42 V164", "class":"sbar sfix" }, hero);
+    engraveStaff(hero, { top:42, x0:36, x1:872, noStartBar:true, clef:"g", mark:"Maestoso", dyn:"ff",
+      notes:[{s:[1,3,5],d:"w"},"|",{s:5,d:"q"},{s:6,d:"q"},{s:7,d:"h"},"|",{s:8,d:"q"},{s:7,d:"q"},{s:6,d:"q"},{s:5,d:"q"},"|",{s:[3,5],d:"w"}] });
+    engraveStaff(hero, { top:132, x0:36, x1:872, noStartBar:true, clef:"f",
+      notes:[{s:[3,6],d:"w"},"|",{s:3,d:"h"},{s:6,d:"h"},"|",{s:4,d:"h"},{s:3,d:"h"},"|",{s:3,d:"w"}] });
+  }
+
+  var grand = document.getElementById("grandstave");
+  var blocks = Array.prototype.slice.call(document.querySelectorAll(".staff-block"));
+  var items = {};
+  var lis = document.querySelectorAll("#marginlist li");
+  for (i = 0; i < lis.length; i++) items[lis[i].getAttribute("data-for")] = lis[i];
+  var beat = document.getElementById("beatline");
+  var orchestra = document.getElementById("orchestra");
+
+  if (reduce){
+    /* the score is served fully engraved */
+    if (grand) grand.classList.add("played");
+    blocks.forEach(function(b){ b.classList.add("played"); });
+  } else {
+    requestAnimationFrame(function(){
+      setTimeout(function(){ if (grand) grand.classList.add("played"); }, 120);
+    });
+  }
+
+  /* the conductor's beat line, tied to scroll */
+  var ticking = false;
+  function beatSweep(){
+    ticking = false;
+    var by = window.innerHeight * 0.42;
+    var live = null;
+    for (var j = 0; j < blocks.length; j++){
+      var r = blocks[j].getBoundingClientRect();
+      if (r.top + 30 < by) blocks[j].classList.add("played");
+      if (r.top < by && r.bottom > by - 40) live = blocks[j];
+    }
+    for (var id in items){
+      var isLive = live && live.id === id;
+      items[id].classList.toggle("live", !!isLive);
+      items[id].classList.toggle("done", document.getElementById(id).classList.contains("played"));
+    }
+    if (!reduce && beat && orchestra){
+      var or = orchestra.getBoundingClientRect();
+      beat.classList.toggle("on", or.top < by && or.bottom > by);
+    }
+  }
+  function onScroll(){
+    if (!ticking){ ticking = true; requestAnimationFrame(beatSweep); }
+  }
+  window.addEventListener("scroll", onScroll, { passive:true });
+  window.addEventListener("resize", onScroll);
+  beatSweep();
+})();
+</script>
+</body>
+</html>

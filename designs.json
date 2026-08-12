@@ -1,15 +1,113 @@
 {
   "approved": null,
   "designs": [
-    {"n": 1, "slug": "01-forge", "name": "The Forge", "status": "candidate"},
-    {"n": 2, "slug": "02-blueprint", "name": "Blueprint", "status": "candidate"},
-    {"n": 3, "slug": "03-mission-control", "name": "Mission Control", "status": "candidate"},
-    {"n": 4, "slug": "04-swiss", "name": "Swiss Editorial", "status": "candidate"},
-    {"n": 5, "slug": "05-dossier", "name": "The Dossier", "status": "candidate"},
-    {"n": 6, "slug": "06-bento", "name": "Keynote Bento", "status": "candidate"},
-    {"n": 7, "slug": "07-terminal", "name": "Plan & Apply", "status": "candidate"},
-    {"n": 8, "slug": "08-stratus", "name": "Stratus", "status": "candidate"},
-    {"n": 9, "slug": "09-steel", "name": "Structural Steel", "status": "candidate"},
-    {"n": 10, "slug": "10-perimeter", "name": "The Perimeter", "status": "candidate"}
+    {
+      "n": 1,
+      "slug": "01-forge",
+      "name": "The Forge",
+      "status": "rejected"
+    },
+    {
+      "n": 2,
+      "slug": "02-blueprint",
+      "name": "Blueprint",
+      "status": "shortlisted"
+    },
+    {
+      "n": 3,
+      "slug": "03-mission-control",
+      "name": "Mission Control",
+      "status": "rejected"
+    },
+    {
+      "n": 4,
+      "slug": "04-swiss",
+      "name": "Swiss Editorial",
+      "status": "shortlisted"
+    },
+    {
+      "n": 5,
+      "slug": "05-dossier",
+      "name": "The Dossier",
+      "status": "rejected"
+    },
+    {
+      "n": 6,
+      "slug": "06-bento",
+      "name": "Keynote Bento",
+      "status": "rejected"
+    },
+    {
+      "n": 7,
+      "slug": "07-terminal",
+      "name": "Plan & Apply",
+      "status": "rejected"
+    },
+    {
+      "n": 8,
+      "slug": "08-stratus",
+      "name": "Stratus",
+      "status": "rejected"
+    },
+    {
+      "n": 9,
+      "slug": "09-steel",
+      "name": "Structural Steel",
+      "status": "shortlisted"
+    },
+    {
+      "n": 10,
+      "slug": "10-perimeter",
+      "name": "The Perimeter",
+      "status": "rejected"
+    },
+    {
+      "n": 11,
+      "slug": "11-transit",
+      "name": "The Network",
+      "status": "killed-midbuild"
+    },
+    {
+      "n": 12,
+      "slug": "12-departures",
+      "name": "Departures",
+      "status": "killed-midbuild"
+    },
+    {
+      "n": 13,
+      "slug": "13-score",
+      "name": "The Score",
+      "status": "killed-midbuild"
+    },
+    {
+      "n": 14,
+      "slug": "14-complications",
+      "name": "Complications",
+      "status": "killed-midbuild"
+    },
+    {
+      "n": 15,
+      "slug": "15-manual",
+      "name": "The Manual",
+      "status": "killed-midbuild"
+    },
+    {
+      "n": 16,
+      "slug": "16-joinery",
+      "name": "Joinery",
+      "status": "killed-midbuild"
+    },
+    {
+      "n": 17,
+      "slug": "17-gazette",
+      "name": "The Gazette",
+      "status": "killed-midbuild"
+    },
+    {
+      "n": 18,
+      "slug": "18-corporate",
+      "name": "Corporate (Primary)",
+      "status": "primary-candidate"
+    }
   ]
 }

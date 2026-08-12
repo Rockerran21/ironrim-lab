@@ -1,0 +1,1072 @@
+<!--
+THESIS: Enterprise systems ship with no instructions. IronRim writes the manual and does the assembly. This site IS the manual: ENTERPRISE SYSTEM, MODEL 2026.
+OWN-WORLD: Flat-pack instruction print. Pure white pages, one ink, one instructional orange, friendly pictograms in a single stroke weight, circled part letters, honest page numbers. No drafting film, no dashboards.
+STORY: Cover, then In the box (8 service parts), Tools required (5 certifications), Steps 1 to 4 assemble the machine, Warranty covers it, Support answers the phone.
+FIRST VIEWPORT: The manual cover: model plate, the finished machine pictogram, read before deployment.
+FORM: A paginated booklet. A page-corner control, arrow keys, and plain scrolling all turn pages with a paper flip. Exploded parts slide along dotted guides, a drawn screw fastens each step, and "Page N of 9" never lies.
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IronRim - The Manual</title>
+<meta name="description" content="IronRim. Assembly and operation manual for the enterprise system: AI platforms, cloud infrastructure, observability, security, and compliance. Columbus, Ohio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#17191c;
+  --mut:#565b61;
+  --paper:#ffffff;
+  --hair:#dcdee1;
+  --shade:#e9ebed;
+  --ghost:#9aa1a7;
+  --accent:#c8420c;
+  --ez:cubic-bezier(.16,1,.3,1);
+  --font:"Familjen Grotesk",system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  font-family:var(--font);
+  font-size:1.0625rem;
+  line-height:1.6;
+  color:var(--ink);
+  background:var(--paper);
+  overflow-x:clip;
+  padding-bottom:76px;
+}
+::selection{background:var(--accent);color:#fff}
+html{scrollbar-color:var(--ink) var(--paper);scrollbar-width:thin}
+::-webkit-scrollbar{width:12px}
+::-webkit-scrollbar-track{background:var(--paper);border-left:1px solid var(--hair)}
+::-webkit-scrollbar-thumb{background:var(--ink);border:3px solid var(--paper);border-radius:7px}
+:focus-visible{outline:2px dashed var(--accent);outline-offset:3px;border-radius:2px}
+a{color:var(--ink);text-decoration-color:var(--accent);text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover{color:var(--accent)}
+svg text{font-family:var(--font);fill:var(--ink)}
+
+.skip{position:fixed;top:-60px;left:16px;z-index:60;background:var(--ink);color:#fff;padding:8px 14px;border-radius:3px;transition:top .2s}
+.skip:focus{top:8px}
+
+/* ---------- header ---------- */
+header.bar{
+  position:fixed;inset:0 0 auto 0;z-index:40;height:52px;
+  background:var(--paper);border-bottom:1px solid var(--hair);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(14px,3vw,32px);
+}
+.brand{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:.07em;font-size:.95rem;text-decoration:none;color:var(--ink)}
+.brand i{width:10px;height:10px;background:var(--accent);display:inline-block}
+nav.toc{display:flex;gap:clamp(12px,2.2vw,26px)}
+nav.toc a{font-size:.78rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);text-decoration:none;padding:4px 0;border-bottom:2px solid transparent}
+nav.toc a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+nav.toc a[aria-current="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+@media (max-width:700px){nav.toc a:not(.keep){display:none}}
+
+/* ---------- pages ---------- */
+.page{min-height:100svh;padding:104px 0 56px;scroll-margin-top:52px}
+.page:focus{outline:none}
+.wrap{width:min(1060px,91vw);margin:0 auto}
+.pagesep{border:0;border-top:1px solid var(--hair);margin:0}
+
+h1{font-size:clamp(2.6rem,8.2vw,5.6rem);line-height:.98;font-weight:700;letter-spacing:-.015em;text-transform:uppercase}
+h2{font-size:clamp(2rem,5.4vw,3.3rem);line-height:1.02;font-weight:700;letter-spacing:-.01em;text-transform:uppercase}
+.rule{border:0;border-top:2px solid var(--ink);margin:.9rem 0 0}
+p{max-width:66ch}
+.mut{color:var(--mut)}
+.small{font-size:.85rem}
+.num{font-variant-numeric:tabular-nums}
+
+/* circled part letter */
+.pl{
+  display:inline-flex;align-items:center;justify-content:center;flex:none;
+  width:1.65em;height:1.65em;border:2px solid var(--ink);border-radius:50%;
+  font-weight:600;font-size:.82em;line-height:1;
+}
+.pl.acc{border-color:var(--accent);color:var(--accent)}
+
+/* buttons */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-weight:600;font-size:.95rem;letter-spacing:.05em;text-transform:uppercase;
+  padding:13px 22px;border-radius:3px;text-decoration:none;cursor:pointer;
+  border:2px solid var(--ink);color:var(--ink);background:var(--paper);
+}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.solid{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.solid:hover{background:#a83507;border-color:#a83507;color:#fff}
+
+/* ---------- cover ---------- */
+#cover .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,5vw,64px);align-items:center}
+.plate{
+  display:inline-block;margin-top:1.1rem;border:2px solid var(--ink);border-radius:3px;
+  padding:8px 16px;font-weight:600;letter-spacing:.14em;font-size:.82rem;text-transform:uppercase;
+}
+.thesis{margin-top:1.4rem;font-size:clamp(1.05rem,1.5vw,1.2rem)}
+.cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:1.7rem}
+.contents{margin-top:2.4rem;max-width:420px;list-style:none}
+.contents li{display:flex;align-items:baseline;gap:10px;padding:7px 0;font-weight:500}
+.contents a{text-decoration:none;font-weight:600}
+.contents .dots{flex:1;border-bottom:2px dotted #b6babf;transform:translateY(-4px)}
+.readfirst{margin-top:2.2rem;padding-top:1rem;border-top:1px solid var(--hair);font-size:.85rem;color:var(--mut);max-width:52ch}
+.coverfig{margin:0}
+.coverfig svg{width:100%;height:auto;display:block}
+@media (max-width:820px){
+  #cover .wrap{grid-template-columns:1fr}
+  .coverfig{max-width:420px}
+}
+
+/* ---------- shared line classes for SVG ---------- */
+.ln{fill:none;stroke:var(--ink);stroke-width:2;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round}
+.lnf{fill:#fff;stroke:var(--ink);stroke-width:2;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round}
+.la{stroke:var(--accent)}
+.fa{fill:var(--accent)}
+.shd{fill:var(--shade)}
+.ghostln{fill:none;stroke:var(--ghost);stroke-width:2;vector-effect:non-scaling-stroke;stroke-dasharray:5 6;stroke-linecap:round;stroke-linejoin:round}
+.guide{fill:none;stroke:var(--accent);stroke-width:2;vector-effect:non-scaling-stroke;stroke-dasharray:1 8;stroke-linecap:round}
+
+/* ---------- in the box ---------- */
+.lead{margin-top:1.2rem;font-size:1.1rem}
+.flatlay{
+  margin-top:2rem;display:grid;gap:1px;background:var(--hair);
+  border:1px solid var(--hair);
+  grid-template-columns:repeat(4,1fr);
+}
+@media (max-width:900px){.flatlay{grid-template-columns:repeat(2,1fr)}}
+.cell{background:var(--paper);padding:clamp(14px,2vw,24px);display:flex;flex-direction:column;gap:10px}
+.cell header{display:flex;align-items:center;justify-content:space-between}
+.cell .qty{font-weight:600;color:var(--mut);font-size:.9rem}
+.cell svg{width:min(112px,60%);height:auto;margin:6px auto}
+.cell h3{font-size:.98rem;font-weight:600;line-height:1.25}
+table.parts{width:100%;border-collapse:collapse;margin-top:2.2rem}
+table.parts caption{text-align:left;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.82rem;padding-bottom:.6rem;color:var(--mut)}
+table.parts th{text-align:left;font-size:.78rem;text-transform:uppercase;letter-spacing:.09em;color:var(--mut);font-weight:600;border-bottom:2px solid var(--ink);padding:8px 12px 8px 0}
+table.parts td{border-bottom:1px solid var(--hair);padding:13px 12px 13px 0;vertical-align:top}
+table.parts td.p{white-space:nowrap;font-weight:600}
+table.parts td.p .pl{margin-right:8px}
+table.parts td:last-child{color:var(--mut)}
+@media (max-width:640px){
+  table.parts td.p{white-space:normal}
+  table.parts th:nth-child(2),table.parts td:nth-child(2){display:none}
+}
+
+.diagram{margin:2.4rem 0 0;overflow-x:auto;overscroll-behavior-x:contain}
+.diagram svg{width:100%;min-width:560px;height:auto;display:block}
+.diagram figcaption{font-size:.85rem;color:var(--mut);padding:10px 2px 2px;min-width:0}
+
+/* ---------- tools ---------- */
+.toolrows{margin-top:1.6rem;border-top:2px solid var(--ink)}
+.toolrow{display:grid;grid-template-columns:220px 1fr auto;gap:clamp(14px,3vw,36px);align-items:center;padding:20px 0;border-bottom:1px solid var(--hair)}
+.toolrow svg{width:100%;max-width:220px;height:auto}
+.toolrow h3{font-size:1.06rem;font-weight:600}
+.toolrow .tname{color:var(--mut);font-size:.85rem;margin-top:2px}
+.toolrow .qty{font-weight:600;color:var(--mut)}
+@media (max-width:640px){.toolrow{grid-template-columns:130px 1fr;grid-template-rows:auto}.toolrow .qty{grid-column:2}}
+
+/* ---------- steps ---------- */
+.stephead{display:flex;align-items:flex-start;gap:clamp(16px,3vw,34px);flex-wrap:wrap}
+.stepnum{
+  font-size:clamp(4.4rem,11vw,7.6rem);font-weight:700;line-height:.82;color:var(--accent);
+  letter-spacing:-.03em;font-variant-numeric:tabular-nums;
+}
+.stephead .tx{flex:1;min-width:240px;padding-top:.4rem}
+.stephead p{margin-top:.7rem}
+.partsused{display:flex;align-items:center;gap:8px;margin-top:1rem;font-size:.88rem;color:var(--mut);flex-wrap:wrap}
+.partsused .pl{font-size:.78rem}
+.detail{display:flex;gap:10px;align-items:baseline;margin-top:1.1rem;max-width:70ch;font-size:.92rem}
+.detail .pl{transform:translateY(3px)}
+.detail b{font-weight:600}
+
+/* ---------- warranty ---------- */
+#warranty .terms{margin-top:2rem;border-top:2px solid var(--ink);max-width:760px}
+#warranty .term{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:18px 0;border-bottom:1px solid var(--hair)}
+#warranty .term dt{font-weight:600;font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);padding-top:3px}
+#warranty .term dd{max-width:60ch}
+blockquote.promise{font-size:clamp(1.2rem,2.4vw,1.7rem);font-weight:600;line-height:1.3;max-width:26ch}
+.warrgrid{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:clamp(24px,4vw,56px);align-items:start;margin-top:.6rem}
+.warrgrid .seal{width:150px;justify-self:end}
+@media (max-width:700px){.warrgrid{grid-template-columns:1fr}.warrgrid .seal{justify-self:start;width:120px}}
+/* pull tab */
+.tabzone{margin-top:2.4rem;position:relative;max-width:760px;overflow:hidden;padding:2px}
+.pulltab{
+  display:inline-flex;align-items:center;gap:12px;cursor:pointer;
+  background:var(--paper);border:2px solid var(--ink);border-radius:3px;
+  padding:12px 18px;font:inherit;font-weight:700;letter-spacing:.1em;font-size:.82rem;text-transform:uppercase;color:var(--ink);
+}
+.pulltab:hover{border-color:var(--accent);color:var(--accent)}
+.pulltab .grip{display:inline-flex;gap:3px}
+.pulltab .grip i{width:3px;height:16px;background:currentColor;display:block}
+.pulltab .arr{font-weight:700}
+.tabpanel{
+  border:2px solid var(--ink);border-top-width:2px;border-radius:3px;margin-top:-2px;
+  padding:clamp(16px,3vw,26px);max-width:760px;
+}
+.tabpanel[hidden]{display:none}
+.tabpanel h3{font-size:1rem;text-transform:uppercase;letter-spacing:.08em}
+.tabpanel ul{margin:.8rem 0 0 1.1rem}
+.tabpanel li{margin:.3rem 0}
+@media (prefers-reduced-motion:no-preference){
+  .tabpanel{transition:transform .55s var(--ez),opacity .4s var(--ez)}
+  .tabpanel.closedpos{transform:translateX(-24px);opacity:0}
+}
+
+/* ---------- support ---------- */
+.supgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,300px);gap:clamp(24px,5vw,64px);margin-top:2rem;align-items:start}
+@media (max-width:760px){.supgrid{grid-template-columns:1fr}}
+.hotline{border-top:2px solid var(--ink);max-width:640px}
+.hotline a,.hotline .addr{display:block;text-decoration:none}
+.hotline .row{display:grid;grid-template-columns:110px 1fr;gap:16px;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--hair)}
+.hotline .lbl{font-size:.82rem;text-transform:uppercase;letter-spacing:.09em;color:var(--mut);font-weight:600}
+.hotline .val{font-size:clamp(1.25rem,2.6vw,1.7rem);font-weight:600;line-height:1.25;overflow-wrap:anywhere}
+.hotline a .val{color:var(--ink)}
+.hotline a:hover .val{color:var(--accent)}
+.nofrust{max-width:300px}
+.nofrust svg{width:min(200px,70%);height:auto;display:block}
+.nofrust p{font-size:.9rem;color:var(--mut);margin-top:10px;max-width:34ch}
+footer.colophon{margin-top:3.4rem;padding-top:1.1rem;border-top:1px solid var(--hair);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.85rem;color:var(--mut)}
+
+/* ---------- fixed pager ---------- */
+.pager{display:none}
+.js .pager{
+  display:flex;position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:40;
+  align-items:center;gap:6px;background:var(--paper);border:1px solid var(--hair);border-radius:3px;
+  padding:5px 8px;box-shadow:0 3px 14px rgba(23,25,28,.10);
+}
+.pager .pnum{font-size:.88rem;font-weight:600;padding:0 8px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pager button{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:0;background:none;cursor:pointer;color:var(--ink);border-radius:3px}
+.pager button:hover{color:var(--accent)}
+.pager button:disabled{color:var(--hair);cursor:default}
+.corner{display:none}
+.js .corner{
+  display:block;position:fixed;right:0;bottom:0;z-index:41;width:72px;height:72px;
+  border:0;background:none;cursor:pointer;padding:0;
+}
+.corner::before{
+  content:"";position:absolute;inset:0;background:var(--accent);
+  clip-path:polygon(0 100%,100% 0,100% 100%);
+}
+.corner::after{
+  content:"";position:absolute;inset:0;background:linear-gradient(135deg,#ffffff 42%,#e2e4e7 96%);
+  clip-path:polygon(0 100%,100% 0,0 0);
+  filter:drop-shadow(2px 2px 3px rgba(23,25,28,.22));
+}
+@media (prefers-reduced-motion:no-preference){
+  .corner{transition:transform .3s var(--ez)}
+  .corner:hover{transform:scale(1.09)}
+}
+
+/* ---------- page-turn sheet ---------- */
+#flip{position:fixed;inset:0;z-index:50;perspective:1500px;pointer-events:none;visibility:hidden}
+#flip.on{visibility:visible}
+#sheet{
+  position:absolute;inset:0;background:linear-gradient(90deg,#fbfbfc 0,#ffffff 12%,#ffffff 88%,#f2f3f4 100%);
+  backface-visibility:hidden;box-shadow:-18px 0 46px rgba(23,25,28,.16);will-change:transform;
+}
+
+/* ---------- assembly motion (one system, exponential ease-out) ---------- */
+.js .anim .part{transition:transform .95s var(--ez);transition-delay:var(--d,0s);transform-box:fill-box}
+.js .anim .stampable{transition:transform .6s var(--ez) .1s,opacity .45s linear .1s}
+@media (prefers-reduced-motion:no-preference){
+  .js .anim:not(.in-view) .part{transform:var(--from,none)}
+  .js .anim:not(.in-view) .stampable{opacity:0;transform:scale(1.55)}
+  .stampable{transform-origin:left top}
+  .lamp{animation:lamp 2.6s ease-in-out infinite}
+  @keyframes lamp{0%,100%{opacity:1}50%{opacity:.35}}
+}
+</style>
+
+<a class="skip" href="#main">Skip to contents</a>
+
+<header class="bar">
+  <a class="brand" href="#cover"><i aria-hidden="true"></i>IRONRIM</a>
+  <nav class="toc" aria-label="Manual contents">
+    <a href="#box">In the box</a>
+    <a href="#tools">Tools</a>
+    <a href="#step-1">Steps</a>
+    <a href="#warranty">Warranty</a>
+    <a href="#support" class="keep">Support</a>
+  </nav>
+</header>
+
+<main id="main">
+
+<!-- ================= PAGE 1 : COVER ================= -->
+<section class="page anim" id="cover" data-title="Cover" tabindex="-1">
+  <div class="wrap">
+    <div>
+      <h1>Enterprise<br>System</h1>
+      <p class="plate">Model 2026 &middot; Assembly and operation manual</p>
+      <p class="thesis">Every enterprise runs on a system nobody wrote the manual for. IronRim architects and operates the systems enterprises bet on: AI platforms, cloud infrastructure, and the observability, security, and compliance that keep them trustworthy. This is the manual. We also do the assembly.</p>
+      <div class="cta">
+        <a class="btn solid" href="#box">Begin assembly &darr;</a>
+        <a class="btn" href="tel:+19182550687">Call support</a>
+      </div>
+      <ul class="contents" aria-label="Contents">
+        <li><a href="#box">In the box</a><span class="dots" aria-hidden="true"></span><span class="num">2</span></li>
+        <li><a href="#tools">Tools required</a><span class="dots" aria-hidden="true"></span><span class="num">3</span></li>
+        <li><a href="#step-1">Assembly, steps 1 to 4</a><span class="dots" aria-hidden="true"></span><span class="num">4</span></li>
+        <li><a href="#warranty">Warranty</a><span class="dots" aria-hidden="true"></span><span class="num">8</span></li>
+        <li><a href="#support">Support</a><span class="dots" aria-hidden="true"></span><span class="num">9</span></li>
+      </ul>
+      <p class="readfirst">Read all instructions before production deployment. Keep this manual for the life of the system.</p>
+    </div>
+    <figure class="coverfig">
+      <svg viewBox="0 0 320 300" role="img" aria-label="The assembled enterprise system, drawn as a flat instruction pictogram: a cabinet with a gauge, status lamp, four modules, a shield, and an antenna.">
+        <ellipse class="shd" cx="160" cy="276" rx="112" ry="9"/>
+        <g class="part" style="--from:translate(0,-26px)">
+          <rect class="lnf" x="92" y="34" width="136" height="28" rx="8"/>
+          <path class="ln" d="M116,41 v14 M136,41 v14 M156,41 v14"/>
+          <path class="ln" d="M236,34 v-16"/>
+          <circle class="fa" cx="236" cy="14" r="4.5"/>
+        </g>
+        <rect class="lnf" x="70" y="62" width="180" height="198" rx="12"/>
+        <path class="ln" d="M70,124 h180"/>
+        <circle class="lnf" cx="120" cy="94" r="17"/>
+        <path class="ln" d="M120,80 v5 M108,88 l4,2.5 M132,88 l-4,2.5"/>
+        <path class="ln la" d="M120,94 L129,84"/>
+        <rect class="ln" x="152" y="82" width="72" height="7" rx="3.5"/>
+        <rect class="ln" x="152" y="96" width="72" height="7" rx="3.5"/>
+        <circle class="fa lamp" cx="238" cy="93" r="5"/>
+        <g class="part" style="--from:translate(-20px,14px)">
+          <rect class="lnf" x="86" y="138" width="70" height="34" rx="4"/><circle class="ln" cx="121" cy="155" r="5"/>
+        </g>
+        <g class="part" style="--from:translate(20px,14px);--d:.08s">
+          <rect class="lnf" x="164" y="138" width="70" height="34" rx="4"/><circle class="ln" cx="199" cy="155" r="5"/>
+        </g>
+        <g class="part" style="--from:translate(-20px,20px);--d:.16s">
+          <rect class="lnf" x="86" y="180" width="70" height="34" rx="4"/><circle class="ln" cx="121" cy="197" r="5"/>
+        </g>
+        <g class="part" style="--from:translate(20px,20px);--d:.24s">
+          <rect class="lnf" x="164" y="180" width="70" height="34" rx="4"/><circle class="ln" cx="199" cy="197" r="5"/>
+        </g>
+        <g class="part" style="--from:translate(0,34px);--d:.32s">
+          <path class="lnf" d="M160,220 l22,8 v14 c0,13 -9,20 -22,26 c-13,-6 -22,-13 -22,-26 v-14 z"/>
+          <path class="ln la" d="M151,240 l6,6 l12,-12"/>
+        </g>
+        <rect class="lnf" x="86" y="260" width="30" height="12" rx="3"/>
+        <rect class="lnf" x="204" y="260" width="30" height="12" rx="3"/>
+      </svg>
+    </figure>
+  </div>
+</section>
+
+<hr class="pagesep">
+
+<!-- ================= PAGE 2 : IN THE BOX ================= -->
+<section class="page" id="box" data-title="In the box" tabindex="-1">
+  <div class="wrap">
+    <h2>In the box</h2>
+    <hr class="rule">
+    <p class="lead">Eight parts. Nothing sold separately, nothing missing when you open the box.</p>
+
+    <div class="flatlay">
+      <div class="cell">
+        <header><span class="pl">A</span><span class="qty num">1x</span></header>
+        <svg viewBox="0 0 96 96" role="img" aria-label="Pictogram: a processor chip with pins, for AI and GenAI Engineering">
+          <rect class="lnf" x="30" y="30" width="36" height="36" rx="5"/>
+          <rect class="ln" x="42" y="42" width="12" height="12"/>
+          <path class="ln" d="M30,38 h-9 M30,48 h-9 M30,58 h-9 M66,38 h9 M66,48 h9 M66,58 h9 M38,30 v-9 M48,30 v-9 M58,30 v-9 M38,66 v9 M48,66 v9 M58,66 v9"/>
+        </svg>
+        <h3>AI &amp; GenAI Engineering</h3>
+      </div>
+      <div class="cell">
+        <header><span class="pl">B</span><span class="qty num">1x</span></header>
+        <svg viewBox="0 0 96 96" role="img" aria-label="Pictogram: a gauge with a needle, for Observability and SRE">
+          <circle class="lnf" cx="48" cy="48" r="23"/>
+          <path class="ln" d="M48,29 v6 M32,38 l5,3 M64,38 l-5,3"/>
+          <path class="ln la" d="M48,48 L61,36"/>
+          <circle class="fa" cx="48" cy="48" r="2.6"/>
+          <path class="ln" d="M40,74 v5 M56,74 v5 M34,79 h28"/>
+        </svg>
+        <h3>Observability &amp; SRE</h3>
+      </div>
+      <div class="cell">
+        <header><span class="pl">C</span><span class="qty num">1x</span></header>
+        <svg viewBox="0 0 96 96" role="img" aria-label="Pictogram: a gear inside a cycle of arrows, for DevOps and Platform Engineering">
+          <path class="ln" d="M67,44 A21,21 0 0 0 33,38"/>
+          <path class="ln" d="M33,38 l8,-6 M33,38 l9,2"/>
+          <path class="ln" d="M29,52 A21,21 0 0 0 63,58"/>
+          <path class="ln" d="M63,58 l-8,6 M63,58 l-9,-2"/>
+          <circle class="lnf" cx="48" cy="48" r="8"/>
+          <path class="ln" d="M48,37 v-4 M48,59 v4 M37,48 h-4 M59,48 h4 M40,40 l-3,-3 M56,40 l3,-3 M40,56 l-3,3 M56,56 l3,3"/>
+        </svg>
+        <h3>DevOps &amp; Platform Engineering</h3>
+      </div>
+      <div class="cell">
+        <header><span class="pl">D</span><span class="qty num">1x</span></header>
+        <svg viewBox="0 0 96 96" role="img" aria-label="Pictogram: a cloud standing on two pillars over a ground line, for Cloud Architecture">
+          <path class="lnf" d="M33,52 a11,11 0 0 1 -1,-22 a15,15 0 0 1 29,-4 a10,10 0 0 1 4,26 z"/>
+          <rect class="lnf" x="35" y="56" width="8" height="16"/>
+          <rect class="lnf" x="55" y="56" width="8" height="16"/>
+          <path class="ln" d="M26,76 h46"/>
+        </svg>
+        <h3>Cloud Architecture</h3>
+      </div>
+      <div class="cell">
+        <header><span class="pl">E</span><span class="qty num">1x</span></header>
+        <svg viewBox="0 0 96 96" role="img" aria-label="Pictogram: three stacked blocks beside a curly brace, for Infrastructure as Code">
+          <path class="ln" d="M34,22 q-9,0 -9,10 v6 q0,7 -7,10 q7,3 7,10 v6 q0,10 9,10"/>
+          <rect class="lnf" x="42" y="24" width="28" height="13" rx="2"/>
+          <rect class="lnf" x="42" y="42" width="28" height="13" rx="2"/>
+          <rect class="lnf" x="42" y="60" width="28" height="13" rx="2"/>
+          <path class="ln" d="M47,30.5 h14"/>
+          <path class="ln la" d="M47,48.5 h9"/>
+          <path class="ln" d="M47,66.5 h14"/>
+        </svg>
+        <h3>Infrastructure as Code</h3>
+      </div>
+      <div class="cell">
+        <header><span class="pl">F</span><span class="qty num">1x</span></header>
+        <svg viewBox="0 0 96 96" role="img" aria-label="Pictogram: a padlock, for Security and Identity">
+          <path class="ln" d="M36,44 v-8 a12,12 0 0 1 24,0 v8"/>
+          <rect class="lnf" x="30" y="44" width="36" height="28" rx="5"/>
+          <circle class="ln" cx="48" cy="55" r="4"/>
+          <path class="ln" d="M48,59 v7"/>
+        </svg>
+        <h3>Security &amp; Identity</h3>
+      </div>
+      <div class="cell">
+        <header><span class="pl">G</span><span class="qty num">1x</span></header>
+        <svg viewBox="0 0 96 96" role="img" aria-label="Pictogram: a clipboard checklist with two boxes ticked, for Compliance">
+          <rect class="lnf" x="30" y="26" width="36" height="46" rx="4"/>
+          <rect class="lnf" x="42" y="21" width="12" height="9" rx="2"/>
+          <rect class="ln" x="36" y="36" width="8" height="8"/>
+          <path class="ln la" d="M37.5,40 l2.5,2.5 l5,-6"/>
+          <path class="ln" d="M49,40 h11"/>
+          <rect class="ln" x="36" y="49" width="8" height="8"/>
+          <path class="ln la" d="M37.5,53 l2.5,2.5 l5,-6"/>
+          <path class="ln" d="M49,53 h11"/>
+          <rect class="ln" x="36" y="62" width="8" height="8"/>
+          <path class="ln" d="M49,66 h11"/>
+        </svg>
+        <h3>Compliance</h3>
+      </div>
+      <div class="cell">
+        <header><span class="pl">H</span><span class="qty num">1x</span></header>
+        <svg viewBox="0 0 96 96" role="img" aria-label="Pictogram: a database cylinder with a rising arrow, for Data and Analytics">
+          <ellipse class="lnf" cx="44" cy="30" rx="16" ry="6"/>
+          <path class="ln" d="M28,30 v28 M60,30 v28"/>
+          <path class="ln" d="M28,44 a16,6 0 0 0 32,0"/>
+          <path class="ln" d="M28,58 a16,6 0 0 0 32,0"/>
+          <path class="ln la" d="M69,62 v-26 M69,36 l-5,7 M69,36 l5,7"/>
+        </svg>
+        <h3>Data &amp; Analytics</h3>
+      </div>
+    </div>
+
+    <table class="parts">
+      <caption>Parts list, model 2026</caption>
+      <thead>
+        <tr><th scope="col">Part</th><th scope="col">Qty</th><th scope="col">Specification</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="p"><span class="pl">A</span>AI &amp; GenAI Engineering</td><td class="num">1x</td><td>LLM platforms, RAG pipelines, MLOps, AI guardrails and governance. AWS Bedrock, SageMaker, Azure OpenAI, LangChain, vector databases.</td></tr>
+        <tr><td class="p"><span class="pl">B</span>Observability &amp; SRE</td><td class="num">1x</td><td>Dynatrace, Datadog, Splunk, Prometheus, Grafana, OpenTelemetry. SLOs, alerting, incident readiness, cost visibility.</td></tr>
+        <tr><td class="p"><span class="pl">C</span>DevOps &amp; Platform Engineering</td><td class="num">1x</td><td>CI/CD with Jenkins, GitHub Actions, Azure DevOps, ArgoCD. Kubernetes and OpenShift platforms, Helm, GitOps.</td></tr>
+        <tr><td class="p"><span class="pl">D</span>Cloud Architecture</td><td class="num">1x</td><td>AWS, Azure, GCP. Landing zones, multi-region resilience, migration and modernization.</td></tr>
+        <tr><td class="p"><span class="pl">E</span>Infrastructure as Code</td><td class="num">1x</td><td>Terraform, ARM, CloudFormation, Ansible. Reusable modules, repeatable environments, drift-free automation.</td></tr>
+        <tr><td class="p"><span class="pl">F</span>Security &amp; Identity</td><td class="num">1x</td><td>IAM, network isolation, KMS and Key Vault, DLP, RBAC, secure AI workloads.</td></tr>
+        <tr><td class="p"><span class="pl">G</span>Compliance</td><td class="num">1x</td><td>FedRAMP High and Moderate, NIST, CIS, HIPAA, GxP. Azure Government experience.</td></tr>
+        <tr><td class="p"><span class="pl">H</span>Data &amp; Analytics</td><td class="num">1x</td><td>Snowflake, Databricks, data platforms and pipelines that feed AI.</td></tr>
+      </tbody>
+    </table>
+
+    <figure class="diagram anim">
+      <svg viewBox="0 0 720 320" role="img" aria-label="Exploded diagram: the eight lettered parts slide along dotted guides into one dashed machine silhouette.">
+        <rect class="ghostln" x="220" y="36" width="280" height="244" rx="14"/>
+        <path class="ghostln" d="M220,70 h280"/>
+        <rect class="ghostln" x="268" y="284" width="34" height="12" rx="3"/>
+        <rect class="ghostln" x="418" y="284" width="34" height="12" rx="3"/>
+        <line class="guide" x1="130" y1="62" x2="248" y2="102"/>
+        <line class="guide" x1="360" y1="8" x2="360" y2="62"/>
+        <line class="guide" x1="590" y1="62" x2="472" y2="102"/>
+        <line class="guide" x1="96" y1="200" x2="248" y2="182"/>
+        <line class="guide" x1="360" y1="310" x2="360" y2="192"/>
+        <line class="guide" x1="624" y1="200" x2="472" y2="182"/>
+        <line class="guide" x1="200" y1="300" x2="300" y2="252"/>
+        <line class="guide" x1="520" y1="300" x2="420" y2="252"/>
+        <g class="part" style="--from:translate(-140px,-48px)"><circle class="lnf" cx="270" cy="110" r="17"/><text x="270" y="115.5" text-anchor="middle" font-size="15" font-weight="600">A</text></g>
+        <g class="part" style="--from:translate(0,-64px);--d:.06s"><circle class="lnf" cx="360" cy="88" r="17"/><text x="360" y="93.5" text-anchor="middle" font-size="15" font-weight="600">D</text></g>
+        <g class="part" style="--from:translate(140px,-48px);--d:.12s"><circle class="lnf" cx="450" cy="110" r="17"/><text x="450" y="115.5" text-anchor="middle" font-size="15" font-weight="600">B</text></g>
+        <g class="part" style="--from:translate(-170px,22px);--d:.18s"><circle class="lnf" cx="270" cy="178" r="17"/><text x="270" y="183.5" text-anchor="middle" font-size="15" font-weight="600">E</text></g>
+        <g class="part" style="--from:translate(0,130px);--d:.24s"><circle class="lnf" cx="360" cy="172" r="17"/><text x="360" y="177.5" text-anchor="middle" font-size="15" font-weight="600">C</text></g>
+        <g class="part" style="--from:translate(170px,22px);--d:.3s"><circle class="lnf" cx="450" cy="178" r="17"/><text x="450" y="183.5" text-anchor="middle" font-size="15" font-weight="600">F</text></g>
+        <g class="part" style="--from:translate(-120px,56px);--d:.36s"><circle class="lnf" cx="315" cy="240" r="17"/><text x="315" y="245.5" text-anchor="middle" font-size="15" font-weight="600">G</text></g>
+        <g class="part" style="--from:translate(120px,56px);--d:.42s"><circle class="lnf" cx="405" cy="240" r="17"/><text x="405" y="245.5" text-anchor="middle" font-size="15" font-weight="600">H</text></g>
+      </svg>
+      <figcaption>Fig. 2.1 &middot; Assembled, all eight parts form one system. That is the point of the box.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<hr class="pagesep">
+
+<!-- ================= PAGE 3 : TOOLS ================= -->
+<section class="page" id="tools" data-title="Tools required" tabindex="-1">
+  <div class="wrap">
+    <h2>Tools required</h2>
+    <hr class="rule">
+    <p class="lead">Five tools ship with every engagement. Each one is a certification we hold, not a logo we rent.</p>
+
+    <div class="toolrows">
+      <div class="toolrow">
+        <svg viewBox="0 0 200 60" role="img" aria-label="Pictogram: an open-end wrench">
+          <ellipse class="shd" cx="100" cy="52" rx="80" ry="4"/>
+          <path class="lnf" d="M36,13 a18,18 0 0 1 0,34 l-14,0 0,-9 8,0 a9,9 0 0 0 0,-16 l-8,0 0,-9 z"/>
+          <rect class="lnf" x="50" y="24" width="128" height="12" rx="6"/>
+        </svg>
+        <div>
+          <h3>Microsoft Certified: Azure Solutions Architect Expert</h3>
+          <p class="tname">Open-end wrench &middot; load-bearing joints</p>
+        </div>
+        <span class="qty num">1x</span>
+      </div>
+      <div class="toolrow">
+        <svg viewBox="0 0 200 60" role="img" aria-label="Pictogram: a flat screwdriver">
+          <ellipse class="shd" cx="100" cy="52" rx="80" ry="4"/>
+          <path class="lnf" d="M24,28 l14,-3 0,10 -14,-3 z"/>
+          <rect class="lnf" x="38" y="27" width="80" height="6" rx="3"/>
+          <rect class="lnf" x="118" y="23" width="10" height="14" rx="2"/>
+          <rect class="lnf" x="128" y="19" width="52" height="22" rx="9"/>
+        </svg>
+        <div>
+          <h3>AWS Certified Solutions Architect, Professional</h3>
+          <p class="tname">Flat screwdriver &middot; torque by pipeline</p>
+        </div>
+        <span class="qty num">1x</span>
+      </div>
+      <div class="toolrow">
+        <svg viewBox="0 0 200 60" role="img" aria-label="Pictogram: an L-shaped hex key">
+          <ellipse class="shd" cx="100" cy="52" rx="60" ry="4"/>
+          <path class="lnf" d="M78,10 h13 v27 h34 v11 h-47 z"/>
+          <path class="ln" d="M81,14 h7 M114,41 v3"/>
+        </svg>
+        <div>
+          <h3>AWS Certified Solutions Architect, Associate</h3>
+          <p class="tname">Hex key &middot; the one every box includes</p>
+        </div>
+        <span class="qty num">1x</span>
+      </div>
+      <div class="toolrow">
+        <svg viewBox="0 0 200 60" role="img" aria-label="Pictogram: a ratchet with a square drive">
+          <ellipse class="shd" cx="100" cy="52" rx="80" ry="4"/>
+          <circle class="lnf" cx="34" cy="30" r="14"/>
+          <rect class="lnf" x="29" y="25" width="10" height="10"/>
+          <rect class="lnf" x="47" y="26" width="12" height="8"/>
+          <rect class="lnf" x="58" y="24" width="118" height="12" rx="6"/>
+        </svg>
+        <div>
+          <h3>Certified Kubernetes Administrator (CKA)</h3>
+          <p class="tname">Ratchet &middot; operating tension, every fastener</p>
+        </div>
+        <span class="qty num">1x</span>
+      </div>
+      <div class="toolrow">
+        <svg viewBox="0 0 200 60" role="img" aria-label="Pictogram: a spirit level with a centered bubble">
+          <ellipse class="shd" cx="100" cy="52" rx="86" ry="4"/>
+          <rect class="lnf" x="14" y="20" width="172" height="20" rx="3"/>
+          <rect class="lnf" x="77" y="24" width="46" height="12" rx="6"/>
+          <circle class="ln la" cx="100" cy="30" r="4.5"/>
+          <path class="ln" d="M93,22 v16 M107,22 v16 M22,20 v20 M178,20 v20"/>
+        </svg>
+        <div>
+          <h3>Dynatrace Associate Certified</h3>
+          <p class="tname">Spirit level &middot; measure before you modify</p>
+        </div>
+        <span class="qty num">1x</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="pagesep">
+
+<!-- ================= PAGE 4 : STEP 1 ================= -->
+<section class="page anim" id="step-1" data-title="Step 1, Assess" tabindex="-1">
+  <div class="wrap">
+    <div class="stephead">
+      <span class="stepnum stampable" aria-hidden="true">1</span>
+      <div class="tx">
+        <h2>Assess</h2>
+        <p>Open the box you already own. We inventory the systems, the spend, and the risk before anyone touches anything.</p>
+        <p class="partsused">Parts in this step: <span class="pl">B</span> Observability &amp; SRE <span class="pl">G</span> Compliance</p>
+      </div>
+    </div>
+    <figure class="diagram">
+      <svg viewBox="0 0 720 400" role="img" aria-label="Exploded diagram, step one: a spirit level and a magnifier move along dotted guides onto a dashed outline of the machine while a checklist slides in. A zoom inset magnifies the level's bubble.">
+        <rect class="ghostln" x="120" y="112" width="190" height="226" rx="12"/>
+        <circle class="ghostln" cx="170" cy="168" r="20"/>
+        <rect class="ghostln" x="212" y="152" width="72" height="8" rx="4"/>
+        <rect class="ghostln" x="212" y="168" width="72" height="8" rx="4"/>
+        <rect class="ghostln" x="140" y="220" width="70" height="42" rx="5"/>
+        <rect class="ghostln" x="222" y="220" width="70" height="42" rx="5"/>
+        <line class="guide" x1="352" y1="16" x2="238" y2="80"/>
+        <path class="ln la" d="M238,80 l10,-7 M238,80 l11,1"/>
+        <line class="guide" x1="496" y1="352" x2="398" y2="284"/>
+        <path class="ln la" d="M398,284 l11,2 M398,284 l4,11"/>
+        <g class="part" style="--from:translate(146px,-104px)">
+          <ellipse class="shd" cx="215" cy="106" rx="86" ry="5"/>
+          <rect class="lnf" x="125" y="82" width="180" height="20" rx="3"/>
+          <rect class="lnf" x="192" y="86" width="46" height="12" rx="6"/>
+          <circle class="ln la" cx="215" cy="92" r="4.5"/>
+          <path class="ln" d="M208,84 v16 M222,84 v16 M133,82 v20 M297,82 v20"/>
+        </g>
+        <g class="part" style="--from:translate(0,-64px) rotate(-150deg);--d:.4s">
+          <circle class="lnf" cx="150" cy="92" r="7"/><path class="ln" d="M145,92 h10"/>
+        </g>
+        <g class="part" style="--from:translate(128px,84px);--d:.15s">
+          <circle class="lnf" cx="360" cy="250" r="30"/>
+          <path class="ln" d="M381,271 l28,28"/>
+          <path class="ln" d="M348,240 a14,14 0 0 1 10,-6"/>
+        </g>
+        <g class="part" style="--from:translate(150px,0);--d:.28s">
+          <ellipse class="shd" cx="545" cy="300" rx="80" ry="5"/>
+          <rect class="lnf" x="462" y="96" width="166" height="196" rx="7"/>
+          <path class="ln" d="M480,120 h130"/>
+          <rect class="ln" x="480" y="140" width="12" height="12"/><path class="ln la" d="M482.5,146 l3.5,3.5 l7,-8.5"/><path class="ln" d="M500,146 h104"/>
+          <rect class="ln" x="480" y="176" width="12" height="12"/><path class="ln la" d="M482.5,182 l3.5,3.5 l7,-8.5"/><path class="ln" d="M500,182 h96"/>
+          <rect class="ln" x="480" y="212" width="12" height="12"/><path class="ln" d="M500,218 h104"/>
+          <rect class="ln" x="480" y="248" width="12" height="12"/><path class="ln" d="M500,254 h88"/>
+        </g>
+        <line class="guide" x1="222" y1="104" x2="240" y2="292"/>
+        <g aria-hidden="true">
+          <circle class="lnf" cx="248" cy="345" r="50"/>
+          <rect class="ln" x="216" y="336" width="62" height="19" rx="9"/>
+          <circle class="ln la" cx="247" cy="345.5" r="6.5"/>
+          <path class="ln" d="M238,334 v22 M256,334 v22"/>
+          <circle class="lnf la" cx="248" cy="295" r="11"/>
+          <text x="248" y="300" text-anchor="middle" font-size="13" font-weight="600" fill="#c8420c">1</text>
+        </g>
+      </svg>
+      <figcaption>Fig. 4.1 &middot; Level on top, magnifier on the panel, findings on the checklist. Nothing is modified in step 1.</figcaption>
+    </figure>
+    <p class="detail"><span class="pl acc">1</span><span><b>Detail 1:</b> the spirit level is <b>Dynatrace Associate Certified</b>. We measure before we modify.</span></p>
+  </div>
+</section>
+
+<hr class="pagesep">
+
+<!-- ================= PAGE 5 : STEP 2 ================= -->
+<section class="page anim" id="step-2" data-title="Step 2, Architect" tabindex="-1">
+  <div class="wrap">
+    <div class="stephead">
+      <span class="stepnum stampable" aria-hidden="true">2</span>
+      <div class="tx">
+        <h2>Architect</h2>
+        <p>Design the frame before the panels. Landing zones, guardrails, and the diagram everyone signs before anything is built.</p>
+        <p class="partsused">Parts in this step: <span class="pl">A</span> AI &amp; GenAI <span class="pl">D</span> Cloud Architecture <span class="pl">F</span> Security &amp; Identity</p>
+      </div>
+    </div>
+    <figure class="diagram">
+      <svg viewBox="0 0 720 400" role="img" aria-label="Exploded diagram, step two: two side panels and a top beam fly along dotted guides onto a base platform, fastened by two rotating screws. A zoom inset magnifies a screw beside the wrench jaw.">
+        <ellipse class="shd" cx="360" cy="336" rx="180" ry="6"/>
+        <rect class="lnf" x="210" y="300" width="300" height="24" rx="4"/>
+        <line class="guide" x1="92" y1="92" x2="216" y2="150"/>
+        <path class="ln la" d="M216,150 l-4,-11 M216,150 l-12,-2"/>
+        <line class="guide" x1="628" y1="92" x2="504" y2="150"/>
+        <path class="ln la" d="M504,150 l4,-11 M504,150 l12,-2"/>
+        <line class="guide" x1="360" y1="14" x2="360" y2="82"/>
+        <path class="ln la" d="M360,82 l-6,-10 M360,82 l6,-10"/>
+        <g class="part" style="--from:translate(-150px,-46px)">
+          <rect class="lnf" x="218" y="120" width="24" height="180" rx="3"/>
+          <path class="ln" d="M230,150 v120"/>
+        </g>
+        <g class="part" style="--from:translate(150px,-46px);--d:.1s">
+          <rect class="lnf" x="478" y="120" width="24" height="180" rx="3"/>
+          <path class="ln" d="M490,150 v120"/>
+        </g>
+        <g class="part" style="--from:translate(0,-104px);--d:.2s">
+          <rect class="lnf" x="218" y="96" width="284" height="24" rx="4"/>
+        </g>
+        <g class="part" style="--from:translate(0,-70px) rotate(-150deg);--d:.42s">
+          <circle class="lnf" cx="232" cy="108" r="9"/><path class="ln" d="M226,108 h12"/>
+        </g>
+        <g class="part" style="--from:translate(0,-70px) rotate(-150deg);--d:.52s">
+          <circle class="lnf" cx="488" cy="108" r="9"/><path class="ln" d="M482,108 h12"/>
+        </g>
+        <g class="part" style="--from:translate(70px,60px);--d:.3s">
+          <path class="lnf" d="M580,238 a16,16 0 0 1 0,30 l-12,0 0,-8 6,0 a7,7 0 0 0 0,-14 l-6,0 0,-8 z"/>
+          <rect class="lnf" x="592" y="247" width="94" height="11" rx="5.5"/>
+        </g>
+        <line class="guide" x1="497" y1="112" x2="596" y2="150"/>
+        <g aria-hidden="true">
+          <circle class="lnf" cx="622" cy="168" r="48"/>
+          <circle class="lnf" cx="614" cy="172" r="15"/>
+          <path class="ln" d="M604,172 h20"/>
+          <path class="ln la" d="M634,150 a26,26 0 0 1 10,18"/>
+          <path class="ln la" d="M644,168 l-6,-6 M644,168 l3,-8"/>
+          <circle class="lnf la" cx="622" cy="120" r="11"/>
+          <text x="622" y="125" text-anchor="middle" font-size="13" font-weight="600" fill="#c8420c">2</text>
+        </g>
+      </svg>
+      <figcaption>Fig. 5.1 &middot; Panels join the base, the beam closes the frame, two screws set the joints. The frame decides everything after it.</figcaption>
+    </figure>
+    <p class="detail"><span class="pl acc">2</span><span><b>Detail 2:</b> the wrench is <b>Microsoft Certified: Azure Solutions Architect Expert</b>. Load-bearing joints get an architect, not a guess.</span></p>
+  </div>
+</section>
+
+<hr class="pagesep">
+
+<!-- ================= PAGE 6 : STEP 3 ================= -->
+<section class="page anim" id="step-3" data-title="Step 3, Automate" tabindex="-1">
+  <div class="wrap">
+    <div class="stephead">
+      <span class="stepnum stampable" aria-hidden="true">3</span>
+      <div class="tx">
+        <h2>Automate</h2>
+        <p>Build it as code. The second environment is a rerun, not a rebuild, and drift has nowhere to live.</p>
+        <p class="partsused">Parts in this step: <span class="pl">C</span> DevOps &amp; Platform <span class="pl">E</span> Infrastructure as Code</p>
+      </div>
+    </div>
+    <figure class="diagram">
+      <svg viewBox="0 0 720 400" role="img" aria-label="Exploded diagram, step three: three identical modules slide along dotted conveyor guides into a rack frame, one after another. A zoom inset magnifies the screwdriver tip in a module screw.">
+        <ellipse class="shd" cx="535" cy="352" rx="120" ry="6"/>
+        <rect class="lnf" x="430" y="106" width="210" height="238" rx="6"/>
+        <path class="ln" d="M430,180 h210 M430,252 h210"/>
+        <path class="ln" d="M172,60 a26,26 0 1 1 -8,-19"/>
+        <path class="ln" d="M164,41 l10,-3 M164,41 l2,10"/>
+        <text x="196" y="66" font-size="15" font-weight="600">repeat</text>
+        <line class="guide" x1="120" y1="146" x2="440" y2="146"/>
+        <path class="ln la" d="M440,146 l-11,-5 M440,146 l-11,5"/>
+        <line class="guide" x1="120" y1="218" x2="440" y2="218"/>
+        <path class="ln la" d="M440,218 l-11,-5 M440,218 l-11,5"/>
+        <line class="guide" x1="120" y1="290" x2="440" y2="290"/>
+        <path class="ln la" d="M440,290 l-11,-5 M440,290 l-11,5"/>
+        <g class="part" style="--from:translate(-320px,0)">
+          <rect class="lnf" x="452" y="122" width="166" height="48" rx="4"/>
+          <path class="ln" d="M468,140 h44 M468,152 h30"/>
+          <circle class="ln" cx="596" cy="146" r="6"/>
+        </g>
+        <g class="part" style="--from:translate(-320px,0);--d:.14s">
+          <rect class="lnf" x="452" y="194" width="166" height="48" rx="4"/>
+          <path class="ln" d="M468,212 h44 M468,224 h30"/>
+          <circle class="ln" cx="596" cy="218" r="6"/>
+        </g>
+        <g class="part" style="--from:translate(-320px,0);--d:.28s">
+          <rect class="lnf" x="452" y="266" width="166" height="48" rx="4"/>
+          <path class="ln" d="M468,284 h44 M468,296 h30"/>
+          <circle class="ln" cx="596" cy="290" r="6"/>
+        </g>
+        <g class="part" style="--from:translate(0,-60px) rotate(-150deg);--d:.46s">
+          <circle class="lnf" cx="446" cy="120" r="8"/><path class="ln" d="M441,120 h10"/>
+        </g>
+        <line class="guide" x1="452" y1="298" x2="236" y2="330"/>
+        <g aria-hidden="true">
+          <circle class="lnf" cx="180" cy="330" r="48"/>
+          <circle class="lnf" cx="196" cy="336" r="12"/>
+          <path class="ln" d="M188,336 h16"/>
+          <path class="lnf" d="M186,332 l-34,-14 0,-4 8,-2 z" transform="rotate(14 186 332)"/>
+          <circle class="lnf la" cx="180" cy="282" r="11"/>
+          <text x="180" y="287" text-anchor="middle" font-size="13" font-weight="600" fill="#c8420c">3</text>
+        </g>
+      </svg>
+      <figcaption>Fig. 6.1 &middot; One module, defined once, seated three times. The conveyor is the pipeline.</figcaption>
+    </figure>
+    <p class="detail"><span class="pl acc">3</span><span><b>Detail 3:</b> the screwdriver is <b>AWS Certified Solutions Architect, Professional</b>. Torque is applied by pipeline, never by hand.</span></p>
+  </div>
+</section>
+
+<hr class="pagesep">
+
+<!-- ================= PAGE 7 : STEP 4 ================= -->
+<section class="page anim" id="step-4" data-title="Step 4, Operate" tabindex="-1">
+  <div class="wrap">
+    <div class="stephead">
+      <span class="stepnum stampable" aria-hidden="true">4</span>
+      <div class="tx">
+        <h2>Operate</h2>
+        <p>Keep it running. SLOs, alerting, and incident readiness from day one, with us on call beside you.</p>
+        <p class="partsused">Parts in this step: <span class="pl">B</span> Observability &amp; SRE <span class="pl">F</span> Security <span class="pl">H</span> Data &amp; Analytics</p>
+      </div>
+    </div>
+    <figure class="diagram">
+      <svg viewBox="0 0 720 400" role="img" aria-label="Exploded diagram, step four: the assembled machine's gauge needle swings to its mark, a shield slides onto the front panel along a dotted guide, and the status lamp comes on. A zoom inset magnifies the ratchet's square drive.">
+        <ellipse class="shd" cx="260" cy="344" rx="140" ry="7"/>
+        <rect class="lnf" x="150" y="80" width="220" height="248" rx="10"/>
+        <path class="ln" d="M150,168 h220"/>
+        <circle class="lnf" cx="212" cy="126" r="26"/>
+        <path class="ln" d="M212,104 v6 M193,115 l5,3 M231,115 l-5,3"/>
+        <g class="part" style="--from:rotate(-95deg);transform-origin:0% 100%;--d:.15s">
+          <path class="ln la" d="M212,126 L227,111"/>
+        </g>
+        <circle class="fa" cx="212" cy="126" r="3"/>
+        <circle class="fa lamp" cx="330" cy="126" r="6"/>
+        <text x="330" y="152" text-anchor="middle" font-size="13" font-weight="600">on</text>
+        <rect class="lnf" x="170" y="240" width="84" height="42" rx="4"/>
+        <rect class="lnf" x="266" y="240" width="84" height="42" rx="4"/>
+        <rect class="lnf" x="168" y="328" width="30" height="12" rx="3"/>
+        <rect class="lnf" x="322" y="328" width="30" height="12" rx="3"/>
+        <line class="guide" x1="474" y1="308" x2="296" y2="210"/>
+        <path class="ln la" d="M296,210 l12,1 M296,210 l6,10"/>
+        <g class="part" style="--from:translate(190px,104px)">
+          <path class="lnf" d="M260,178 l27,10 v17 c0,16 -12,26 -27,33 c-15,-7 -27,-17 -27,-33 v-17 z"/>
+          <path class="ln la" d="M248,206 l8,8 l16,-16"/>
+        </g>
+        <g class="part" style="--from:translate(0,-56px) rotate(-150deg);--d:.4s">
+          <circle class="lnf" cx="330" cy="260" r="8"/><path class="ln" d="M325,260 h10"/>
+        </g>
+        <g class="part" style="--from:translate(60px,40px);--d:.25s">
+          <ellipse class="shd" cx="560" cy="352" rx="90" ry="5"/>
+          <circle class="lnf" cx="492" cy="326" r="13"/>
+          <rect class="lnf" x="487" y="321" width="10" height="10"/>
+          <rect class="lnf" x="504" y="322" width="10" height="8"/>
+          <rect class="lnf" x="513" y="320" width="110" height="12" rx="6"/>
+        </g>
+        <line class="guide" x1="500" y1="312" x2="576" y2="204"/>
+        <g aria-hidden="true">
+          <circle class="lnf" cx="590" cy="150" r="48"/>
+          <circle class="lnf" cx="588" cy="152" r="20"/>
+          <rect class="lnf" x="580" y="144" width="16" height="16"/>
+          <path class="ln la" d="M614,124 a34,34 0 0 1 10,24"/>
+          <path class="ln la" d="M624,148 l-6,-7 M624,148 l4,-9"/>
+          <circle class="lnf la" cx="590" cy="100" r="11"/>
+          <text x="590" y="105" text-anchor="middle" font-size="13" font-weight="600" fill="#c8420c">4</text>
+        </g>
+      </svg>
+      <figcaption>Fig. 7.1 &middot; Needle on its mark, shield seated, lamp on. Operation is a step, not an afterthought.</figcaption>
+    </figure>
+    <p class="detail"><span class="pl acc">4</span><span><b>Detail 4:</b> the ratchet is <b>Certified Kubernetes Administrator (CKA)</b>. Every fastener stays at operating tension.</span></p>
+  </div>
+</section>
+
+<hr class="pagesep">
+
+<!-- ================= PAGE 8 : WARRANTY ================= -->
+<section class="page" id="warranty" data-title="Warranty" tabindex="-1">
+  <div class="wrap">
+    <h2>Warranty</h2>
+    <hr class="rule">
+    <div class="warrgrid">
+      <div>
+        <p class="lead">Every system we assemble is covered by the people who assembled it. This warranty is honored in person, not by a call tree.</p>
+        <dl class="terms">
+          <div class="term">
+            <dt>Coverage</dt>
+            <dd>Environments of the kind we have assembled before: Fortune 500 financial services, Big Four consulting, US federal agencies on Azure Government running FedRAMP High workloads, and healthcare and pharma manufacturing.</dd>
+          </div>
+          <div class="term">
+            <dt>Conditions</dt>
+            <dd><blockquote class="promise">&ldquo;Rare expertise, delivered with customer obsession, accountability, and timeliness.&rdquo;</blockquote></dd>
+          </div>
+          <div class="term">
+            <dt>Term</dt>
+            <dd>Coverage begins on day one of the engagement. We stay reachable after handover; see page 9.</dd>
+          </div>
+        </dl>
+      </div>
+      <svg class="seal" viewBox="0 0 120 120" role="img" aria-label="A circular warranty seal with a check mark">
+        <circle class="ln" cx="60" cy="60" r="52"/>
+        <path class="ln" d="M60,4 v8 M60,108 v8 M4,60 h8 M108,60 h8 M20,20 l6,6 M94,94 l6,6 M100,20 l-6,6 M26,94 l-6,6"/>
+        <circle class="lnf" cx="60" cy="60" r="38"/>
+        <path class="ln la" d="M44,61 l11,11 l22,-24"/>
+      </svg>
+    </div>
+
+    <div class="tabzone">
+      <button class="pulltab" id="pulltab" aria-expanded="false" aria-controls="issuer">
+        <span class="grip" aria-hidden="true"><i></i><i></i><i></i></span>
+        Pull: issued by
+        <span class="arr" aria-hidden="true">&rarr;</span>
+      </button>
+      <div class="tabpanel closedpos" id="issuer" hidden>
+        <h3>Issued by</h3>
+        <p style="margin-top:.6rem">IronRim is led by principal architect <b>Prashant Chawla</b>.</p>
+        <ul>
+          <li>17+ years in enterprise infrastructure</li>
+          <li>9 years at JP Morgan Chase in Global Technology Infrastructure</li>
+          <li>Former Amazon engineer</li>
+          <li>10 years on AWS, 8 on Azure</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="pagesep">
+
+<!-- ================= PAGE 9 : SUPPORT ================= -->
+<section class="page" id="support" data-title="Support" tabindex="-1">
+  <div class="wrap">
+    <h2>Support</h2>
+    <hr class="rule">
+    <div class="supgrid">
+      <div class="hotline">
+        <a class="row" href="tel:+19182550687">
+          <span class="lbl">Call</span>
+          <span class="val num">+1 918 255 0687</span>
+        </a>
+        <a class="row" href="mailto:info@ironrim.com">
+          <span class="lbl">Write</span>
+          <span class="val">info@ironrim.com</span>
+        </a>
+        <div class="row addr">
+          <span class="lbl">Visit</span>
+          <span class="val">470 W Broad St,<br>Columbus, OH 43215</span>
+        </div>
+      </div>
+      <div class="nofrust">
+        <svg viewBox="0 0 200 200" role="img" aria-label="A prohibition circle over a confused figure scratching its head beside loose parts: frustration is not part of this assembly.">
+          <circle class="lnf" cx="90" cy="52" r="14"/>
+          <path class="ln" d="M90,66 v42 M90,78 l-22,14 M90,78 l20,-16 l8,-8 M90,108 l-16,30 M90,108 l16,30"/>
+          <path class="ln" d="M116,42 a8,8 0 1 0 4,12"/>
+          <rect class="ln" x="128" y="118" width="22" height="10" rx="2"/>
+          <circle class="ln" cx="160" cy="134" r="5"/>
+          <path class="ln" d="M128,140 l14,-6"/>
+          <circle class="ln la" cx="100" cy="100" r="84"/>
+          <path class="ln la" d="M41,41 L159,159"/>
+        </svg>
+        <p>No step should require guesswork. If one does, that is our defect. Call us.</p>
+      </div>
+    </div>
+    <footer class="colophon">
+      <span>&copy; 2026 IronRim. Columbus, Ohio.</span>
+      <span class="num">Printed in Columbus, Ohio &middot; EN &middot; Model 2026</span>
+    </footer>
+  </div>
+</section>
+
+</main>
+
+<!-- pager -->
+<div class="pager" role="group" aria-label="Manual pages">
+  <button id="prev" aria-label="Previous page">
+    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M9.5,2 L4.5,7 L9.5,12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <span class="pnum">Page <span id="pn" class="num">1</span> of <span class="num">9</span></span>
+  <button id="next" aria-label="Next page">
+    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.5,2 L9.5,7 L4.5,12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+</div>
+<button class="corner" id="corner" aria-label="Turn to the next page"></button>
+<div id="flip" aria-hidden="true"><div id="sheet"></div></div>
+
+<script>
+(function(){
+  "use strict";
+  var root=document.documentElement;
+  root.classList.add('js');
+  var pages=[].slice.call(document.querySelectorAll('.page'));
+  var M=pages.length;
+  var cur=0,busy=false;
+  var pn=document.getElementById('pn');
+  var prevB=document.getElementById('prev'),nextB=document.getElementById('next');
+  var corner=document.getElementById('corner');
+  var flip=document.getElementById('flip'),sheet=document.getElementById('sheet');
+  var navLinks=[].slice.call(document.querySelectorAll('nav.toc a'));
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  /* assembly reveal */
+  var ioA=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in-view');ioA.unobserve(e.target);}
+    });
+  },{threshold:.3,rootMargin:'0px 0px -6% 0px'});
+  [].forEach.call(document.querySelectorAll('.anim'),function(el){ioA.observe(el);});
+
+  /* current page tracking: the page crossing the viewport's center band */
+  function setCur(i){
+    if(i===cur&&pn.textContent!=='')return updateUI();
+    cur=i;updateUI();
+  }
+  function updateUI(){
+    pn.textContent=String(cur+1);
+    prevB.disabled=(cur===0);
+    corner.setAttribute('aria-label',cur===M-1?'Back to the cover':'Turn to the next page: '+pages[Math.min(cur+1,M-1)].dataset.title);
+    nextB.setAttribute('aria-label',cur===M-1?'Back to the cover':'Next page');
+    var id=pages[cur].id;
+    navLinks.forEach(function(a){
+      if(a.getAttribute('href')==='#'+id){a.setAttribute('aria-current','true');}
+      else{a.removeAttribute('aria-current');}
+    });
+  }
+  var ioP=new IntersectionObserver(function(es){
+    var best=null;
+    es.forEach(function(e){if(e.isIntersecting)best=e.target;});
+    if(best)setCur(pages.indexOf(best));
+  },{rootMargin:'-45% 0px -45% 0px',threshold:0});
+  pages.forEach(function(p){ioP.observe(p);});
+  updateUI();
+
+  function land(t){
+    pages[t].focus({preventScroll:true});
+    busy=false;
+  }
+  function jump(t){
+    pages[t].scrollIntoView({behavior:'instant',block:'start'});
+  }
+  function goPlain(t){
+    pages[t].scrollIntoView({behavior:reduce.matches?'auto':'smooth',block:'start'});
+    pages[t].focus({preventScroll:true});
+  }
+  function turn(t){
+    if(busy||t<0||t>=M||t===cur)return;
+    if(reduce.matches){goPlain(t);return;}
+    busy=true;
+    var fwd=t>cur;
+    flip.classList.add('on');
+    sheet.style.transition='none';
+    sheet.style.opacity='1';
+    sheet.style.transformOrigin='left center';
+    if(fwd){
+      sheet.style.transform='rotateY(0deg)';
+      requestAnimationFrame(function(){
+        jump(t);
+        requestAnimationFrame(function(){
+          sheet.style.transition='transform .62s cubic-bezier(.3,.7,.4,1)';
+          sheet.style.transform='rotateY(-178deg)';
+          sheet.addEventListener('transitionend',function done(){
+            sheet.removeEventListener('transitionend',done);
+            flip.classList.remove('on');
+            land(t);
+          });
+        });
+      });
+    }else{
+      sheet.style.transform='rotateY(-178deg)';
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          sheet.style.transition='transform .5s cubic-bezier(.3,.7,.4,1)';
+          sheet.style.transform='rotateY(0deg)';
+          sheet.addEventListener('transitionend',function done(){
+            sheet.removeEventListener('transitionend',done);
+            jump(t);
+            sheet.style.transition='opacity .16s linear';
+            sheet.style.opacity='0';
+            sheet.addEventListener('transitionend',function done2(){
+              sheet.removeEventListener('transitionend',done2);
+              flip.classList.remove('on');
+              land(t);
+            });
+          });
+        });
+      });
+    }
+  }
+  nextB.addEventListener('click',function(){turn(cur===M-1?0:cur+1);});
+  prevB.addEventListener('click',function(){turn(cur-1);});
+  corner.addEventListener('click',function(){turn(cur===M-1?0:cur+1);});
+  window.addEventListener('keydown',function(e){
+    if(e.metaKey||e.ctrlKey||e.altKey)return;
+    var tag=(e.target&&e.target.tagName)||'';
+    if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+    if(e.key==='ArrowRight'){e.preventDefault();turn(cur===M-1?0:cur+1);}
+    else if(e.key==='ArrowLeft'){e.preventDefault();turn(cur-1);}
+  });
+
+  /* warranty pull tab */
+  var tab=document.getElementById('pulltab'),panel=document.getElementById('issuer');
+  tab.addEventListener('click',function(){
+    var open=tab.getAttribute('aria-expanded')==='true';
+    if(open){
+      panel.classList.add('closedpos');
+      panel.hidden=true;
+      tab.setAttribute('aria-expanded','false');
+    }else{
+      panel.hidden=false;
+      requestAnimationFrame(function(){requestAnimationFrame(function(){panel.classList.remove('closedpos');});});
+      tab.setAttribute('aria-expanded','true');
+    }
+  });
+})();
+</script>

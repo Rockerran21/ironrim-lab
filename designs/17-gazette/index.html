@@ -1,0 +1,658 @@
+<!doctype html>
+<!--
+THESIS: Infrastructure makes news only when it fails. IronRim's work is the news that never happens, so this site is the edition where everything ran.
+OWN-WORLD: A serious broadsheet: newsprint cream, dense justified columns with real rules, blackletter masthead, agate folios. Every surface (links, selection, scrollbar, focus) is printed matter.
+STORY: The paper reports the quiet. Eight service desks file stories, a four part special report explains the method, the bureau box carries the record, contact runs as classified notices.
+FIRST VIEWPORT: The masthead prints with an ink roll, the folio dates the edition, the lead headline typesets word by word at linotype speed, columns flow in, STOP PRESS stamps the promise.
+FORM: One orchestrated compose on load, then print-still. Semantic HTML, vanilla CSS grid and columns, small vanilla JS. Reduced motion prints the paper instantly.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IronRim - The Gazette</title>
+<meta name="description" content="The IronRim Gazette, Systems Edition. IronRim architects and operates the systems enterprises bet on: AI platforms, cloud infrastructure, observability, security and compliance. Columbus, Ohio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Besley:ital,wght@0,400..900;1,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f5efe1;
+  --paper-deep:#ebe3d1;
+  --ink:#211d16;
+  --ink-soft:#544c3a;
+  --rule:#b3a78e;
+  --press:#7d211a;
+  --head:"Besley",Georgia,"Times New Roman",serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mast:"UnifrakturMaguntia",Georgia,serif;
+  --agate:.78rem;
+  --ease:cubic-bezier(.22,.9,.24,.99);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scrollbar-color:var(--ink-soft) var(--paper-deep)}
+@media (prefers-reduced-motion: no-preference){html{scroll-behavior:smooth}}
+::-webkit-scrollbar{width:13px;background:var(--paper-deep)}
+::-webkit-scrollbar-thumb{background:var(--ink-soft);border:3px solid var(--paper-deep)}
+::selection{background:var(--ink);color:var(--paper)}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:1rem;
+  line-height:1.55;
+  overflow-x:clip;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:var(--ink-soft)}
+a:hover{text-decoration-thickness:2px;text-decoration-color:var(--press)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--paper);padding:.5rem 1rem;z-index:99}
+.skip:focus{left:.5rem;top:.5rem}
+.sheet{max-width:1180px;margin:0 auto;padding:0 1.25rem}
+
+/* Index strip: the paper's own navigation */
+.index{
+  position:sticky;top:0;z-index:10;
+  background:var(--paper);
+  border-bottom:2px solid var(--ink);
+  font-size:var(--agate);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.index .sheet{display:flex;flex-wrap:wrap;gap:.35rem 1.1rem;align-items:baseline;padding-top:.45rem;padding-bottom:.45rem}
+.index b{font-weight:700;letter-spacing:.18em}
+.index a{text-decoration:none}
+.index a:hover{text-decoration:underline;text-decoration-color:var(--press)}
+.index .pg{color:var(--ink-soft);font-style:normal}
+
+/* Masthead */
+.masthead{text-align:center;padding-top:1.4rem}
+.ears{display:none;font-size:var(--agate);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em;line-height:1.45}
+@media(min-width:820px){
+  .masthead .sheet{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:1rem}
+  .ears{display:block;max-width:15rem;padding-bottom:.9rem}
+  .ear-l{text-align:left}
+  .ear-r{text-align:right;justify-self:end}
+}
+.mast-clip{overflow:visible}
+.masthead h1{
+  font-family:var(--mast);
+  font-weight:400;
+  font-size:clamp(2.6rem,8.5vw,5.6rem);
+  line-height:1.02;
+  letter-spacing:.01em;
+  filter:url(#inkbleed);
+}
+.mast-sub{font-size:var(--agate);letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft);margin-top:.35rem}
+.folio{
+  border-top:2px solid var(--ink);
+  border-bottom:1px solid var(--ink);
+  margin-top:1rem;
+  padding:.4rem 0;
+  font-size:var(--agate);
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  display:flex;flex-wrap:wrap;justify-content:center;gap:.3rem 1rem;
+}
+.folio b{font-weight:700}
+
+/* Pages */
+.page{padding:1.6rem 0 2.4rem}
+.page:target{scroll-margin-top:3rem}
+[id]{scroll-margin-top:3.4rem}
+.runhead{
+  border-top:3px solid var(--ink);
+  border-bottom:1px solid var(--ink);
+  padding:.35rem 0;
+  margin-bottom:1.6rem;
+  font-size:var(--agate);
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+}
+.runhead b{font-weight:800}
+.fold{
+  height:52px;
+  background:linear-gradient(180deg,
+    rgba(33,29,22,0) 0%,
+    rgba(33,29,22,.05) 42%,
+    rgba(33,29,22,.16) 50%,
+    rgba(33,29,22,.04) 58%,
+    rgba(33,29,22,0) 100%);
+}
+
+/* Story furniture */
+.slug{
+  font-family:var(--head);
+  font-size:.72rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--press);
+  margin-bottom:.5rem;
+}
+.slug::after{content:"";display:block;width:2.6rem;border-bottom:1px solid var(--rule);margin-top:.35rem}
+h2,h3{font-family:var(--head);text-wrap:balance}
+.lead-head{
+  font-size:clamp(1.9rem,4.6vw,3.3rem);
+  font-weight:900;
+  line-height:1.06;
+  letter-spacing:-.01em;
+  text-transform:uppercase;
+}
+.deck{
+  font-family:var(--body);
+  font-style:italic;
+  font-size:1.08rem;
+  color:var(--ink-soft);
+  margin-top:.6rem;
+  max-width:60ch;
+}
+.byline{
+  font-size:var(--agate);
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:var(--ink-soft);
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  padding:.3rem 0;
+  margin:.9rem 0 1rem;
+}
+.body p{
+  text-align:justify;
+  hyphens:auto;
+  -webkit-hyphens:auto;
+  font-size:.95rem;
+  margin-bottom:.75rem;
+}
+.body p:last-child{margin-bottom:0}
+.opener p:first-of-type::first-letter{
+  float:left;
+  font-family:var(--head);
+  font-weight:900;
+  font-size:3.1em;
+  line-height:.83;
+  padding:.05em .09em 0 0;
+}
+.jump{font-family:var(--head);font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;text-align:right;margin-top:.6rem}
+.dateline{font-weight:700;letter-spacing:.04em}
+
+.story h3{font-size:1.32rem;font-weight:800;line-height:1.15;text-transform:uppercase;letter-spacing:.005em;margin-bottom:.4rem}
+.story .deck{font-size:.95rem;margin:.1rem 0 .7rem}
+
+/* A1 layout */
+.a1-top{display:grid;gap:2rem;margin-top:1.4rem}
+@media(min-width:900px){
+  .a1-top{grid-template-columns:8fr 4fr}
+  .a1-rail{border-left:1px solid var(--rule);padding-left:2rem}
+}
+.lead-body{margin-top:.2rem}
+@media(min-width:640px){.lead-body{columns:2;column-gap:2rem;column-rule:1px solid var(--rule)}}
+@media(min-width:1150px){.lead-body{columns:3}}
+.a1-row{display:grid;gap:2rem;margin-top:2rem;border-top:1px solid var(--ink);padding-top:1.4rem}
+@media(min-width:700px){
+  .a1-row{grid-template-columns:1fr 1fr}
+  .a1-row>.story+.story{border-left:1px solid var(--rule);padding-left:2rem}
+}
+@media(max-width:699px){.a1-row>.story+.story{border-top:1px solid var(--rule);padding-top:1.4rem}}
+@media(min-width:1000px){.a1-row .body{columns:2;column-gap:1.8rem;column-rule:1px solid var(--rule)}}
+
+/* Stop press */
+.stoppress{
+  border:4px double var(--ink);
+  padding:1rem 1.1rem;
+  margin-bottom:1.8rem;
+  background:var(--paper);
+}
+.stoppress .sp-head{
+  font-family:var(--head);
+  font-weight:900;
+  letter-spacing:.24em;
+  font-size:.85rem;
+  color:var(--press);
+  text-transform:uppercase;
+  border-bottom:1px solid var(--rule);
+  padding-bottom:.4rem;
+  margin-bottom:.6rem;
+}
+.stoppress p{font-size:.92rem;text-align:justify;hyphens:auto}
+.stoppress q{font-style:italic;font-weight:600}
+.stoppress .sp-note{font-size:var(--agate);color:var(--ink-soft);text-align:left;font-style:normal;margin-top:.5rem}
+
+/* Ornament */
+.orn{display:block;margin:2rem auto 0;color:var(--ink-soft)}
+
+/* A2 */
+.contstrip{display:grid;gap:1.6rem;border-bottom:2px solid var(--ink);padding-bottom:1.4rem;margin-bottom:1.6rem}
+@media(min-width:700px){
+  .contstrip{grid-template-columns:1fr 1fr}
+  .contstrip>.story+.story{border-left:1px solid var(--rule);padding-left:1.6rem}
+}
+@media(max-width:699px){.contstrip>.story+.story{border-top:1px solid var(--rule);padding-top:1.4rem}}
+.cont-head{font-family:var(--head);font-weight:800;font-size:.9rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.45rem}
+.cont-head a{text-decoration-color:var(--rule)}
+.deskgrid{display:grid;gap:1.8rem}
+@media(min-width:900px){
+  .deskgrid{grid-template-columns:repeat(3,1fr)}
+  .deskgrid>.story:not(:nth-child(3n+1)){border-left:1px solid var(--rule);padding-left:1.8rem}
+}
+@media(min-width:600px) and (max-width:899px){
+  .deskgrid{grid-template-columns:1fr 1fr}
+  .deskgrid>.story:nth-child(even){border-left:1px solid var(--rule);padding-left:1.8rem}
+}
+@media(max-width:599px){.deskgrid>.story+.story{border-top:1px solid var(--rule);padding-top:1.4rem}}
+
+/* B1 special report */
+.report-intro{max-width:68ch;margin:0 auto 1.8rem;text-align:center}
+.report-intro h2{font-size:clamp(1.6rem,3.6vw,2.5rem);font-weight:900;text-transform:uppercase;line-height:1.1;margin-bottom:.6rem}
+.report-intro .deck{margin:0 auto}
+.report-grid{display:grid;gap:1.8rem;border-top:1px solid var(--ink);padding-top:1.5rem}
+@media(min-width:1000px){
+  .report-grid{grid-template-columns:repeat(4,1fr)}
+  .report-grid>.story+.story{border-left:1px solid var(--rule);padding-left:1.8rem}
+}
+@media(min-width:600px) and (max-width:999px){
+  .report-grid{grid-template-columns:1fr 1fr}
+  .report-grid>.story:nth-child(even){border-left:1px solid var(--rule);padding-left:1.8rem}
+}
+@media(max-width:599px){.report-grid>.story+.story{border-top:1px solid var(--rule);padding-top:1.4rem}}
+.part{font-family:var(--head);font-weight:900;font-size:.8rem;letter-spacing:.2em;color:var(--press);text-transform:uppercase;margin-bottom:.4rem}
+.report-grid h3{font-size:1.5rem}
+.report-grid .one-liner{font-style:italic;color:var(--ink-soft);font-size:.98rem;margin-bottom:.6rem}
+
+/* B4 */
+.b4-grid{display:grid;gap:2rem}
+@media(min-width:900px){
+  .b4-grid{grid-template-columns:7fr 5fr}
+  .notices{border-left:1px solid var(--rule);padding-left:2rem}
+}
+.bureau{border:1px solid var(--ink);padding:1.4rem 1.5rem}
+.bureau-head{
+  font-family:var(--head);font-weight:900;font-size:1.1rem;letter-spacing:.2em;text-transform:uppercase;
+  text-align:center;border-bottom:2px solid var(--ink);padding-bottom:.6rem;margin-bottom:1rem;
+}
+.bureau .body p{font-size:.95rem}
+.story h3.agate-head{font-family:var(--head);font-weight:800;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--press);margin:1.1rem 0 .4rem}
+.agate-list{list-style:none;font-size:.88rem}
+.agate-list li{padding:.3rem 0;border-top:1px dotted var(--rule)}
+.agate-list li:first-child{border-top:0}
+.notices-head{
+  font-family:var(--head);font-weight:900;font-size:1.1rem;letter-spacing:.2em;text-transform:uppercase;
+  text-align:center;border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);padding:.5rem 0;margin-bottom:.4rem;
+}
+.notice{border-bottom:1px solid var(--rule);padding:.85rem 0;font-size:.92rem;text-align:justify;hyphens:auto}
+.notice b{font-family:var(--head);font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:.8rem}
+.notice a{font-weight:600}
+
+/* Footer */
+footer{border-top:1px solid var(--ink);margin-top:1rem}
+.colophon{
+  border-top:3px solid var(--ink);margin-top:3px;
+  text-align:center;font-size:var(--agate);color:var(--ink-soft);
+  text-transform:uppercase;letter-spacing:.12em;
+  padding:1.1rem 1.25rem 1.6rem;
+}
+.colophon p{margin-top:.3rem}
+
+/* Compose: the pressroom sequence. Base state is fully printed; the
+   .compose class is only added by JS when motion is permitted. */
+html.compose .mast-clip{clip-path:inset(0 100% 0 0)}
+html.compose .folio,html.compose .ears,html.compose .mast-sub{opacity:0}
+html.compose .w{opacity:0}
+html.compose .story,html.compose .colnote{opacity:0;transform:translateY(8px)}
+html.compose .stoppress{opacity:0;transform:scale(1.05)}
+html.composed .mast-clip{clip-path:inset(0 -3% 0 0);transition:clip-path .7s var(--ease)}
+html.composed .folio,html.composed .ears,html.composed .mast-sub{opacity:1;transition:opacity .5s var(--ease) .55s}
+html.composed .w{opacity:1;transition:opacity .1s linear}
+html.composed .story,html.composed .colnote{opacity:1;transform:none;transition:opacity .55s var(--ease),transform .55s var(--ease)}
+html.composed .stoppress{opacity:1;transform:none;transition:opacity .4s var(--ease),transform .4s var(--ease)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <filter id="inkbleed">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="1.7"/>
+  </filter>
+</svg>
+
+<a class="skip" href="#a1">Skip to the front page</a>
+
+<nav class="index" aria-label="Sections of this edition">
+  <div class="sheet">
+    <b>Inside this edition</b>
+    <a href="#a1">Front Page <span class="pg">A1</span></a>
+    <a href="#a2">The Service Desks <span class="pg">A2</span></a>
+    <a href="#b1">Special Report <span class="pg">B1</span></a>
+    <a href="#b4">Bureau &amp; Notices <span class="pg">B4</span></a>
+  </div>
+</nav>
+
+<header class="masthead">
+  <div class="sheet">
+    <p class="ears ear-l">All the systems fit to run. Reporting the quiet since the first environment held.</p>
+    <div>
+      <div class="mast-clip">
+        <h1>The IronRim Gazette</h1>
+      </div>
+      <p class="mast-sub">The paper of record for systems that hold</p>
+    </div>
+    <p class="ears ear-r">Production forecast: clear. Nothing on the incident docket at press time.</p>
+  </div>
+  <div class="sheet">
+    <p class="folio">
+      <span><b>Vol. I, No. 1</b></span>
+      <span>Columbus, Ohio</span>
+      <span id="folio-date">Wednesday, August 12, 2026</span>
+      <span><b>Systems Edition</b></span>
+      <span>Price: Free</span>
+    </p>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- PAGE A1 -->
+  <section class="page" id="a1" aria-label="Page A1, front page">
+    <div class="sheet">
+
+      <article class="story">
+        <p class="slug">The Lead</p>
+        <h2 class="lead-head" data-typeset>Enterprises bet on systems; firm architects them to hold</h2>
+        <p class="deck">Infrastructure makes headlines only when it fails. This paper reports the other story: the platforms that ran, the alarms that stayed silent, and the firm that builds it that way on purpose.</p>
+        <p class="byline">From the IronRim bureau, Columbus</p>
+        <div class="body lead-body opener">
+          <p><span class="dateline">COLUMBUS:</span> The wire carried nothing last night about the systems that held, and that is the story. Outages get column inches; the platform that runs clean runs in silence. IronRim, an enterprise technology consulting firm of this city, works the silent side of that ledger. The firm architects and operates the systems enterprises bet on: AI platforms, cloud infrastructure, and the observability, security, and compliance that keep them trustworthy.</p>
+          <p>The bets in question are not small. Enterprises now stake customer trust on language models, revenue on pipelines, and the books themselves on clouds. The firm's position, stated plainly to this paper, is that such bets should be architected rather than hoped for: drawn before they are built, written as code so they repeat, watched so the quiet can be proven, and governed so an auditor finds order rather than apology.</p>
+          <p>This edition reports the quiet in full. Eight desks file their stories beginning below and continuing on Page A2. A four part special report on Page B1 explains how the firm works a system from first assessment to steady operation. The bureau's own record, including seventeen years of it, is printed on Page B4, where the notices column stands open to enterprises with bets of their own to place.</p>
+        </div>
+        <p class="jump"><a href="#b4">Notices column, Page B4</a></p>
+      </article>
+
+      <div class="a1-top">
+        <div class="a1-main">
+          <div class="a1-row">
+            <article class="story" id="story-observability">
+              <p class="slug">Observability &amp; SRE</p>
+              <h3 data-typeset>The quiet is measured nightly; alarms stay silent for cause</h3>
+              <p class="deck">Service level objectives and tuned alerting keep the silence honest, the watch desk reports.</p>
+              <div class="body opener">
+                <p>Silence in production is only good news if somebody is measuring it. The firm's observability practice instruments estates with Dynatrace, Datadog, Splunk, Prometheus, Grafana and OpenTelemetry, then sets service level objectives so the quiet can be audited rather than assumed. An unwatched system is not calm; it is merely unreported.</p>
+              </div>
+              <p class="jump"><a href="#cont-observability">Continued on Page A2</a></p>
+            </article>
+            <article class="story" id="story-cloud">
+              <p class="slug">Cloud Architecture</p>
+              <h3 data-typeset>Three clouds, one discipline: landing zones set before arrival</h3>
+              <p class="deck">On AWS, Azure and GCP alike, the firm builds the ground before the workload lands.</p>
+              <div class="body opener">
+                <p>Migrations fail loudly and are remembered; sound architecture is quiet and forgotten. The firm designs on AWS, Azure and GCP, opening engagements with landing zones: accounts, networks, identity and guardrails established before the first workload arrives, so arrival is an event only on the project plan.</p>
+              </div>
+              <p class="jump"><a href="#cont-cloud">Continued on Page A2</a></p>
+            </article>
+          </div>
+        </div>
+
+        <aside class="a1-rail" aria-label="Front page rail">
+          <div class="stoppress" role="note">
+            <p class="sp-head">Stop Press</p>
+            <p>Received at the composing desk as this page went to plate, the firm's standing commitment, reprinted in every edition: <q>Rare expertise, delivered with customer obsession, accountability, and timeliness.</q></p>
+            <p class="sp-note">Set in type once. Honored daily.</p>
+          </div>
+
+          <article class="story">
+            <p class="slug">AI &amp; GenAI Engineering</p>
+            <h3 data-typeset>Language models put to work; guardrails go up first</h3>
+            <p class="deck">LLM platforms arrive with governance attached, the AI desk insists.</p>
+            <div class="body opener">
+              <p>The firm builds LLM platforms and RAG pipelines on AWS Bedrock, SageMaker and Azure OpenAI, with LangChain and vector databases underneath. MLOps carries models from notebook to production, and AI guardrails and governance decide what a model may do and prove it afterward.</p>
+              <p>In this bureau's judgment the ordering is the story. Guardrails here are not fitted after an incident makes the papers; they are drawn into the architecture before the first token is served.</p>
+            </div>
+          </article>
+        </aside>
+      </div>
+
+      <svg class="orn" viewBox="0 0 120 10" width="120" height="10" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M0 5h42M78 5h42"/>
+          <path d="M60 1l5 4-5 4-5-4z"/>
+          <circle cx="49" cy="5" r="1.5"/>
+          <circle cx="71" cy="5" r="1.5"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <div class="fold" role="presentation"></div>
+
+  <!-- PAGE A2 -->
+  <section class="page" id="a2" aria-label="Page A2, the service desks">
+    <div class="sheet">
+      <header class="runhead">
+        <span>The IronRim Gazette</span>
+        <b>Page A2: The Service Desks</b>
+        <span>Systems Edition</span>
+      </header>
+
+      <div class="contstrip">
+        <article class="story" id="cont-observability">
+          <p class="cont-head">Observability &amp; SRE, <a href="#story-observability">from Page A1</a></p>
+          <div class="body">
+            <p>Alerting is tuned until a page means action and nothing else; incident readiness is rehearsed before it is needed, not improvised when it is; and cost visibility puts a price on every quiet hour, so that finance reads the same story operations does. The desk regards a silent pager and a legible bill as the same deliverable.</p>
+          </div>
+        </article>
+        <article class="story" id="cont-cloud">
+          <p class="cont-head">Cloud Architecture, <a href="#story-cloud">from Page A1</a></p>
+          <div class="body">
+            <p>Multi-region resilience is drawn for the failure nobody schedules, and migration and modernization proceed on a plan the client can read rather than a leap the client must trust. Estates arrive modern, and, more to the point, they arrive boring: the desk's highest compliment.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="deskgrid">
+        <article class="story">
+          <p class="slug">DevOps &amp; Platform Engineering</p>
+          <h3>Pipelines run to schedule; deployments cease to be events</h3>
+          <p class="deck">GitOps turns releases into routine, the platform desk reports.</p>
+          <div class="body opener">
+            <p>CI/CD built on Jenkins, GitHub Actions, Azure DevOps and ArgoCD moves code without ceremony, while Kubernetes and OpenShift platforms carry it, with Helm charts and GitOps keeping what runs identical to what is written. A release that makes no news, shipped in the middle of a Tuesday, is this desk's whole definition of success.</p>
+          </div>
+        </article>
+
+        <article class="story">
+          <p class="slug">Infrastructure as Code</p>
+          <h3>Every environment written down; drift loses its foothold</h3>
+          <p class="deck">Terraform, ARM, CloudFormation and Ansible replace memory with modules.</p>
+          <div class="body opener">
+            <p>An environment that cannot be rebuilt from its own record is a liability wearing a name tag. The firm writes infrastructure in Terraform, ARM, CloudFormation and Ansible: reusable modules, repeatable environments, drift-free automation. What was clicked into being once is committed to writing, reviewed like the source it is, and reproduced on demand.</p>
+          </div>
+        </article>
+
+        <article class="story">
+          <p class="slug">Security &amp; Identity</p>
+          <h3>Doors locked before anyone knocks; keys held to account</h3>
+          <p class="deck">Identity and isolation guard the estate, and now the AI inside it.</p>
+          <div class="body opener">
+            <p>The security desk works in the preventative tense: IAM and RBAC decide who may act, network isolation decides what can reach what, KMS and Key Vault hold the keys, and DLP watches the exits. The same discipline now extends to secure AI workloads, where the newest systems inherit the oldest rules.</p>
+          </div>
+        </article>
+
+        <article class="story">
+          <p class="slug">Compliance</p>
+          <h3>Auditors arrive to find the paperwork already in order</h3>
+          <p class="deck">FedRAMP, NIST, CIS, HIPAA and GxP treated as architecture, not season.</p>
+          <div class="body opener">
+            <p>Compliance at this firm is not an annual weather event. FedRAMP High and Moderate, NIST, CIS, HIPAA and GxP are treated as design inputs, with Azure Government experience where federal workloads demand it. The controls are built in when the system is, which is why the audit reads like a description rather than a discovery.</p>
+          </div>
+        </article>
+
+        <article class="story">
+          <p class="slug">Data &amp; Analytics</p>
+          <h3>The pipelines that feed the models run on time</h3>
+          <p class="deck">Snowflake and Databricks platforms deliver data the AI desk can trust.</p>
+          <div class="body opener">
+            <p>Every model on Page A1 eats from a pipeline reported here. The firm builds data platforms and pipelines on Snowflake and Databricks: the plumbing that feeds AI, delivered with the same discipline as everything else in this paper. When the data arrives clean and on time, the desks upstream have nothing to report, which is the point.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="fold" role="presentation"></div>
+
+  <!-- PAGE B1 -->
+  <section class="page" id="b1" aria-label="Page B1, special report">
+    <div class="sheet">
+      <header class="runhead">
+        <span>The IronRim Gazette</span>
+        <b>Page B1: Special Report</b>
+        <span>Systems Edition</span>
+      </header>
+
+      <div class="report-intro story">
+        <p class="slug" style="text-align:center">Special Report, in four parts</p>
+        <h2>How a system comes to hold</h2>
+        <p class="deck">The firm works every engagement in the same printed order. This report follows the method from the first honest look to the long quiet after.</p>
+      </div>
+
+      <div class="report-grid">
+        <article class="story">
+          <p class="part">Part I</p>
+          <h3>Assess</h3>
+          <p class="one-liner">We read the estate as it is: systems, spend, risks, and the gaps between them.</p>
+          <div class="body">
+            <p>Every engagement opens with the unglamorous work of looking. Nothing is drawn until the present state is written down and agreed to, because a target set from a guess is a guess with a budget.</p>
+          </div>
+        </article>
+        <article class="story">
+          <p class="part">Part II</p>
+          <h3>Architect</h3>
+          <p class="one-liner">We draw the target plainly and defend every decision in writing.</p>
+          <div class="body">
+            <p>The design is a document the client can read, question and keep: what will be built, why this way and not the other way, and what it costs to be wrong. Decisions come with their reasoning attached.</p>
+          </div>
+        </article>
+        <article class="story">
+          <p class="part">Part III</p>
+          <h3>Automate</h3>
+          <p class="one-liner">We build it as code so environments repeat and drift dies.</p>
+          <div class="body">
+            <p>What was designed is then written: infrastructure as code, pipelines that ship without ceremony, environments that can be rebuilt from their own record on any given morning. Hands leave the keyboard; the record stays.</p>
+          </div>
+        </article>
+        <article class="story">
+          <p class="part">Part IV</p>
+          <h3>Operate</h3>
+          <p class="one-liner">We run it, watch it, and hand over runbooks that hold at 3 a.m.</p>
+          <div class="body">
+            <p>The system enters the long quiet this paper exists to report: watched by the instruments on Page A1, governed by the desks on Page A2, and documented so the worst night of the year is a procedure, not an adventure.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="fold" role="presentation"></div>
+
+  <!-- PAGE B4 -->
+  <section class="page" id="b4" aria-label="Page B4, bureau and notices">
+    <div class="sheet">
+      <header class="runhead">
+        <span>The IronRim Gazette</span>
+        <b>Page B4: Bureau &amp; Notices</b>
+        <span>Systems Edition</span>
+      </header>
+
+      <div class="b4-grid">
+        <section class="bureau story" aria-label="About the bureau">
+          <h2 class="bureau-head">About the Bureau</h2>
+          <div class="body opener">
+            <p>IronRim is led by principal architect Prashant Chawla: seventeen years and counting in enterprise infrastructure, including nine years at JP Morgan Chase in Global Technology Infrastructure, and prior service as an Amazon engineer. The record runs ten years on AWS and eight on Azure, which is to say the bureau was filing on clouds before clouds were the front page.</p>
+          </div>
+          <h3 class="agate-head">Credentials on file</h3>
+          <ul class="agate-list">
+            <li>Microsoft Certified: Azure Solutions Architect Expert</li>
+            <li>AWS Certified Solutions Architect, Professional</li>
+            <li>AWS Certified Solutions Architect, Associate</li>
+            <li>Certified Kubernetes Administrator (CKA)</li>
+            <li>Dynatrace Associate Certified</li>
+          </ul>
+          <h3 class="agate-head">Beats covered</h3>
+          <ul class="agate-list">
+            <li>Fortune 500 financial services</li>
+            <li>Big Four consulting</li>
+            <li>US federal agencies on Azure Government, FedRAMP High workloads</li>
+            <li>Healthcare and pharma manufacturing</li>
+          </ul>
+        </section>
+
+        <section class="notices story" aria-label="Notices and classifieds">
+          <h2 class="notices-head">Notices &amp; Classifieds</h2>
+          <p class="notice"><b>Commissions invited.</b> Enterprises seeking architecture that holds may write the bureau at <a href="mailto:info@ironrim.com">info@ironrim.com</a>. All inquiries read; all inquiries answered.</p>
+          <p class="notice"><b>By telephone.</b> The desk answers at <a href="tel:+19182550687">+1 918 255 0687</a>.</p>
+          <p class="notice"><b>In person.</b> The bureau keeps offices at 470 W Broad St, Columbus, OH 43215.</p>
+          <p class="notice"><b>Situations undertaken.</b> AI platforms, cloud estates, observability, platform engineering, infrastructure as code, security, compliance, and the data that feeds it all, as reported in this edition. Terms on inquiry.</p>
+          <p class="notice"><b>Corrections.</b> This edition reports no incidents. The bureau intends to keep it that way.</p>
+        </section>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="colophon">
+    <p>© 2026 IronRim. Columbus, Ohio.</p>
+    <p>Composed, set and printed by the firm. Published wherever systems hold.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var d=document,root=d.documentElement;
+  var f=d.getElementById('folio-date');
+  if(f){
+    try{
+      f.textContent=new Date().toLocaleDateString('en-US',
+        {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    }catch(e){}
+  }
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  /* A tab loaded in the background gets the paper already printed */
+  if(document.visibilityState==='hidden')return;
+
+  /* Typeset marked headlines word by word at linotype speed */
+  var t=560,WORD=36;
+  d.querySelectorAll('[data-typeset]').forEach(function(h){
+    var words=h.textContent.trim().split(/\s+/);
+    h.textContent='';
+    words.forEach(function(w,i){
+      var s=d.createElement('span');
+      s.className='w';
+      s.textContent=w;
+      s.style.transitionDelay=t+'ms';
+      t+=WORD;
+      h.appendChild(s);
+      if(i<words.length-1)h.appendChild(d.createTextNode(' '));
+    });
+    t+=80;
+  });
+
+  /* Columns flow in, column by column */
+  d.querySelectorAll('.story').forEach(function(el,i){
+    el.style.transitionDelay=(880+i*85)+'ms';
+  });
+
+  /* Stop press stamps in once, last */
+  var sp=d.querySelector('.stoppress');
+  if(sp)sp.style.transitionDelay=(t+260)+'ms';
+
+  root.classList.add('compose');
+  var press=function(){root.classList.add('composed');};
+  requestAnimationFrame(function(){requestAnimationFrame(press);});
+  /* Failsafe: the paper always prints, whatever stalls */
+  setTimeout(press,150);
+})();
+</script>
+</body>
+</html>

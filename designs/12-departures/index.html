@@ -1,0 +1,814 @@
+<!--
+THESIS: Enterprise systems should run like a great railway, on time every day, and IronRim is the operator that keeps the board reading ON TIME.
+OWN-WORLD: A grand rail terminal. Deep green painted enamel, cream signage lettering, brass rails and bezels, ivory Solari flap cards with near-black type. Mechanical, warm, tactile. Never a digital dashboard.
+STORY: Arrive under the departures board (the eight services), visit the stationmaster's certificate case (proof), read the timetable (process), buy a ticket at the window (contact).
+FIRST VIEWPORT: The painted thesis line above a full-size split-flap departures board booting once through all eight services.
+FORM: One motion system, the split-flap choreography; exponential ease-out elsewhere. Working station clock. Hovered departures lift their brass rail and reveal detail. A mailto ticket that punches itself. Reduced motion renders everything pre-flipped.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="IronRim architects and operates enterprise AI platforms, cloud infrastructure, and the observability, security, and compliance that keep them trustworthy. Columbus, Ohio.">
+<meta name="theme-color" content="#15382d">
+<title>IronRim - Departures</title>
+<script>document.documentElement.className='js'</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wall:#f2ead9;
+  --wall-2:#eadfc8;
+  --ink:#25201a;
+  --ink-soft:#584d3c;
+  --green:#15382d;
+  --green-2:#0d2b21;
+  --green-line:#26543f;
+  --cream:#f1e7cf;
+  --cream-soft:#cfc0a0;
+  --brass:#b3873a;
+  --brass-2:#d9ac5e;
+  --brass-dark:#7c5a17;
+  --card:#f4ecda;
+  --card-ink:#211d17;
+  --slit:#181410;
+  --sans:"Oswald","Avenir Next Condensed","Arial Narrow",sans-serif;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --out:cubic-bezier(.19,.9,.24,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scrollbar-color:var(--green) var(--wall-2)}
+html,body{overflow-x:clip}
+@media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+body{
+  background:var(--wall);
+  color:var(--ink);
+  font:400 1.05rem/1.65 var(--serif);
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--brass);color:#161310}
+::-webkit-scrollbar{width:13px}
+::-webkit-scrollbar-track{background:var(--wall-2)}
+::-webkit-scrollbar-thumb{background:var(--green);border:3px solid var(--wall-2);border-radius:8px}
+::-webkit-scrollbar-thumb:hover{background:var(--green-2)}
+:focus-visible{outline:2px solid var(--brass-dark);outline-offset:3px;border-radius:2px}
+.sect-green :focus-visible,.topbar :focus-visible,.board :focus-visible,footer :focus-visible{outline-color:var(--brass-2)}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+html:not(.js) .sr{position:static;width:auto;height:auto;margin:0;overflow:visible;clip-path:none;white-space:normal}
+html:not(.js) .flaps{display:none}
+img,svg{max-width:100%}
+
+.wrap{max-width:1080px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+
+.skip{position:absolute;left:8px;top:-60px;z-index:60;background:var(--green);color:var(--cream);font:600 .85rem var(--sans);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:10px 16px;border:1px solid var(--brass)}
+.skip:focus-visible{top:8px}
+
+/* ---------- top bar: painted enamel band ---------- */
+.topbar{position:sticky;top:0;z-index:50;background:var(--green);border-bottom:2px solid var(--brass);box-shadow:0 6px 16px -10px rgba(18,22,16,.6)}
+.bar{display:flex;align-items:center;gap:1.2rem;min-height:56px;flex-wrap:wrap;padding-top:6px;padding-bottom:6px}
+.brand{display:inline-flex;align-items:center;gap:.55rem;color:var(--cream);text-decoration:none;font:600 1.05rem var(--sans);letter-spacing:.22em;text-transform:uppercase;border:1px solid var(--brass-2);padding:4px 12px 4px 8px}
+.brand svg{width:20px;height:20px;flex:none}
+.topbar nav{margin-left:auto;display:flex;flex-wrap:wrap;column-gap:clamp(.8rem,2.4vw,1.7rem);row-gap:.15rem}
+.topbar nav a{color:var(--cream);text-decoration:none;font:500 .78rem var(--sans);letter-spacing:.14em;text-transform:uppercase;padding:6px 0}
+.topbar nav a:hover{color:var(--brass-2);text-decoration:underline;text-decoration-color:var(--brass-2);text-decoration-thickness:2px;text-underline-offset:6px}
+
+/* ---------- hero ---------- */
+.hero{padding:clamp(2.2rem,5vh,3.6rem) 0 clamp(2.6rem,6vh,4.2rem)}
+h1{
+  font:600 clamp(2rem,4.6vw,3.7rem)/1.08 var(--sans);
+  color:var(--green);letter-spacing:.015em;text-transform:uppercase;
+  text-wrap:balance;max-width:20ch;
+}
+.lede{max-width:62ch;margin:1.1rem 0 1.4rem;font-size:1.12rem;color:var(--ink)}
+.lede strong{font-weight:600}
+.hero-links{display:flex;gap:1.4rem;align-items:center;flex-wrap:wrap;margin-bottom:clamp(1.8rem,4vh,2.8rem)}
+.btn-enamel{
+  display:inline-block;background:var(--green);color:var(--cream);text-decoration:none;
+  font:600 .85rem var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  padding:12px 22px;border:1px solid var(--brass-2);border-radius:3px;
+  box-shadow:0 3px 0 rgba(21,42,33,.35),0 8px 14px -8px rgba(20,30,24,.5);
+  transition:transform .25s var(--out),box-shadow .25s var(--out);
+}
+.btn-enamel:hover{transform:translateY(-2px);box-shadow:0 5px 0 rgba(21,42,33,.3),0 14px 20px -10px rgba(20,30,24,.5)}
+.btn-enamel:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(21,42,33,.4),0 4px 8px -6px rgba(20,30,24,.5)}
+.link-plain{color:var(--ink);font:600 .95rem var(--serif);text-decoration:underline;text-decoration-color:var(--brass);text-decoration-thickness:2px;text-underline-offset:4px}
+.link-plain:hover{color:var(--brass-dark)}
+
+/* ---------- the departures board ---------- */
+.board{
+  --cw:clamp(10px,1.32vw,19px);
+  --ch:calc(var(--cw)*1.5);
+  --colgap:clamp(14px,2.2vw,26px);
+  position:relative;
+  background:linear-gradient(180deg,#183f32,var(--green) 12%,#123227 88%,#0f2b21);
+  border:3px solid #0b2019;
+  border-radius:14px;
+  padding:clamp(14px,2.6vw,30px) clamp(14px,3vw,34px) clamp(16px,2.6vw,28px);
+  box-shadow:0 26px 50px -22px rgba(24,26,20,.55),0 6px 12px -6px rgba(24,26,20,.4),inset 0 2px 0 rgba(217,172,94,.18);
+}
+.bolt{position:absolute;width:12px;height:12px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#e8c47c,#8a6526 65%,#5c4212);
+  box-shadow:0 1px 2px rgba(0,0,0,.55)}
+.bolt.b1{top:9px;left:9px}.bolt.b2{top:9px;right:9px}.bolt.b3{bottom:9px;left:9px}.bolt.b4{bottom:9px;right:9px}
+
+.bd-top{display:flex;align-items:center;gap:clamp(.9rem,2.5vw,1.6rem);padding-bottom:12px;border-bottom:1px solid var(--green-line);flex-wrap:wrap}
+.bd-title{font:600 clamp(1.15rem,2.6vw,1.7rem) var(--sans);color:var(--cream);letter-spacing:.24em;text-transform:uppercase;text-shadow:0 1px 0 rgba(0,0,0,.4)}
+.bd-station{margin-left:auto;text-align:right;font:500 .68rem/1.5 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--cream-soft)}
+.clock{width:clamp(52px,6vw,70px);height:auto;flex:none;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35))}
+.clock .bezel{fill:#0e281f;stroke:var(--brass);stroke-width:3}
+.clock .face{fill:var(--card)}
+.clock .tick{stroke:#241f18;stroke-linecap:round}
+.clock .hand{fill:#241f18}
+.clock .sec{fill:#a1762c}
+.clock .pin{fill:var(--brass-2);stroke:#241f18;stroke-width:.6}
+
+.bd-head{display:flex;gap:var(--colgap);padding:14px 6px 4px;font:600 .66rem var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--brass-2)}
+.w-d{width:calc(var(--cw)*22 + 42px)}
+.w-p{width:calc(var(--cw)*13 + 24px)}
+.w-s{width:calc(var(--cw)*9 + 16px)}
+
+.bd-rows{display:grid;row-gap:2px;padding-top:4px}
+.dep{position:relative;display:flex;align-items:center;column-gap:var(--colgap);padding:9px 6px 13px;text-decoration:none;border-radius:4px;transition:transform .3s var(--out),box-shadow .3s var(--out)}
+.dep::after{content:"";position:absolute;left:4px;right:4px;bottom:3px;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,#8a6526,var(--brass-2) 35%,#c2914a 65%,#8a6526);
+  opacity:.5;transition:opacity .3s var(--out)}
+.dep:hover,.dep:focus-visible{transform:translateY(-3px);box-shadow:0 14px 22px -14px rgba(6,14,10,.8)}
+.dep:hover::after,.dep:focus-visible::after{opacity:1}
+
+/* split-flap cells */
+.flaps{display:flex;gap:2px}
+.c{position:relative;width:var(--cw);height:var(--ch);background:var(--slit);border-radius:2.5px;perspective:calc(var(--ch)*4)}
+.c .h,.c .fh{position:absolute;left:0;right:0;overflow:hidden;background:var(--card)}
+.c .u{top:0;height:calc(50% - .5px);border-radius:2.5px 2.5px 0 0}
+.c .l{bottom:0;height:calc(50% - .5px);border-radius:0 0 2.5px 2.5px;box-shadow:inset 0 1px 0 rgba(24,18,10,.14)}
+.c b{position:absolute;left:0;width:100%;height:var(--ch);line-height:var(--ch);text-align:center;
+  font:500 calc(var(--ch)*.74)/var(--ch) var(--sans);font-style:normal;color:var(--card-ink)}
+.c .u b{top:0}
+.c .l b{top:calc(var(--ch) / -2)}
+.c .fp{position:absolute;left:0;right:0;top:0;height:calc(50% - .5px);transform-origin:50% 100%;transform-style:preserve-3d;visibility:hidden;z-index:2}
+.c .fh{top:0;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.c .ff{border-radius:2.5px 2.5px 0 0}
+.c .ff::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,252,240,.35),rgba(30,22,12,.05));pointer-events:none}
+.c .ff b{top:0}
+.c .fk{transform:rotateX(180deg);border-radius:0 0 2.5px 2.5px}
+.c .fk b{top:calc(var(--ch) / -2)}
+
+html:not(.js) .dep{flex-wrap:wrap}
+html:not(.js) .dep .sr{color:var(--cream);font:500 1rem var(--sans);letter-spacing:.04em}
+
+/* detail drawer under the board */
+.bd-detail{margin-top:14px;padding:14px 6px 2px;border-top:1px solid var(--green-line);min-height:104px}
+.dd-name{font:600 1.05rem var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--cream)}
+.dd-desc{margin:.25rem 0 .35rem;max-width:70ch;color:var(--cream-soft);font-size:.98rem}
+.dd-tools{font:500 .72rem var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--brass-2)}
+.board-note{margin-top:1rem;font-style:italic;color:var(--ink-soft);font-size:.95rem}
+
+/* ---------- sections ---------- */
+.sect{padding:clamp(3.2rem,9vh,5.5rem) 0}
+.sect-alt{background:var(--wall-2)}
+h2{display:flex;align-items:center;font:600 1rem var(--sans);text-transform:uppercase;color:var(--green)}
+.fl-h2{--cw:clamp(19px,4.2vw,33px);--ch:calc(var(--cw)*1.42)}
+html:not(.js) h2 .sr{font:600 clamp(1.7rem,4vw,2.4rem) var(--sans);letter-spacing:.06em}
+.sub{margin:.9rem 0 2.2rem;font-size:1.08rem;font-style:italic;color:var(--ink-soft)}
+.sect-green .sub{color:var(--cream-soft)}
+
+/* services ledger */
+.lines{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2.2rem 3rem}
+.line{border-top:1px solid #c4ab77;padding-top:1.1rem;scroll-margin-top:90px}
+.line h3{font:600 1.12rem var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--green)}
+.line p{margin:.45rem 0 .8rem;max-width:58ch}
+.chips{list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.chips li{border:1px solid #b39a63;border-radius:999px;padding:2px 11px;background:#f7f0e1;
+  font:500 .7rem var(--sans);letter-spacing:.08em;text-transform:uppercase;color:#4d4335}
+
+/* credentials */
+.cred-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:3rem;align-items:start}
+.cred-grid p{max-width:58ch;margin-bottom:1rem}
+.case{border:1px solid var(--brass);outline:1px solid var(--brass);outline-offset:5px;background:#f6efdf;padding:1.4rem 1.5rem 1rem;margin:6px;box-shadow:0 14px 26px -18px rgba(40,32,18,.5)}
+.case-plate{font:600 .72rem var(--sans);letter-spacing:.26em;text-transform:uppercase;color:var(--brass-dark);border-bottom:1px solid #c4ab77;padding-bottom:.7rem}
+.certs{list-style:none}
+.certs li{display:flex;align-items:center;gap:.8rem;padding:.85rem 0;border-bottom:1px solid #d9c69a;font:600 .95rem var(--serif);color:var(--ink)}
+.certs li:last-child{border-bottom:0}
+.certs svg{width:26px;height:26px;flex:none;color:var(--brass-dark)}
+
+/* motto frieze */
+.frieze{background:var(--green);border-top:2px solid var(--brass);border-bottom:2px solid var(--brass);padding:2.6rem 0}
+.frieze p{max-width:46ch;margin:0 auto;text-align:center;color:var(--cream);font:400 italic clamp(1.15rem,2.6vw,1.5rem)/1.5 var(--serif)}
+
+/* timetable */
+.stops{list-style:none;position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;counter-reset:stop}
+.stops::before{content:"";position:absolute;top:15px;left:4%;right:4%;height:3px;background:var(--green);border-radius:2px}
+.stop{position:relative;padding-top:2.6rem}
+.dot{position:absolute;top:0;left:0;width:32px;height:32px;border-radius:50%;background:var(--card);border:3px solid var(--green);
+  display:grid;place-items:center;font:600 .9rem var(--sans);color:var(--green);box-shadow:0 2px 4px rgba(30,26,16,.3)}
+.plate{display:inline-block;background:var(--green);color:var(--cream);font:600 .88rem var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  padding:5px 14px;border:1px solid var(--brass-2);border-radius:3px;box-shadow:0 2px 4px rgba(24,26,20,.3)}
+.stop p{margin-top:.7rem;font-size:.98rem;max-width:32ch}
+
+/* ticket window */
+.sect-green{background:linear-gradient(180deg,#173b2f,var(--green) 18%,#102e24)}
+.sect-green,.sect-green h2{color:var(--cream)}
+.tk-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:3rem;align-items:center}
+.tk-copy p{max-width:52ch;color:var(--cream);margin-bottom:1.4rem}
+.tel-line,.addr-line{display:flex;align-items:center;gap:.7rem;margin-bottom:1rem;font-style:normal}
+.tel-line svg,.addr-line svg{width:22px;height:22px;flex:none;color:var(--brass-2)}
+.tel-line a{color:var(--cream);font:600 1.15rem var(--sans);letter-spacing:.06em;text-decoration:underline;text-decoration-color:var(--brass-2);text-decoration-thickness:2px;text-underline-offset:5px}
+.tel-line a:hover{color:var(--brass-2)}
+.addr-line{color:var(--cream-soft);font:500 .95rem var(--sans);letter-spacing:.06em}
+
+.ticket{
+  position:relative;display:flex;align-items:stretch;text-decoration:none;color:var(--card-ink);
+  background:var(--card);border:1px solid #b8a06a;border-radius:8px;max-width:460px;
+  box-shadow:0 18px 30px -16px rgba(5,12,9,.8),0 4px 8px -4px rgba(5,12,9,.5);
+  transform:rotate(-1.2deg);
+  transition:transform .3s var(--out),box-shadow .3s var(--out);
+}
+.ticket:hover{transform:rotate(0deg) translateY(-3px);box-shadow:0 24px 38px -18px rgba(5,12,9,.85),0 6px 10px -5px rgba(5,12,9,.5)}
+.ticket:active{transform:translateY(1px)}
+.t-main{flex:1;padding:1.2rem 1.3rem 1.1rem}
+.t-route{display:block;font:600 .66rem var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--brass-dark)}
+.t-big{display:block;margin:.45rem 0 .3rem;font:600 1.5rem/1.1 var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--green)}
+.t-addr{display:block;font:600 1rem var(--serif);color:var(--ink)}
+.t-foot{display:block;margin-top:.6rem;font:500 .62rem var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--ink-soft)}
+.t-stub{position:relative;flex:none;width:96px;display:grid;place-items:center;text-align:center;
+  border-left:1px dashed #9d8b60;font:600 .8rem/1.3 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--brass-dark)}
+.ticket::before,.ticket::after{content:"";position:absolute;right:calc(96px - 9px);width:18px;height:18px;border-radius:50%;background:var(--green);z-index:1}
+.ticket::before{top:-10px;box-shadow:inset 0 -2px 3px rgba(0,0,0,.25)}
+.ticket::after{bottom:-10px;box-shadow:inset 0 2px 3px rgba(0,0,0,.25)}
+.hole{position:absolute;top:12px;right:12px;width:15px;height:15px;border-radius:50%;background:#102e24;
+  box-shadow:inset 0 2px 3px rgba(0,0,0,.5);transform:scale(0);transition:transform .3s var(--out)}
+.ticket.punched{transform:rotate(.6deg) translateY(1px)}
+.ticket.punched .hole{transform:scale(1)}
+.tk-note{margin-top:1rem;font-style:italic;color:var(--cream-soft);font-size:.92rem}
+
+footer{background:var(--green-2);border-top:2px solid var(--brass);padding:1.6rem 0}
+.foot{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:var(--cream-soft);font:500 .8rem var(--sans);letter-spacing:.12em;text-transform:uppercase}
+
+/* ---------- responsive ---------- */
+@media (max-width:840px){
+  .bd-head{display:none}
+  .dep{flex-wrap:wrap;row-gap:8px;column-gap:14px}
+  .fl-dest{flex-basis:100%}
+  .cred-grid,.tk-grid{grid-template-columns:1fr}
+  .stops{grid-template-columns:1fr;gap:1.6rem}
+  .stops::before{top:6px;bottom:6px;left:14px;right:auto;width:3px;height:auto}
+  .stop{padding-top:0;padding-left:3.2rem}
+  .dot{top:2px}
+  .ticket{margin-top:.5rem}
+}
+@media (max-width:420px){
+  .board{--cw:clamp(9.5px,2.6vw,12px)}
+  .t-stub{width:78px}
+  .ticket::before,.ticket::after{right:calc(78px - 9px)}
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="wrap bar">
+    <a class="brand" href="#departures">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"></circle>
+        <circle cx="12" cy="12" r="3.5"></circle>
+        <path d="M12 3v3M12 18v3M3 12h3M18 12h3"></path>
+      </svg>
+      IronRim
+    </a>
+    <nav aria-label="Sections">
+      <a href="#departures">Departures</a>
+      <a href="#services">Services</a>
+      <a href="#credentials">Credentials</a>
+      <a href="#timetable">Timetable</a>
+      <a href="#tickets">Tickets</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============ HERO: the departures board ============ -->
+<section class="hero" id="departures">
+  <div class="wrap">
+    <h1>Your systems should run like a great railway.</h1>
+    <p class="lede">On time, every day. IronRim architects and operates the systems enterprises bet on: <strong>AI platforms, cloud infrastructure</strong>, and the observability, security, and compliance that keep them trustworthy. We are the operator that keeps the board reading <strong>ON TIME</strong>.</p>
+    <p class="hero-links">
+      <a class="btn-enamel" href="#tickets">Open the ticket window</a>
+      <a class="link-plain" href="#services">Read the lines</a>
+    </p>
+  </div>
+  <div class="wrap">
+    <div class="board" role="region" aria-label="Departures board listing IronRim services">
+      <span class="bolt b1"></span><span class="bolt b2"></span><span class="bolt b3"></span><span class="bolt b4"></span>
+      <header class="bd-top">
+        <span class="bd-title">Departures</span>
+        <svg class="clock" id="clock" viewBox="0 0 100 100" aria-hidden="true">
+          <circle class="bezel" cx="50" cy="50" r="47"></circle>
+          <circle class="face" cx="50" cy="50" r="41.5"></circle>
+          <g id="ticks"></g>
+          <g id="hh"><rect class="hand" x="48.5" y="27" width="3" height="26" rx="1.5"></rect></g>
+          <g id="mh"><rect class="hand" x="48.9" y="17" width="2.2" height="36" rx="1.1"></rect></g>
+          <g id="sh"><rect class="sec" x="49.5" y="14" width="1.1" height="42" rx=".55"></rect><circle class="sec" cx="50" cy="58" r="2.4"></circle></g>
+          <circle class="pin" cx="50" cy="50" r="1.8"></circle>
+        </svg>
+        <span class="bd-station">IronRim Terminal<br>Columbus, Ohio</span>
+      </header>
+      <div class="bd-head" aria-hidden="true"><span class="w-d">Destination</span><span class="w-p">Platform</span><span class="w-s">Status</span></div>
+      <div class="bd-rows">
+        <a class="dep" href="#svc-1" data-i="0">
+          <span class="sr">AI and GenAI Engineering. Platform: AWS Bedrock. Status: available.</span>
+          <span class="flaps fl-dest" data-t="AI &amp; GENAI ENGINEERING" data-len="22" aria-hidden="true"></span>
+          <span class="flaps fl-plat" data-t="AWS BEDROCK" data-len="13" aria-hidden="true"></span>
+          <span class="flaps fl-stat" data-t="AVAILABLE" data-len="9" aria-hidden="true"></span>
+        </a>
+        <a class="dep" href="#svc-2" data-i="1">
+          <span class="sr">Observability and SRE. Platform: Dynatrace. Status: available.</span>
+          <span class="flaps fl-dest" data-t="OBSERVABILITY &amp; SRE" data-len="22" aria-hidden="true"></span>
+          <span class="flaps fl-plat" data-t="DYNATRACE" data-len="13" aria-hidden="true"></span>
+          <span class="flaps fl-stat" data-t="AVAILABLE" data-len="9" aria-hidden="true"></span>
+        </a>
+        <a class="dep" href="#svc-3" data-i="2">
+          <span class="sr">DevOps and Platform Engineering. Platform: Kubernetes and ArgoCD. Status: available.</span>
+          <span class="flaps fl-dest" data-t="DEVOPS &amp; PLATFORM ENG" data-len="22" aria-hidden="true"></span>
+          <span class="flaps fl-plat" data-t="K8S + ARGOCD" data-len="13" aria-hidden="true"></span>
+          <span class="flaps fl-stat" data-t="AVAILABLE" data-len="9" aria-hidden="true"></span>
+        </a>
+        <a class="dep" href="#svc-4" data-i="3">
+          <span class="sr">Cloud Architecture. Platform: AWS, Azure, and GCP. Status: available.</span>
+          <span class="flaps fl-dest" data-t="CLOUD ARCHITECTURE" data-len="22" aria-hidden="true"></span>
+          <span class="flaps fl-plat" data-t="AWS/AZURE/GCP" data-len="13" aria-hidden="true"></span>
+          <span class="flaps fl-stat" data-t="AVAILABLE" data-len="9" aria-hidden="true"></span>
+        </a>
+        <a class="dep" href="#svc-5" data-i="4">
+          <span class="sr">Infrastructure as Code. Platform: Terraform. Status: available.</span>
+          <span class="flaps fl-dest" data-t="INFRASTRUCTURE AS CODE" data-len="22" aria-hidden="true"></span>
+          <span class="flaps fl-plat" data-t="TERRAFORM" data-len="13" aria-hidden="true"></span>
+          <span class="flaps fl-stat" data-t="AVAILABLE" data-len="9" aria-hidden="true"></span>
+        </a>
+        <a class="dep" href="#svc-6" data-i="5">
+          <span class="sr">Security and Identity. Platform: IAM and KMS. Status: available.</span>
+          <span class="flaps fl-dest" data-t="SECURITY &amp; IDENTITY" data-len="22" aria-hidden="true"></span>
+          <span class="flaps fl-plat" data-t="IAM + KMS" data-len="13" aria-hidden="true"></span>
+          <span class="flaps fl-stat" data-t="AVAILABLE" data-len="9" aria-hidden="true"></span>
+        </a>
+        <a class="dep" href="#svc-7" data-i="6">
+          <span class="sr">Compliance. Platform: FedRAMP High. Status: available.</span>
+          <span class="flaps fl-dest" data-t="COMPLIANCE" data-len="22" aria-hidden="true"></span>
+          <span class="flaps fl-plat" data-t="FEDRAMP HIGH" data-len="13" aria-hidden="true"></span>
+          <span class="flaps fl-stat" data-t="AVAILABLE" data-len="9" aria-hidden="true"></span>
+        </a>
+        <a class="dep" href="#svc-8" data-i="7">
+          <span class="sr">Data and Analytics. Platform: Snowflake. Status: available.</span>
+          <span class="flaps fl-dest" data-t="DATA &amp; ANALYTICS" data-len="22" aria-hidden="true"></span>
+          <span class="flaps fl-plat" data-t="SNOWFLAKE" data-len="13" aria-hidden="true"></span>
+          <span class="flaps fl-stat" data-t="AVAILABLE" data-len="9" aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="bd-detail" aria-live="polite">
+        <p class="dd-name">AI &amp; GenAI Engineering</p>
+        <p class="dd-desc">LLM platforms, RAG pipelines, MLOps, and AI guardrails and governance.</p>
+        <p class="dd-tools">AWS Bedrock / SageMaker / Azure OpenAI / LangChain / Vector databases</p>
+      </div>
+    </div>
+    <p class="board-note">Every destination is a service we run. Point to a departure for its detail, or select it to read the full line.</p>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="sect" id="services">
+  <div class="wrap">
+    <h2><span class="sr">Services</span><span class="flaps fl-h2" data-t="SERVICES" data-len="8" aria-hidden="true"></span></h2>
+    <p class="sub">Eight lines, one operator. Architecture, build, and the daily operation after.</p>
+    <div class="lines">
+      <article class="line" id="svc-1">
+        <h3>AI &amp; GenAI Engineering</h3>
+        <p>LLM platforms, RAG pipelines, MLOps, and AI guardrails and governance.</p>
+        <ul class="chips" aria-label="Tools"><li>AWS Bedrock</li><li>SageMaker</li><li>Azure OpenAI</li><li>LangChain</li><li>Vector databases</li></ul>
+      </article>
+      <article class="line" id="svc-2">
+        <h3>Observability &amp; SRE</h3>
+        <p>SLOs, alerting, incident readiness, and cost visibility.</p>
+        <ul class="chips" aria-label="Tools"><li>Dynatrace</li><li>Datadog</li><li>Splunk</li><li>Prometheus</li><li>Grafana</li><li>OpenTelemetry</li></ul>
+      </article>
+      <article class="line" id="svc-3">
+        <h3>DevOps &amp; Platform Engineering</h3>
+        <p>CI/CD, Kubernetes and OpenShift platforms, Helm, and GitOps.</p>
+        <ul class="chips" aria-label="Tools"><li>Jenkins</li><li>GitHub Actions</li><li>Azure DevOps</li><li>ArgoCD</li></ul>
+      </article>
+      <article class="line" id="svc-4">
+        <h3>Cloud Architecture</h3>
+        <p>Landing zones, multi-region resilience, migration and modernization.</p>
+        <ul class="chips" aria-label="Tools"><li>AWS</li><li>Azure</li><li>GCP</li></ul>
+      </article>
+      <article class="line" id="svc-5">
+        <h3>Infrastructure as Code</h3>
+        <p>Reusable modules, repeatable environments, drift-free automation.</p>
+        <ul class="chips" aria-label="Tools"><li>Terraform</li><li>ARM</li><li>CloudFormation</li><li>Ansible</li></ul>
+      </article>
+      <article class="line" id="svc-6">
+        <h3>Security &amp; Identity</h3>
+        <p>IAM, network isolation, DLP, RBAC, and secure AI workloads.</p>
+        <ul class="chips" aria-label="Tools"><li>IAM</li><li>KMS</li><li>Key Vault</li><li>DLP</li><li>RBAC</li></ul>
+      </article>
+      <article class="line" id="svc-7">
+        <h3>Compliance</h3>
+        <p>FedRAMP High and Moderate, NIST, CIS, HIPAA, and GxP, with Azure Government experience.</p>
+        <ul class="chips" aria-label="Frameworks"><li>FedRAMP</li><li>NIST</li><li>CIS</li><li>HIPAA</li><li>GxP</li><li>Azure Government</li></ul>
+      </article>
+      <article class="line" id="svc-8">
+        <h3>Data &amp; Analytics</h3>
+        <p>Data platforms and pipelines that feed AI.</p>
+        <ul class="chips" aria-label="Tools"><li>Snowflake</li><li>Databricks</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CREDENTIALS ============ -->
+<section class="sect sect-alt" id="credentials">
+  <div class="wrap cred-grid">
+    <div>
+      <h2><span class="sr">Credentials</span><span class="flaps fl-h2" data-t="CREDENTIALS" data-len="11" aria-hidden="true"></span></h2>
+      <p class="sub">The stationmaster's papers.</p>
+      <p>IronRim is led by principal architect <strong>Prashant Chawla</strong>: 17+ years in enterprise infrastructure, 9 of them at JP Morgan Chase in Global Technology Infrastructure, and a former Amazon engineer. 10 years on AWS. 8 on Azure.</p>
+      <p>The line has carried work for Fortune 500 financial services, Big Four consulting, US federal agencies on Azure Government running FedRAMP High workloads, and healthcare and pharma manufacturing.</p>
+    </div>
+    <div class="case">
+      <p class="case-plate">Certificate case</p>
+      <ul class="certs">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5.5"></circle><path d="M9 13.5L7.5 21l4.5-2.5L16.5 21 15 13.5"></path></svg>
+          <span>Microsoft Certified: Azure Solutions Architect Expert</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5.5"></circle><path d="M9 13.5L7.5 21l4.5-2.5L16.5 21 15 13.5"></path></svg>
+          <span>AWS Certified Solutions Architect, Professional</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5.5"></circle><path d="M9 13.5L7.5 21l4.5-2.5L16.5 21 15 13.5"></path></svg>
+          <span>AWS Certified Solutions Architect, Associate</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5.5"></circle><path d="M9 13.5L7.5 21l4.5-2.5L16.5 21 15 13.5"></path></svg>
+          <span>Certified Kubernetes Administrator (CKA)</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5.5"></circle><path d="M9 13.5L7.5 21l4.5-2.5L16.5 21 15 13.5"></path></svg>
+          <span>Dynatrace Associate Certified</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<aside class="frieze">
+  <div class="wrap"><p>&ldquo;Rare expertise, delivered with customer obsession, accountability, and timeliness.&rdquo;</p></div>
+</aside>
+
+<!-- ============ TIMETABLE (process) ============ -->
+<section class="sect" id="timetable">
+  <div class="wrap">
+    <h2><span class="sr">Timetable</span><span class="flaps fl-h2" data-t="TIMETABLE" data-len="9" aria-hidden="true"></span></h2>
+    <p class="sub">How a line goes into service.</p>
+    <ol class="stops">
+      <li class="stop">
+        <span class="dot" aria-hidden="true">1</span>
+        <span class="plate">Assess</span>
+        <p>Walk the line. We survey what runs today, where it strains, and what it costs.</p>
+      </li>
+      <li class="stop">
+        <span class="dot" aria-hidden="true">2</span>
+        <span class="plate">Architect</span>
+        <p>Draw the route. A design your teams can operate, not a diagram for a slide.</p>
+      </li>
+      <li class="stop">
+        <span class="dot" aria-hidden="true">3</span>
+        <span class="plate">Automate</span>
+        <p>Lay the track. Pipelines, infrastructure as code, and guardrails, so every change ships the same way.</p>
+      </li>
+      <li class="stop">
+        <span class="dot" aria-hidden="true">4</span>
+        <span class="plate">Operate</span>
+        <p>Keep the timetable. SLOs, monitoring, and incident readiness, day after day.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ TICKET WINDOW (contact) ============ -->
+<section class="sect sect-green" id="tickets">
+  <div class="wrap">
+    <h2><span class="sr">Ticket window</span><span class="flaps fl-h2" data-t="TICKET WINDOW" data-len="13" aria-hidden="true"></span></h2>
+    <p class="sub">The window is open.</p>
+    <div class="tk-grid">
+      <div class="tk-copy">
+        <p>Write to the window and tell us what has to run on time. We work from Columbus with enterprises anywhere.</p>
+        <p class="tel-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"></path></svg>
+          <a href="tel:+19182550687">+1 918 255 0687</a>
+        </p>
+        <address class="addr-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+          470 W Broad St, Columbus, OH 43215
+        </address>
+      </div>
+      <div>
+        <a class="ticket" id="ticket" href="mailto:info@ironrim.com">
+          <span class="t-main">
+            <span class="t-route">IronRim Terminal</span>
+            <span class="t-big">Start a project</span>
+            <span class="t-addr">info@ironrim.com</span>
+            <span class="t-foot">Columbus, Ohio</span>
+          </span>
+          <span class="t-stub" aria-hidden="true">Admit one<span class="hole"></span></span>
+        </a>
+        <p class="tk-note">The ticket opens your mail client. The punch is on us.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>&copy; 2026 IronRim. Columbus, Ohio.</span>
+    <span>The board reads ON TIME.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+var ABC = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&./-+";
+var N = ABC.length;
+function idx(ch){ var i = ABC.indexOf(ch); return i < 0 ? 0 : i; }
+function rnd(a,b){ return a + Math.random()*(b-a); }
+
+/* ---- split-flap display engine ---- */
+function buildDisplay(el, len){
+  var cells = [], frag = document.createDocumentFragment(), i, c;
+  for(i=0;i<len;i++){
+    c = document.createElement("span");
+    c.className = "c";
+    c.innerHTML = '<span class="h u"><b></b></span><span class="h l"><b></b></span>'
+                + '<span class="fp"><span class="fh ff"><b></b></span><span class="fh fk"><b></b></span></span>';
+    frag.appendChild(c);
+    cells.push({
+      u: c.children[0].firstChild,
+      l: c.children[1].firstChild,
+      fp: c.children[2],
+      ff: c.children[2].children[0].firstChild,
+      fk: c.children[2].children[1].firstChild,
+      cur: 0, anim: null
+    });
+  }
+  el.textContent = "";
+  el.appendChild(frag);
+
+  var d = { cells: cells, skip: false, target: "" };
+
+  function setCell(c, t){
+    if(c.anim){ c.anim.cancel(); c.anim = null; }
+    c.fp.style.visibility = "hidden";
+    c.cur = t;
+    c.u.textContent = ABC[t];
+    c.l.textContent = ABC[t];
+  }
+
+  d.setInstant = function(text){
+    d.skip = true;
+    var t = pad(text);
+    cells.forEach(function(c,i){ setCell(c, idx(t[i])); });
+  };
+
+  d.showRandom = function(){
+    cells.forEach(function(c){
+      c.cur = Math.floor(Math.random()*27); /* residue: blank or a letter */
+      c.u.textContent = ABC[c.cur];
+      c.l.textContent = ABC[c.cur];
+    });
+  };
+
+  function pad(text){
+    text = (text || "").toUpperCase();
+    while(text.length < len) text += " ";
+    return text.slice(0, len);
+  }
+
+  function step(c, next, dur){
+    return new Promise(function(res){
+      var nc = ABC[next];
+      c.u.textContent = nc;          /* revealed behind the falling flap */
+      c.ff.textContent = ABC[c.cur]; /* front face: current top half */
+      c.fk.textContent = nc;         /* back face: next bottom half */
+      c.fp.style.visibility = "visible";
+      var a = c.fp.animate(
+        [{transform:"rotateX(0deg)"},{transform:"rotateX(-180deg)"}],
+        {duration:dur, easing:"cubic-bezier(.55,.08,.7,.5)"}
+      );
+      c.anim = a;
+      a.onfinish = function(){
+        c.l.textContent = nc; c.cur = next;
+        c.fp.style.visibility = "hidden"; c.anim = null; res(true);
+      };
+      a.oncancel = function(){
+        c.fp.style.visibility = "hidden"; c.anim = null; res(false);
+      };
+    });
+  }
+
+  function flipCell(c, target, maxSteps){
+    var dist = (target - c.cur + N) % N;
+    if(dist === 0) return Promise.resolve();
+    if(dist > maxSteps){
+      c.cur = (target - maxSteps + N) % N;
+      c.u.textContent = ABC[c.cur];
+      c.l.textContent = ABC[c.cur];
+    }
+    function loop(){
+      if(d.skip){ setCell(c, target); return Promise.resolve(); }
+      if(c.cur === target) return Promise.resolve();
+      return step(c, (c.cur + 1) % N, rnd(52, 88)).then(loop);
+    }
+    return loop();
+  }
+
+  d.flip = function(text, colStagger){
+    d.skip = false;
+    var t = pad(text);
+    d.target = t;
+    var ps = cells.map(function(c,i){
+      return new Promise(function(res){
+        setTimeout(function(){
+          flipCell(c, idx(t[i]), 7 + Math.floor(rnd(0,4))).then(res);
+        }, i * (colStagger || 34) + rnd(0, 40));
+      });
+    });
+    /* safety sweep: content never depends on an animation finishing */
+    setTimeout(function(){
+      cells.forEach(function(c,i){
+        if(c.cur !== idx(t[i])) setCell(c, idx(t[i]));
+      });
+    }, len * (colStagger || 34) + 4000);
+    return Promise.all(ps);
+  };
+
+  return d;
+}
+
+/* ---- board rows ---- */
+var boardDs = [];
+var rows = Array.prototype.slice.call(document.querySelectorAll(".dep"));
+rows.forEach(function(row){
+  Array.prototype.forEach.call(row.querySelectorAll(".flaps"), function(f){
+    var len = parseInt(f.dataset.len, 10);
+    var d = buildDisplay(f, len);
+    d.target = (f.dataset.t || "").toUpperCase();
+    d.rowIndex = parseInt(row.dataset.i, 10);
+    boardDs.push(d);
+  });
+});
+
+/* ---- section headlines ---- */
+var headDs = [];
+Array.prototype.forEach.call(document.querySelectorAll(".fl-h2"), function(f){
+  var len = parseInt(f.dataset.len, 10);
+  var d = buildDisplay(f, len);
+  d.target = (f.dataset.t || "").toUpperCase();
+  d.el = f;
+  headDs.push(d);
+});
+
+if(RM){
+  boardDs.forEach(function(d){ d.setInstant(d.target); });
+  headDs.forEach(function(d){ d.setInstant(d.target); });
+}else{
+  /* hero boot cycle: rows flip in with mechanical stagger, skippable by scroll */
+  boardDs.forEach(function(d){ d.showRandom(); });
+  var bootSkipped = false;
+  var skipEvents = ["wheel","touchmove","keydown","scroll"];
+  function flushBoot(){
+    if(bootSkipped) return;
+    bootSkipped = true;
+    boardDs.forEach(function(d){ d.setInstant(d.target); });
+    skipEvents.forEach(function(ev){ removeEventListener(ev, flushBoot); });
+  }
+  boardDs.forEach(function(d){
+    setTimeout(function(){
+      if(!bootSkipped) d.flip(d.target, 30);
+    }, 450 + d.rowIndex * 130);
+  });
+  setTimeout(function(){
+    skipEvents.forEach(function(ev){ addEventListener(ev, flushBoot, {passive:true}); });
+  }, 150);
+  setTimeout(flushBoot, 4600); /* boot is over; retire the listeners */
+
+  /* headlines flip when their section enters view */
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting) return;
+      io.unobserve(e.target);
+      headDs.forEach(function(d){
+        if(d.el === e.target) d.flip(d.target, 44);
+      });
+    });
+  }, {threshold:.3});
+  headDs.forEach(function(d){ io.observe(d.el); });
+}
+
+/* ---- hover a departure: detail drawer beneath the board ---- */
+var lines = Array.prototype.slice.call(document.querySelectorAll(".line"));
+var ddName = document.querySelector(".dd-name");
+var ddDesc = document.querySelector(".dd-desc");
+var ddTools = document.querySelector(".dd-tools");
+rows.forEach(function(row){
+  function show(){
+    var a = lines[parseInt(row.dataset.i, 10)];
+    if(!a) return;
+    ddName.textContent = a.querySelector("h3").textContent;
+    ddDesc.textContent = a.querySelector("p").textContent;
+    ddTools.textContent = Array.prototype.map.call(
+      a.querySelectorAll(".chips li"),
+      function(li){ return li.textContent; }
+    ).join(" / ");
+  }
+  row.addEventListener("mouseenter", show);
+  row.addEventListener("focus", show);
+});
+
+/* ---- station clock: real time, sweep second hand ---- */
+var clock = document.getElementById("clock");
+if(clock){
+  var SVGNS = "http://www.w3.org/2000/svg";
+  var tg = clock.querySelector("#ticks");
+  for(var i=0;i<60;i++){
+    var major = i % 5 === 0;
+    var ln = document.createElementNS(SVGNS, "line");
+    ln.setAttribute("class", "tick");
+    ln.setAttribute("x1", 50); ln.setAttribute("y1", 11.5);
+    ln.setAttribute("x2", 50); ln.setAttribute("y2", major ? 17.5 : 14);
+    ln.setAttribute("stroke-width", major ? 2 : .9);
+    ln.setAttribute("transform", "rotate(" + (i*6) + " 50 50)");
+    tg.appendChild(ln);
+  }
+  var hh = clock.querySelector("#hh"),
+      mh = clock.querySelector("#mh"),
+      sh = clock.querySelector("#sh");
+  function setHands(){
+    var n = new Date();
+    var s = n.getSeconds() + (RM ? 0 : n.getMilliseconds()/1000);
+    var m = n.getMinutes() + s/60;
+    var h = (n.getHours() % 12) + m/60;
+    sh.setAttribute("transform", "rotate(" + (s*6) + " 50 50)");
+    mh.setAttribute("transform", "rotate(" + (m*6) + " 50 50)");
+    hh.setAttribute("transform", "rotate(" + (h*30) + " 50 50)");
+  }
+  if(RM){
+    setHands();
+    setInterval(setHands, 1000);
+  }else{
+    var sweeping = false;
+    function sweep(){
+      setHands();
+      if(document.hidden){ sweeping = false; return; }
+      requestAnimationFrame(sweep);
+    }
+    function startSweep(){
+      if(sweeping) return;
+      sweeping = true;
+      requestAnimationFrame(sweep);
+    }
+    setHands();
+    document.addEventListener("visibilitychange", function(){
+      if(!document.hidden) startSweep();
+    });
+    startSweep();
+  }
+}
+
+/* ---- the ticket punches itself, then opens mail ---- */
+var tk = document.getElementById("ticket");
+if(tk){
+  tk.addEventListener("click", function(e){
+    if(RM) return;
+    if(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+    if(tk.classList.contains("punched")) return;
+    e.preventDefault();
+    tk.classList.add("punched");
+    setTimeout(function(){ location.href = tk.href; }, 420);
+  });
+}
+})();
+</script>
+</body>
+</html>

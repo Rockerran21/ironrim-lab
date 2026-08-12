@@ -12,43 +12,46 @@
   h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;margin-bottom:8px}
   h1 span{background:linear-gradient(135deg,#38bdf8,#818cf8);-webkit-background-clip:text;background-clip:text;color:transparent}
   .sub{color:#94a3c0;margin-bottom:36px}
+  h2{font-size:1rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#94a3c0;margin:34px 0 14px}
   .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
   a.card{display:flex;align-items:center;gap:16px;background:#141d33;border:1px solid #233052;
        border-radius:14px;padding:20px 22px;color:#e6ecf7;text-decoration:none;position:relative;
        transition:border-color .2s,transform .2s}
   a.card:hover{border-color:rgba(56,189,248,.5);transform:translateY(-3px)}
-  a.card.approved{border-color:rgba(74,222,128,.6)}
+  a.card.primary{border-color:rgba(74,222,128,.6)}
   .num{font-size:1.4rem;font-weight:800;color:#38bdf8;font-variant-numeric:tabular-nums;min-width:2.2ch}
   .name{font-weight:700}
   .desc{font-size:.82rem;color:#94a3c0;margin-top:2px}
   .tag{position:absolute;top:10px;right:12px;font-size:.62rem;font-weight:800;letter-spacing:.1em;
        padding:3px 9px;border-radius:99px;text-transform:uppercase}
-  .tag.approved{color:#4ade80;border:1px solid rgba(74,222,128,.5);background:rgba(74,222,128,.1)}
-  .tag.rejected{color:#f87171;border:1px solid rgba(248,113,113,.4);background:rgba(248,113,113,.08)}
+  .tag.primary{color:#4ade80;border:1px solid rgba(74,222,128,.5);background:rgba(74,222,128,.1)}
+  .tag.short{color:#38bdf8;border:1px solid rgba(56,189,248,.5);background:rgba(56,189,248,.1)}
+  .retired{color:#5a688a;font-size:.85rem;line-height:2}
+  .retired a{color:#5a688a}
   .back{display:inline-block;margin-top:36px;color:#38bdf8;text-decoration:none;font-weight:600}
   .back:hover{text-decoration:underline}
-  .kbd{color:#94a3c0;font-size:.85rem;margin-top:10px}
-  .kbd b{color:#e6ecf7}
 </style>
 </head>
 <body>
 <div class="wrap">
   <h1>IronRim <span>Design Gallery</span></h1>
-  <p class="sub">10 takes on the same story. Open any design directly, or use the rotator and press <b>Next</b> (or ←/→) to cycle.</p>
+  <p class="sub">The corporate direction plus the three shortlisted concepts. Use the rotator and press <b>Next</b> (or ←/→) to cycle.</p>
+  <h2>Primary direction</h2>
   <div class="grid">
-    <a class="card" href="01-forge/"><span class="num">01</span><span><span class="name">The Forge</span><span class="desc">Molten iron, embers, cooling steel</span></span></a>
-    <a class="card" href="02-blueprint/"><span class="num">02</span><span><span class="name">Blueprint</span><span class="desc">Cyanotype engineering drawing set</span></span></a>
-    <a class="card" href="03-mission-control/"><span class="num">03</span><span><span class="name">Mission Control</span><span class="desc">Live observability control room</span></span></a>
-    <a class="card" href="04-swiss/"><span class="num">04</span><span><span class="name">Swiss Editorial</span><span class="desc">Huge type, exposed grid, rust red</span></span></a>
-    <a class="card" href="05-dossier/"><span class="num">05</span><span><span class="name">The Dossier</span><span class="desc">Federal capability case file</span></span></a>
-    <a class="card" href="06-bento/"><span class="num">06</span><span><span class="name">Keynote Bento</span><span class="desc">Dark stage, living capability tiles</span></span></a>
-    <a class="card" href="07-terminal/"><span class="num">07</span><span><span class="name">Plan &amp; Apply</span><span class="desc">Terraform session, amber phosphor</span></span></a>
-    <a class="card" href="08-stratus/"><span class="num">08</span><span><span class="name">Stratus</span><span class="desc">Above the clouds, frosted glass</span></span></a>
-    <a class="card" href="09-steel/"><span class="num">09</span><span><span class="name">Structural Steel</span><span class="desc">Trusses, rivets, safety orange</span></span></a>
-    <a class="card" href="10-perimeter/"><span class="num">10</span><span><span class="name">The Perimeter</span><span class="desc">Working radar scope, held boundary</span></span></a>
+    <a class="card primary" href="18-corporate/"><span class="num">18</span><span><span class="name">Corporate</span><span class="desc">Credible enterprise site: teams, 8 global offices, follow-the-sun</span></span><span class="tag primary">Primary</span></a>
   </div>
+  <h2>Shortlisted concepts (round 1)</h2>
+  <div class="grid">
+    <a class="card" href="02-blueprint/"><span class="num">02</span><span><span class="name">Blueprint</span><span class="desc">Cyanotype engineering drawing set</span></span><span class="tag short">Shortlist</span></a>
+    <a class="card" href="04-swiss/"><span class="num">04</span><span><span class="name">Swiss Editorial</span><span class="desc">Huge type, exposed grid, rust red</span></span><span class="tag short">Shortlist</span></a>
+    <a class="card" href="09-steel/"><span class="num">09</span><span><span class="name">Structural Steel</span><span class="desc">Trusses, rivets, safety orange</span></span><span class="tag short">Shortlist</span></a>
+  </div>
+  <h2>Archive</h2>
+  <p class="retired">
+    Round 1 retired: <a href="01-forge/">01 Forge</a> · <a href="03-mission-control/">03 Mission Control</a> · <a href="05-dossier/">05 Dossier</a> · <a href="06-bento/">06 Bento</a> · <a href="07-terminal/">07 Plan &amp; Apply</a> · <a href="08-stratus/">08 Stratus</a> · <a href="10-perimeter/">10 Perimeter</a><br>
+    Round 2, stopped mid-build (unreviewed): <a href="12-departures/">12 Departures</a> · <a href="13-score/">13 Score</a> · <a href="15-manual/">15 Manual</a> · <a href="16-joinery/">16 Joinery</a> · <a href="17-gazette/">17 Gazette</a>
+  </p>
   <a class="back" href="../">← Back to the rotator</a>
-  <p class="kbd">Tip: on the rotator, <b>←</b>/<b>→</b> keys also switch designs.</p>
 </div>
 </body>
 </html>
